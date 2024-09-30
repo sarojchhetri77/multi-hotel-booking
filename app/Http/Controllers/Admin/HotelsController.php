@@ -3,16 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Hotel;
+use App\Services\HotelService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class HotelsController extends Controller
 {
+    protected $hotelService;
+   public function __construct(HotelService $hotelService)
+   {
+      $this->hotelService = $hotelService;
+   }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        
+        $data['hotels'] = $this->hotelService->listHotels(['status'=>config('constants.status.active')]);
+        return view('backend.hotels.index',$data);
     }
 
     /**
@@ -20,7 +30,7 @@ class HotelsController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.hotels.create');
     }
 
     /**
@@ -28,7 +38,20 @@ class HotelsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => ['required','string','max:50'],
+            'owner_id' => ['required','exits:users,id'],
+            'address' => ['required','string'],
+            'district' => ['required','string'],
+            'city' => ['required','string'],
+            'total_room' => ['required','integer'],
+            'street_num' => ['required','integer'],
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator->messages())->withInput()->with('error','Validation Error');
+        }
+        $this->hotelService->requestHotel($validator->valid());
+        return redirect()->route('hotel.index')->with('success','Hotel is Created SUccessfully');
     }
 
     /**
@@ -36,7 +59,8 @@ class HotelsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data['hotel'] = Hotel::findOrFail($id);
+        return view('backend.hotels.show',$data);
     }
 
     /**
@@ -44,7 +68,8 @@ class HotelsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['hotel'] = $this->hotelService->getHotelDetailsById($id);
+        return view('backend.hotels.edit',$data);
     }
 
     /**
@@ -52,7 +77,20 @@ class HotelsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => ['required','string','max:50'],
+            'owner_id' => ['required','exits:users,id'],
+            'address' => ['required','string'],
+            'district' => ['required','string'],
+            'city' => ['required','string'],
+            'total_room' => ['required','integer'],
+            'street_num' => ['required','integer'],
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator->messages())->withInput()->with('error','Validation Error');
+        }
+        $this->hotelService->requestHotel($validator->valid(),$id);
+        return redirect()->route('hotel.index')->with('success','Hotel Update SUccessfully');
     }
 
     /**
@@ -60,6 +98,11 @@ class HotelsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $hotel = $this->findOrFail($id);
+        if($hotel){
+            $hotel->delete();
+            return redirect()->route('hotel.index')->with('success','Hotel Update Successfully');
+        }
+        return redirect()->route('hotel.index')->with('error','Delete failed!');
     }
 }

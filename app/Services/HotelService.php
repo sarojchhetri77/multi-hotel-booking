@@ -46,7 +46,7 @@ class HotelService
         return $hotel;
     }
 
-    public function getPropertiesDetailsById($id,$params = []){
+    public function getHotelDetailsById($id,$params = []){
         $hotel = $this->hotel->query();
         if(key_exists('status',$params)){
             $hotel->where('status',$params['status']);
@@ -56,7 +56,9 @@ class HotelService
         }
         return $hotel->where('id',$id)->first();
     }
-    public function getPropertiesDetailsBySlug($slug,$params = []){
+
+
+    public function getHotelDetailsBySlug($slug,$params = []){
         $hotel = $this->hotel->query();
         if(key_exists('status',$params)){
             $hotel->where('status',$params['status']);
