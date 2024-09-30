@@ -21,7 +21,7 @@ class HotelsController extends Controller
      */
     public function index()
     {
-        $data['hotels'] = $this->hotelService->listHotels(['status'=>config('constants.status.active')]);
+        $data['hotels'] = $this->hotelService->listHotels();
         return view('backend.hotels.index',$data);
     }
 

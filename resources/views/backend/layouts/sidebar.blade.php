@@ -72,10 +72,10 @@
             {{-- main category --}}
             @if (!request()->is('store/*'))
                 
-            <li class="menu-item {{ request()->routeIs('category*') ? 'active' : '' }}">
-                <a href="" class="menu-link ">
+            <li class="menu-item {{ request()->routeIs('hotel*') ? 'active' : '' }}">
+                <a href="{{url('hotel')}}" class="menu-link ">
                     <i class="menu-icon tf-icons bx bx-category"></i>
-                    <div data-i18n="Analytics">Category</div>
+                    <div data-i18n="Analytics">Hotel</div>
                 </a>
             </li>
             @endif
