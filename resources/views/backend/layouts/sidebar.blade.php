@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 {{-- ==========for discussion forum------------- --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-some-files fs-1">
@@ -109,246 +109,22 @@
                                 <span class="menu-title">Question Report</span>
                             </a>
                         </div>
-                       
-                            {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ Request::segment(1) === 'properties' && Request::segment(2) === 'by-category' ? 'show' : '' }}">
-                                <span class="menu-link {{ Request::segment(1) === 'properties' && Request::segment(2) === 'by-category' ? 'active' : '' }}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">By Status</span>
-                                    <span class="menu-arrow"></span>
-                                </span>
-                                <div class="menu-sub menu-sub-accordion">
-                                        <div class="menu-item">
-                                            <a class="menu-link {{ Request::segment(1) === 'properties' && Request::segment(2) === 'by-status' ? 'active' : '' }}" href="{{url('properties/by-status/archived')}}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Archived</span>
-                                            </a>
-                                        </div>
-                                        <div class="menu-item">
-                                            <a class="menu-link {{ Request::segment(1) === 'properties' && Request::segment(2) === 'by-status' ? 'active' : '' }}" href="{{url('properties/by-status/verified')}}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Verified</span>
-                                            </a>
-                                        </div>
-                                        <div class="menu-item">
-                                            <a class="menu-link {{ Request::segment(1) === 'properties' && Request::segment(2) === 'by-status' ? 'active' : '' }}" href="{{url('properties/by-status/rejected')}}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Rejected</span>
-                                            </a>
-                                        </div>
-                                        <div class="menu-item">
-                                            <a class="menu-link {{ Request::segment(1) === 'properties' && Request::segment(2) === 'by-status' ? 'active' : '' }}" href="{{url('properties/by-status/unverified')}}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Unverified</span>
-                                            </a>
-                                        </div>
-                                </div>
-                            </div> --}}
                     </div>
-                </div>
+                </div> --}}
                 {{-- ---------end of the discussion forum --------------- --}}
-
-                {{-- for blogs --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
+                <div class="menu-item">
+                    <a class="menu-link {{ Request::segment(1) === 'hotel' ? 'active' : '' }}"
+                        href="{{ url('hotel') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-some-files fs-1">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
                         </span>
-                        <span class="menu-title">Blogs</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link"
-                                href="{{ url('admin/blogcategory/') }}">
-                                <span class="menu-icon">
-                                    <i class="ki-duotone ki-some-files fs-1">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </span>
-                                <span class="menu-title">Categories</span>
-                            </a>
-                        </div>
-                     </div>
-                        <div class="menu-sub menu-sub-accordion">
-                            <div class="menu-item">
-                                <a class="menu-link {{ Request::segment(1) === 'admin' &&Request::segment(2) === 'blogs' ? 'active' : '' }}"
-                                    href="{{ url('admin/blogs') }}">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-some-files fs-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                    </span>
-                                    <span class="menu-title">All Blogs List</span>
-                                </a>
-                            </div>
-                    </div>
+                        <span class="menu-title">Hotels</span>
+                    </a>
                 </div>
-                {{-- end for the blogs --}}
-                {{-- for documentation --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-some-files fs-1">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Documentation</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link"
-                                href="{{ url('admin/doccategory/') }}">
-                                <span class="menu-icon">
-                                    <i class="ki-duotone ki-some-files fs-1">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </span>
-                                <span class="menu-title">Categories</span>
-                            </a>
-                        </div>
-                     </div>
-                        <div class="menu-sub menu-sub-accordion">
-                            <div class="menu-item">
-                                <a class="menu-link {{ Request::segment(1) === 'admin' &&Request::segment(2) === 'blogs' ? 'active' : '' }}"
-                                    href="{{ url('admin/document') }}">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-some-files fs-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                    </span>
-                                    <span class="menu-title">All Document Title</span>
-                                </a>
-                            </div>
-                    </div>
-                        <div class="menu-sub menu-sub-accordion">
-                            <div class="menu-item">
-                                <a class="menu-link {{ Request::segment(1) === 'admin' &&Request::segment(2) === 'blogs' ? 'active' : '' }}"
-                                    href="{{ url('admin/content') }}">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-some-files fs-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                    </span>
-                                    <span class="menu-title">All Contents</span>
-                                </a>
-                            </div>
-                    </div>
-                        <div class="menu-sub menu-sub-accordion">
-                            <div class="menu-item">
-                                <a class="menu-link {{ Request::segment(1) === 'admin' &&Request::segment(2) === 'quizz' ? 'active' : '' }}"
-                                    href="{{ url('admin/quizz') }}">
-                                    <span class="menu-icon">
-                                        <i class="ki-duotone ki-some-files fs-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>    
-                                    </span>
-                                    <span class="menu-title">All Quiz</span>
-                                </a>
-                            </div>
-                    </div>
-                </div>
-                {{-- end for the documentation --}}
-                {{-- Overall Exam --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-some-files fs-1">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Exams</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{url('admin/exam-question')}}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Questions</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {{-- job section  --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-some-files fs-1">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Jobs</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{url('admin/job')}}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">All Jobs</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {{-- end of job section  --}}
-                {{-- orther utilities --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-some-files fs-1">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Others Utilities</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{url('admin/policies')}}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Policies</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{url('admin/exam-setting')}}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Exam Setting</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>

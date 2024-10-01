@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Hotel;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -30,7 +31,8 @@ class HotelService
     }
     
     public function requestHotel($data, $id = null){
-        $data['slug'] = Str::slug($data['title']) . '-' . now()->timestamp;
+        $data['slug'] = Str::slug($data['name']) . '-' . now()->timestamp;
+        $data['owner_id'] = Auth::user()->id;
         if(key_exists('thumbnail',$data)){
             if($data['thumbnail'] instanceof UploadedFile){
                 $thumbnailPath = $data['thumbnail']->store('uploads/hotels/thumbnails','public');

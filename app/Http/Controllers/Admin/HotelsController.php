@@ -7,6 +7,7 @@ use App\Models\Hotel;
 use App\Services\HotelService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class HotelsController extends Controller
 {
@@ -40,14 +41,15 @@ class HotelsController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'name' => ['required','string','max:50'],
-            'owner_id' => ['required','exits:users,id'],
+            // 'owner_id' => ['required','exits:users,id'],
             'address' => ['required','string'],
             'district' => ['required','string'],
             'city' => ['required','string'],
-            'total_room' => ['required','integer'],
-            'street_num' => ['required','integer'],
+            'room_number' => ['required','integer'],
+            'street_no' => ['required','integer'],
         ]);
         if($validator->fails()){
+            Log::error('Validation failed', ['errors' => $validator->errors()->all()]);
             return redirect()->back()->withErrors($validator->messages())->withInput()->with('error','Validation Error');
         }
         $this->hotelService->requestHotel($validator->valid());
@@ -79,7 +81,7 @@ class HotelsController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'name' => ['required','string','max:50'],
-            'owner_id' => ['required','exits:users,id'],
+            // 'owner_id' => ['required','exits:users,id'],
             'address' => ['required','string'],
             'district' => ['required','string'],
             'city' => ['required','string'],
@@ -87,6 +89,7 @@ class HotelsController extends Controller
             'street_num' => ['required','integer'],
         ]);
         if($validator->fails()){
+            Log::error('Validation failed', ['errors' => $validator->errors()->all()]);
             return redirect()->back()->withErrors($validator->messages())->withInput()->with('error','Validation Error');
         }
         $this->hotelService->requestHotel($validator->valid(),$id);

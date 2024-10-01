@@ -15,18 +15,18 @@
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
-                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">Blogs</li>
+                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">Hotels</li>
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">List</li>
                         </ul>
                         <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-1 lh-0">
-                            All Blogs</h1>
+                            All Hotels</h1>
                     </div>
                 </div>
                 <div class="action-btn">
-                    <a href="{{url('admin/blogs/create')}}" class="btn btn-sm btn-primary p-4">
+                    <a href="{{url('hotel/create')}}" class="btn btn-sm btn-primary p-4">
                         Add New
                     </a>
                 </div>
@@ -43,7 +43,7 @@
                                     <span class="path2"></span>
                                 </i>
                                 <input type="text" data-kt-table-filter="search"
-                                    class="form-control form-control-solid w-250px ps-13" placeholder="Search Blog" />
+                                    class="form-control form-control-solid w-250px ps-13" placeholder="Search Hotel" />
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,6 @@
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                     <th class="w-10px pe-2">S.N</th>
                                     <th class="min-w-125px">Title</th>
-                                    <th class="min-w-125px">Category</th>
                                     <th class="min-w-125px">Thumbnail</th>
                                     <th class="min-w-125px">Status</th>
                                     <th class="text-end min-w-100px">Actions</th>
@@ -64,7 +63,7 @@
                                     <tr>
                                         <td></td>
                                         <td class="">
-                                            <p class="text-gray-800 text-hover-primary mb-1">{{ $hotel->title }}
+                                            <p class="text-gray-800 text-hover-primary mb-1">{{ $hotel->name }}
                                             </p>
                                         </td>
                                         <td>

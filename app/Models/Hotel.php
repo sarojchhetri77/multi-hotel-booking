@@ -16,7 +16,8 @@ class Hotel extends Model
         'street_no',
         'slug',
         'owner_id',
-        'total_room',
+        'room_number',
+        'thumbnail',
      ];
      public function categories(){
         return $this->hasMany(Category::class,'hotel_id');
