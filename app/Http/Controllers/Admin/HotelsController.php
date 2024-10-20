@@ -108,4 +108,43 @@ class HotelsController extends Controller
         }
         return redirect()->route('hotel.index')->with('error','Delete failed!');
     }
+
+    public function updateHotelStatus(Hotel $hotel, $action)
+    {
+        switch ($action) {
+            case 'verified':
+                return $this->updateStatus($hotel, 'verified');
+            case 'rejected':
+                return $this->updateStatus($hotel, 'rejected');
+            default:
+                return redirect()->route('hotel.index')->with('error', 'Invalid action');
+        }
+    }
+    
+    protected function updateStatus($hotel, $status)
+    {
+        $hotel->status = $status;
+        if ($hotel->save()) {
+            return redirect()->route('hotel.index')->with('success', 'Status updated successfully');
+        }
+    
+        return redirect()->route('hotel.index')->with('error', 'Failed to update status');
+    }
+    
+
+    public function updateRejectMessage(Request $request,$id){
+        $validator = Validator::make($request->all(),[
+           'reason' => ['required'],
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator->messages())->withInput();
+        }
+        $hotel = Hotel::findOrFail($id);
+        $hotel->reject_message = $request->reason;
+        $hotel->status = config('constants.hotel_status.rejected');
+        $hotel->save();
+        return redirect()->route('hotel.index')->with('success','Hotel Reject Successfully');
+
+    }
+
 }

@@ -69,21 +69,27 @@
                                         <td>
                                             <img class="symbol" height="50%" width="50%" src="{{asset($hotel->thumbnail)}}" alt="hotel thumbnail">
                                         </td>
+
                                         <td>
                                             @switch($hotel->status)
-                                                @case(config('constants.status.active'))
+                                                @case(config('constants.hotel_status.verified'))
                                                     <div class="badge badge-light-success fw-bold">
-                                                        {{ config('constants.status.active') }}</div>
+                                                        {{ config('constants.hotel_status.verified') }}</div>
                                                 @break
 
-                                                @case(config('constants.status.inactive'))
+                                                @case(config('constants.hotel_status.unverified'))
                                                     <div class="badge badge-light-danger fw-bold">
-                                                        {{ config('constants.status.inactive') }}</div>
+                                                        {{ config('constants.hotel_status.unverified') }}</div>
+                                                @break
+
+                                                @case(config('constants.hotel_status.rejected'))
+                                                    <div class="badge badge-light-danger fw-bold">
+                                                        {{ config('constants.hotel_status.rejected') }}</div>
                                                 @break
 
                                                 @default
                                                     <div class="badge badge-light-danger fw-bold">
-                                                        {{ config('constants.status.inactive') }}</div>
+                                                        {{ config('constants.hotel_status.unverified') }}</div>
                                             @endswitch
                                         </td>
                                         
@@ -101,15 +107,45 @@
                                                     <a href="{{route('hotel.show',$hotel->id)}}" class="menu-link px-3">View</a>
                                                 </div>
                                                 <div class="menu-item px-3">
-                                                    {{-- <form action="{{route('questions.destroy',$hotel->id)}}" method="post">
+                                                    <a href="{{ route('hotel.status', [$hotel->id, 'verified']) }}" class="menu-link px-3">Verify</a>
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#rejectModel_{{$hotel->id}}">Rejected</a>
+                                                    {{-- <a href="{{ route('hotel.status', [$hotel->id, 'rejected']) }}" class="menu-link px-3">Rejected</a> --}}
+                                                </div>
+                                                <div class="menu-item px-3">
+                                                    <form action="{{route('hotel.destroy',$hotel->id)}}" method="post">
                                                         @csrf
                                                         @method('delete')
-                                                    <button class="menu-link px-3 border-0 w-100 btn btn-white btn-sm" onclick="return confirm('Are you want to delete this property')"  type="submit">Delete</button>
-                                                    </form> --}}
+                                                    <button class="menu-link px-3 border-0 w-100 btn btn-white btn-sm" onclick="return confirm('Are you want to delete this hotel')"  type="submit">Delete</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
+                                    <div class="modal fade" id="rejectModel_{{$hotel->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="rejectModelLabel_{{$hotel->id}}">Write reason to reject this hotel</h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action="{{route('hotel.reject',$hotel->id)}}" method="post">
+                                                @csrf
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="reject" class="form-label">Reason</label>
+                                                    <textarea class="form-control" name="reason" id="reject" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                              <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </form>
+                                          </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>

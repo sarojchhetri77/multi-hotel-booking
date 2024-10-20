@@ -22,4 +22,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::resource('hotel',HotelsController::class);
 
+Route::get('hotels/{hotel}/{status}', [HotelsController::class, 'updateHotelStatus'])->name('hotel.status');
+Route::post('hotels/reject/{id}', [HotelsController::class, 'updateRejectMessage'])->name('hotel.reject');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
