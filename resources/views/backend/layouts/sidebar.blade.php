@@ -124,6 +124,30 @@
                         <span class="menu-title">Hotels</span>
                     </a>
                 </div>
+                <div class="menu-item">
+                    <a class="menu-link {{ Request::segment(1) === 'category' ? 'active' : '' }}"
+                        href="{{ url('category') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-some-files fs-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Category</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link {{ Request::segment(1) === 'room' ? 'active' : '' }}"
+                        href="{{ url('room') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-some-files fs-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Rooms</span>
+                    </a>
+                </div>
                 
             </div>
         </div>

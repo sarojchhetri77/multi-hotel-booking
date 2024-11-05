@@ -21,8 +21,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $data['category'] = $this->categoryService->listCategories();
-        return view('backend.category.index',$data);
+        $data['categories'] = $this->categoryService->listCategories();
+        return view('backend.categories.index',$data);
     }
 
     /**
@@ -30,7 +30,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('backend.category.create');
+        return view('backend.categories.create');
     }
 
     /**
@@ -56,7 +56,7 @@ class CategoriesController extends Controller
     public function show(string $id)
     {
         $data['category'] = Category::findOrFail($id);
-        return view('backend.category.show',$data);
+        return view('backend.categories.show',$data);
     }
 
     /**
@@ -65,7 +65,7 @@ class CategoriesController extends Controller
     public function edit(string $id)
     {
         $data['category'] = Category::findOrFail($id);
-        return view('backend.category.edit',$data);
+        return view('backend.categories.edit',$data);
     }
 
     /**

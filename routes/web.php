@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\HotelsController;
+use App\Http\Controllers\Admin\RoomsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +23,8 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::resource('hotel',HotelsController::class);
+Route::resource('category',CategoriesController::class);
+Route::resource('room',RoomsController::class);
 
 Route::get('hotels/{hotel}/{status}', [HotelsController::class, 'updateHotelStatus'])->name('hotel.status');
 Route::post('hotels/reject/{id}', [HotelsController::class, 'updateRejectMessage'])->name('hotel.reject');
