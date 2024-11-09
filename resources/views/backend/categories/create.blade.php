@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="action-btn">
-                    <a href="{{ url('admin/category') }}" class="btn btn-sm btn-primary p-4">
+                    <a href="{{ url('category') }}" class="btn btn-sm btn-primary p-4">
                         Back
                     </a>
                 </div>
@@ -57,20 +57,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6  mb-7">
-                                    <label class="col-lg-4 fw-semibold text-muted required">Icon</label>
-                                    <div class="col-lg-10">
-                                        <input type="file" name="icon"
-                                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('icon') is-invalid @enderror"
-                                            placeholder="Choose Icon" value="{{ old('icon') }}" accept="image/*"/>
-                                        @error('icon')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-12  mb-7">
+                                {{-- <div class="col-md-12  mb-7">
                                     <label class="col-lg-4 fw-semibold text-muted">Description</label>
                                     <div class="col-lg-12">
                                         <textarea name="description" id="description"
@@ -81,7 +68,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12
                                             mb-7">
                                         <input type="submit" class="btn btn-success" value="Submit">

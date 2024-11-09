@@ -41,7 +41,6 @@ class CategoriesController extends Controller
         $validator = Validator::make($request->all(),[
             'title' => ['required','string'],
             'hotel_id' => ['required','exits:hotels,id'],
-            // 'thumbnail' => ['nullable'],
         ]);
         if($validator->fails()){
             return redirect()->back()->withErrors($validator->messages())->withInput()->with('error','Validation Error');

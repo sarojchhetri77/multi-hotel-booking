@@ -22,11 +22,11 @@
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">List</li>
                         </ul>
                         <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-1 lh-0">
-                            All Categories For Discussions</h1>
+                            All Categories</h1>
                     </div>
                 </div>
                 <div class="action-btn">
-                    <a href="{{url('admin/category/create')}}" class="btn btn-sm btn-primary p-4">
+                    <a href="{{url('category/create')}}" class="btn btn-sm btn-primary p-4">
                         Add New
                     </a>
                 </div>
