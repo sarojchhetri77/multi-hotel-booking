@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\HotelApproveMail;
 use App\Models\Hotel;
 use App\Services\HotelService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class HotelsController extends Controller
 {
@@ -125,6 +127,7 @@ class HotelsController extends Controller
     {
         $hotel->status = $status;
         if ($hotel->save()) {
+            Mail::to($hotel->user->email)->send(new HotelApproveMail($hotel, $status));
             return redirect()->route('hotel.index')->with('success', 'Status updated successfully');
         }
     
@@ -143,8 +146,11 @@ class HotelsController extends Controller
         $hotel->reject_message = $request->reason;
         $hotel->status = config('constants.hotel_status.rejected');
         $hotel->save();
+        $status = $hotel->status;
+        Mail::to($hotel->user->email)->send(new HotelApproveMail($hotel, $status));
         return redirect()->route('hotel.index')->with('success','Hotel Reject Successfully');
 
     }
+
 
 }

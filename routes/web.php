@@ -22,6 +22,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+// to approve or reject  the hotel
+// Route::post('/hotel/approve/{id}', [HotelsController::class, 'approveHotel'])->name('hotel.approve');
+
 Route::resource('hotel',HotelsController::class);
 Route::resource('category',CategoriesController::class);
 Route::resource('room',RoomsController::class);

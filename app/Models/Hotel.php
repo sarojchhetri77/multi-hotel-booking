@@ -24,4 +24,8 @@ class Hotel extends Model
      public function categories(){
         return $this->hasMany(Category::class,'hotel_id');
      }
+
+     public function user(){
+      return $this->belongsTo(User::class,'owner_id');
+     }
 }
