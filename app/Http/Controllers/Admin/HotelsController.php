@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Mail;
 class HotelsController extends Controller
 {
     protected $hotelService;
-   public function __construct(HotelService $hotelService)
-   {
-      $this->hotelService = $hotelService;
-   }
+    public function __construct(HotelService $hotelService)
+    {
+        $this->hotelService = $hotelService;
+    }
 
     /**
      * Display a listing of the resource.
@@ -25,7 +25,7 @@ class HotelsController extends Controller
     public function index()
     {
         $data['hotels'] = $this->hotelService->listHotels();
-        return view('backend.hotels.index',$data);
+        return view('backend.hotels.index', $data);
     }
 
     /**
@@ -41,21 +41,21 @@ class HotelsController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'name' => ['required','string','max:50'],
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:50'],
             // 'owner_id' => ['required','exits:users,id'],
-            'address' => ['required','string'],
-            'district' => ['required','string'],
-            'city' => ['required','string'],
-            'room_number' => ['required','integer'],
-            'street_no' => ['required','integer'],
+            'address' => ['required', 'string'],
+            'district' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'room_number' => ['required', 'integer'],
+            'street_no' => ['required', 'integer'],
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             Log::error('Validation failed', ['errors' => $validator->errors()->all()]);
-            return redirect()->back()->withErrors($validator->messages())->withInput()->with('error','Validation Error');
+            return redirect()->back()->withErrors($validator->messages())->withInput()->with('error', 'Validation Error');
         }
         $this->hotelService->requestHotel($validator->valid());
-        return redirect()->route('hotel.index')->with('success','Hotel is Created SUccessfully');
+        return redirect()->route('hotel.index')->with('success', 'Hotel is Created SUccessfully');
     }
 
     /**
@@ -64,7 +64,7 @@ class HotelsController extends Controller
     public function show(string $id)
     {
         $data['hotel'] = Hotel::findOrFail($id);
-        return view('backend.hotels.show',$data);
+        return view('backend.hotels.show', $data);
     }
 
     /**
@@ -73,7 +73,7 @@ class HotelsController extends Controller
     public function edit(string $id)
     {
         $data['hotel'] = $this->hotelService->getHotelDetailsById($id);
-        return view('backend.hotels.edit',$data);
+        return view('backend.hotels.edit', $data);
     }
 
     /**
@@ -81,21 +81,21 @@ class HotelsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator = Validator::make($request->all(),[
-            'name' => ['required','string','max:50'],
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:50'],
             // 'owner_id' => ['required','exits:users,id'],
-            'address' => ['required','string'],
-            'district' => ['required','string'],
-            'city' => ['required','string'],
-            'total_room' => ['required','integer'],
-            'street_num' => ['required','integer'],
+            'address' => ['required', 'string'],
+            'district' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'total_room' => ['required', 'integer'],
+            'street_num' => ['required', 'integer'],
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             Log::error('Validation failed', ['errors' => $validator->errors()->all()]);
-            return redirect()->back()->withErrors($validator->messages())->withInput()->with('error','Validation Error');
+            return redirect()->back()->withErrors($validator->messages())->withInput()->with('error', 'Validation Error');
         }
-        $this->hotelService->requestHotel($validator->valid(),$id);
-        return redirect()->route('hotel.index')->with('success','Hotel Update SUccessfully');
+        $this->hotelService->requestHotel($validator->valid(), $id);
+        return redirect()->route('hotel.index')->with('success', 'Hotel Update SUccessfully');
     }
 
     /**
@@ -104,11 +104,11 @@ class HotelsController extends Controller
     public function destroy(string $id)
     {
         $hotel = $this->findOrFail($id);
-        if($hotel){
+        if ($hotel) {
             $hotel->delete();
-            return redirect()->route('hotel.index')->with('success','Hotel Update Successfully');
+            return redirect()->route('hotel.index')->with('success', 'Hotel Update Successfully');
         }
-        return redirect()->route('hotel.index')->with('error','Delete failed!');
+        return redirect()->route('hotel.index')->with('error', 'Delete failed!');
     }
 
     public function updateHotelStatus(Hotel $hotel, $action)
@@ -122,24 +122,34 @@ class HotelsController extends Controller
                 return redirect()->route('hotel.index')->with('error', 'Invalid action');
         }
     }
-    
+
     protected function updateStatus($hotel, $status)
     {
         $hotel->status = $status;
+
         if ($hotel->save()) {
-            Mail::to($hotel->user->email)->send(new HotelApproveMail($hotel, $status));
+            $user = $hotel->user;
+            $user->role = config('constants.user_type.admin');
+            $user->save();
+            try {
+                Mail::to($user->email)->send(new HotelApproveMail($hotel, $status));
+            } catch (\Exception $e) {
+                return redirect()->route('hotel.index')->with('error', 'Status updated but failed to send email');
+            }
+
             return redirect()->route('hotel.index')->with('success', 'Status updated successfully');
         }
-    
+
         return redirect()->route('hotel.index')->with('error', 'Failed to update status');
     }
-    
 
-    public function updateRejectMessage(Request $request,$id){
-        $validator = Validator::make($request->all(),[
-           'reason' => ['required'],
+
+    public function updateRejectMessage(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'reason' => ['required'],
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->messages())->withInput();
         }
         $hotel = Hotel::findOrFail($id);
@@ -148,9 +158,6 @@ class HotelsController extends Controller
         $hotel->save();
         $status = $hotel->status;
         Mail::to($hotel->user->email)->send(new HotelApproveMail($hotel, $status));
-        return redirect()->route('hotel.index')->with('success','Hotel Reject Successfully');
-
+        return redirect()->route('hotel.index')->with('success', 'Hotel Reject Successfully');
     }
-
-
 }

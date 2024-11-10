@@ -8,7 +8,7 @@
             class="flex-column-fluid menu menu-sub-indention menu-column menu-rounded menu-active-bg mb-7">
             <div class="menu-item">
                 <a class="menu-link {{ Request::segment(0) === 'admin' || Request::segment(1) === 'home' ? 'active' : '' }}"
-                    href="{{ url('admin/home') }}">
+                    href="{{ url('home') }}">
                     <span class="menu-icon">
                         <i class="ki-duotone ki-element-11 fs-1">
                             <span class="path1"></span>
@@ -20,7 +20,8 @@
                     <span class="menu-title">Dashboard</span>
                 </a>
             </div>
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ Request::segment(1) === 'admin' &&Request::segment(2) === 'users' ? 'show' : '' }}">
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                @if (auth()->user()->role == config('constants.user_type.super_admin'))
                 <span class="menu-link {{ Request::segment(1) === 'admin' &&Request::segment(2) === 'users' ? 'active' : '' }}">
                     <span class="menu-icon">
                         <i class="ki-duotone ki-some-files fs-1">
@@ -60,6 +61,7 @@
                         </div>
                     </div>
                 </div>
+              
                 {{-- ==========for discussion forum------------- --}}
                 {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
@@ -124,6 +126,7 @@
                         <span class="menu-title">Hotels</span>
                     </a>
                 </div>
+                @endif
                 <div class="menu-item">
                     <a class="menu-link {{ Request::segment(1) === 'category' ? 'active' : '' }}"
                         href="{{ url('category') }}">

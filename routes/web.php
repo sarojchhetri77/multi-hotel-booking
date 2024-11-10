@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\HotelManageController;
 use App\Http\Controllers\Admin\HotelsController;
 use App\Http\Controllers\Admin\RoomsController;
 use Illuminate\Support\Facades\Auth;
@@ -22,8 +23,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-// to approve or reject  the hotel
-// Route::post('/hotel/approve/{id}', [HotelsController::class, 'approveHotel'])->name('hotel.approve');
+// to manage the hotel 
+Route::get('hotel/manage',[HotelManageController::class,'index'])->name('manage.hotel');
 
 Route::resource('hotel',HotelsController::class);
 Route::resource('category',CategoriesController::class);
