@@ -13,7 +13,23 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            
+            $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('room_number')->nullable();
+            $table->integer('capacity');
+            $table->integer('beds');
+            $table->string('bed_type')->nullable();
+            $table->decimal('price_per_night', 10, 2);
+            $table->boolean('available')->default(true);
+            $table->boolean('has_wifi')->default(false);
+            $table->boolean('has_air_conditioning')->default(false);
+            $table->boolean('has_tv')->default(false);
+            $table->boolean('has_bathroom')->default(false);
+            $table->string('room_view')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->enum('status', config('constants.room_status'))->default(config('constants.room_status.available'));
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

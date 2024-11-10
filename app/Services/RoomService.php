@@ -30,4 +30,8 @@ class RoomService
     $data['slug'] = Str::slug($data['title'], '-');
     
    }
+
+   public function getRoomDetailsById($id,$params = []){   
+    return $this->room->where('id',$id)->first();
+}
 }

@@ -17,9 +17,15 @@ return [
     ],
 
     'hotel_status' => [
-      'unverified' => 'UNVERIFIED',
-      'verified' => 'VERIFIED',
-      'rejected' => 'REJECTED',
+        'unverified' => 'UNVERIFIED',
+        'verified' => 'VERIFIED',
+        'rejected' => 'REJECTED',
+    ],
+
+    'room_status' => [
+        'available' => 'AVAILABLE',
+        'booked' => 'BOOKED',
+        'under_maintenance' => 'UNDER_MAINTENANCE',
     ],
 
 ];
