@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CategoriesController extends Controller
@@ -21,7 +22,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $data['categories'] = $this->categoryService->listCategories();
+        $hotel_id = Auth::user()->hotel->id;
+        $data['categories'] = $this->categoryService->listCategories(['hotel_id'=>$hotel_id]);
         return view('backend.categories.index',$data);
     }
 
@@ -40,7 +42,7 @@ class CategoriesController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'title' => ['required','string'],
-            'hotel_id' => ['required','exits:hotels,id'],
+            // 'hotel_id' => ['required','exits:hotels,id'],
         ]);
         if($validator->fails()){
             return redirect()->back()->withErrors($validator->messages())->withInput()->with('error','Validation Error');

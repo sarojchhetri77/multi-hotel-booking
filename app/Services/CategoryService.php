@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Models\Hotel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class CategoryService
@@ -20,6 +21,9 @@ class CategoryService
         if(key_exists('status',$params)){
             $category->where('status',$params['status']);
         }
+        if(key_exists('hotel_id',$params)){
+            $category->where('hotel_id',$params['hotel_id']);
+        }
         if(key_exists('with',$params)){
             $category->with($params['with']);
         }
@@ -32,6 +36,7 @@ class CategoryService
 
     public function requestCategory($data,$id = null){
         $data['slug'] = Str::slug($data['title'], '-');
+        $data['hotel_id'] = Auth::user()->hotel->id;
        $category = $this->category->updateOrCreate(['id' => $id], $data);
        return $category;
     }

@@ -114,6 +114,7 @@
                     </div>
                 </div> --}}
                 {{-- ---------end of the discussion forum --------------- --}}
+               
                 <div class="menu-item">
                     <a class="menu-link {{ Request::segment(1) === 'hotel' ? 'active' : '' }}"
                         href="{{ url('hotel') }}">
@@ -127,6 +128,7 @@
                     </a>
                 </div>
                 @endif
+                @if (auth()->user()->role == config('constants.user_type.admin'))
                 <div class="menu-item">
                     <a class="menu-link {{ Request::segment(1) === 'category' ? 'active' : '' }}"
                         href="{{ url('category') }}">
@@ -151,6 +153,7 @@
                         <span class="menu-title">Rooms</span>
                     </a>
                 </div>
+                @endif
                 
             </div>
         </div>

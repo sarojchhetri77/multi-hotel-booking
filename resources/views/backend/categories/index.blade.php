@@ -53,7 +53,6 @@
                                 <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
                                     <th class="w-10px pe-2">S.N</th>
                                     <th class="min-w-125px">Title</th>
-                                    <th class="min-w-125px">Status</th>
                                     <th class="text-end min-w-100px">Actions</th>
                                 </tr>
                             </thead>
@@ -64,23 +63,6 @@
                                         <td class="d-flex align-items-center">
                                             <p class="text-gray-800 text-hover-primary mb-1">{{ $category->title }}
                                             </p>
-                                        </td>
-                                        <td>
-                                            @switch($category->status)
-                                                @case(config('constants.status.active'))
-                                                    <div class="badge badge-light-success fw-bold">
-                                                        {{ config('constants.status.active') }}</div>
-                                                @break
-
-                                                @case(config('constants.status.inactive'))
-                                                    <div class="badge badge-light-danger fw-bold">
-                                                        {{ config('constants.status.inactive') }}</div>
-                                                @break
-
-                                                @default
-                                                    <div class="badge badge-light-danger fw-bold">
-                                                        {{ config('constants.status.inactive') }}</div>
-                                            @endswitch
                                         </td>
                                         <td class="text-end">
                                             <a href="#"

@@ -31,10 +31,27 @@
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="card">
                     <div class="card-header border-0 pt-6">
-                        
+                          <h2>Manage {{$hotel->name}}</h2>
                     </div>
                     <div class="card-body py-4">
-                     
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12" >
+                                        <a href="">
+                                            <div style="height: 100px" class="bg-primary shadow-sm">
+                                                <p>Category</p>
+                                            </div>
+                                         </a>
+                                 </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-12" >
+                                        <a href="">
+                                            <div style="height: 100px" class="bg-secondary shadow-sm">
+                                                <p>Rooms</p>
+                                            </div>
+                                         </a>
+                                 </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
