@@ -45,7 +45,7 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-6  mb-7">
-                                    <label class="col-lg-4 fw-semibold text-muted required">Name</label>
+                                    <label class="col-lg-4 fw-semibold text-muted required">Title</label>
                                     <div class="col-lg-12">
                                         <input type="text" name="name"
                                             class="form-control mb-lg-0 @error('name') is-invalid @enderror"
@@ -58,12 +58,39 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6  mb-7">
-                                    <label class="col-lg-4 fw-semibold text-muted required">Address</label>
+                                    <label class="col-lg-4 fw-semibold text-muted required">Category</label>
+                                    <div class="col-lg-10">
+                                        <select name="category_id" id="category" class="form-select form-select-sm form-select-solid @error('category_id') is-invalid @enderror" data-control="select2" data-close-on-select="true" data-placeholder="Select an option" data-allow-clear="true">
+                                            <option></option>
+                                            @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}" {{old('category_id') == $category->id ? 'selected' : ''}}>{{ $category->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('category_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6  mb-7">
+                                    <label class="col-lg-4 fw-semibold text-muted required">Thumbnail</label>
+                                    <div class="col-lg-10">
+                                        <input type="file" name="thumbnail" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('thumbnail') is-invalid @enderror" placeholder="Choose Icon" value="{{ old('thumbnail') }}" />
+                                        @error('thumbnail')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6  mb-7">
+                                    <label class="col-lg-4 fw-semibold text-muted required">Capacity</label>
                                     <div class="col-lg-12">
-                                        <input type="text" name="address"
-                                            class="form-control mb-lg-0 @error('address') is-invalid @enderror"
-                                            placeholder="Enter Title" value="{{ old('address') }}" />
-                                        @error('address')
+                                        <input type="number" name="capacity"
+                                            class="form-control mb-lg-0 @error('capacity') is-invalid @enderror"
+                                            placeholder="Enter Title" value="{{ old('capacity') }}" />
+                                        @error('capacity')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -71,46 +98,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6  mb-7">
-                                    <label class="col-lg-4 fw-semibold text-muted required">District</label>
-                                    <div class="col-lg-12">
-                                        <input type="text" name="district"
-                                            class="form-control mb-lg-0 @error('district') is-invalid @enderror"
-                                            placeholder="Enter Title" value="{{ old('district') }}" />
-                                        @error('district')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6  mb-7">
-                                    <label class="col-lg-4 fw-semibold text-muted required">City</label>
-                                    <div class="col-lg-12">
-                                        <input type="text" name="city"
-                                            class="form-control mb-lg-0 @error('city') is-invalid @enderror"
-                                            placeholder="Enter Title" value="{{ old('city') }}" />
-                                        @error('city')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6  mb-7">
-                                    <label class="col-lg-4 fw-semibold text-muted required">Street No</label>
-                                    <div class="col-lg-12">
-                                        <input type="number" name="street_no"
-                                            class="form-control mb-lg-0 @error('street_no') is-invalid @enderror"
-                                            placeholder="Enter Title" value="{{ old('street_no') }}" />
-                                        @error('street_no')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6  mb-7">
-                                    <label class="col-lg-4 fw-semibold text-muted required">Total Rooms</label>
+                                    <label class="col-lg-4 fw-semibold text-muted required">Room Number</label>
                                     <div class="col-lg-12">
                                         <input type="number" name="room_number"
                                             class="form-control mb-lg-0 @error('room_number') is-invalid @enderror"
@@ -123,20 +111,59 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6  mb-7">
-                                    <label class="col-lg-4 fw-semibold text-muted required">Thumbnail</label>
+                                    <label class="col-lg-4 fw-semibold text-muted required">Total Beds</label>
                                     <div class="col-lg-12">
-                                        <input type="file" name="thumbnail"
-                                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('thumbnail') is-invalid @enderror"
-                                            placeholder="Choose Icon" value="{{ old('thumbnail') }}" accept="image/*"/>
-                                        @error('thumbnail')
+                                        <input type="number" name="beds"
+                                            class="form-control mb-lg-0 @error('beds') is-invalid @enderror"
+                                            placeholder="Enter Title" value="{{ old('beds') }}" />
+                                        @error('beds')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-12  mb-7">
-                                    <label class="col-lg-4 fw-semibold text-muted"> Hotel Description</label>
+                                <div class="col-md-6  mb-7">
+                                    <label class="col-lg-4 fw-semibold text-muted required">Bed Type</label>
+                                    <div class="col-lg-12">
+                                        <input type="text" name="bed_type"
+                                            class="form-control mb-lg-0 @error('bed_type') is-invalid @enderror"
+                                            placeholder="Enter Title" value="{{ old('bed_type') }}" />
+                                        @error('bed_type')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6  mb-7">
+                                    <label class="col-lg-4 fw-semibold text-muted required">Price Per Night</label>
+                                    <div class="col-lg-12">
+                                        <input type="number" name="price_per_night"
+                                            class="form-control mb-lg-0 @error('price_per_night') is-invalid @enderror"
+                                            placeholder="Enter Title" value="{{ old('price_per_night') }}" />
+                                        @error('price_per_night')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6  mb-7">
+                                    <label class="col-lg-4 fw-semibold text-muted required">Room View</label>
+                                    <div class="col-lg-12">
+                                        <input type="text" name="room_view"
+                                            class="form-control mb-lg-0 @error('room_view') is-invalid @enderror"
+                                            placeholder="Enter Title" value="{{ old('room_view') }}" />
+                                        @error('room_view')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12  mb-7">
+                                    <label class="col-lg-4 fw-semibold text-muted"> Room Description</label>
                                     <div class="col-lg-12">
                                         <textarea name="description"  id="description"
                                             class="form-control form-control-lg ckeditor-editor  @error('description') is-invalid @endif">{{old('description')}}</textarea>
@@ -146,7 +173,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div> --}}
+                                </div>
                                 <div class="col-md-12 mb-7">
                                         <input type="submit" class="btn btn-success" value="Submit">
                                     </div>

@@ -54,7 +54,7 @@
                                     <th class="w-10px pe-2">S.N</th>
                                     <th class="min-w-125px">Title</th>
                                     <th class="min-w-125px">Thumbnail</th>
-                                    <th class="min-w-125px">Status</th>
+                                    {{-- <th class="min-w-125px">Status</th> --}}
                                     <th class="text-end min-w-100px">Actions</th>
                                 </tr>
                             </thead>
@@ -83,9 +83,6 @@
                                                     <a href="{{route('room.show',$room->id)}}" class="menu-link px-3">View</a>
                                                 </div>
                                                 <div class="menu-item px-3">
-                                                    <a href="{{ route('room.status', [$room->id, 'verified']) }}" class="menu-link px-3">Verify</a>
-                                                </div>
-                                                <div class="menu-item px-3">
                                                     <a href="" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#rejectModel_{{$room->id}}">Rejected</a>
                                                     {{-- <a href="{{ route('room.status', [$room->id, 'rejected']) }}" class="menu-link px-3">Rejected</a> --}}
                                                 </div>
@@ -99,29 +96,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" id="rejectModel_{{$room->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="rejectModelLabel_{{$room->id}}">Write reason to reject this room</h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <form action="{{route('room.reject',$room->id)}}" method="post">
-                                                @csrf
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="reject" class="form-label">Reason</label>
-                                                    <textarea class="form-control" name="reason" id="reject" rows="3"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                              <button type="submit" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </form>
-                                          </div>
-                                        </div>
-                                    </div>
                                 @endforeach
                             </tbody>
                         </table>

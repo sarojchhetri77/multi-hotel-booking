@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Services\RoomService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class RoomsController extends Controller
 {
@@ -31,7 +32,7 @@ class RoomsController extends Controller
     public function create()
     { 
         $hotel_id = Auth::user()->hotel->id;
-        $data['category'] = Category::where('hotel_id',$hotel_id)->first();
+        $data['categories'] = Category::where('hotel_id',$hotel_id)->get();
         return view('backend.rooms.create',$data);
     }
 
@@ -40,7 +41,27 @@ class RoomsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => ['required','string','max:255'],
+            'category_id' => ['required'],
+            'thumbnail' => ['required','image','mimes:png,jpg,jpeg'],
+            'capacity' => ['required'],
+            'description' => ['required'],
+            'room_number' => ['required'],
+            'beds' => ['required'],
+            'bed_type' => ['nullable'],
+            'price_per_night' => ['required'],
+            'has_wifi' => ['nullable'],
+            'has_air_conditioning' => ['nullable'],
+            'has_tv' => ['nullable'],
+            'has_bathroom' => ['nullable'],
+            'room_view' => ['nullable'],
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->messages())->withInput()->with('error', 'Validation Error');
+        }
+        $store = $this->roomService->requestRoom($validator->valid());
+        return redirect()->route('room.index')->with('success','Room created successfylly');
     }
 
     /**

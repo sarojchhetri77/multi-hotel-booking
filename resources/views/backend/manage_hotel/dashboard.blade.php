@@ -37,14 +37,14 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 col-sm-6 col-12" >
-                                        <a href="">
+                                        <a href="{{url('category')}}">
                                             <div style="height: 100px" class="bg-primary shadow-sm">
                                                 <p>Category</p>
                                             </div>
                                          </a>
                                  </div>
                                 <div class="col-lg-4 col-md-4 col-sm-6 col-12" >
-                                        <a href="">
+                                        <a href="{{url('room')}}">
                                             <div style="height: 100px" class="bg-secondary shadow-sm">
                                                 <p>Rooms</p>
                                             </div>
