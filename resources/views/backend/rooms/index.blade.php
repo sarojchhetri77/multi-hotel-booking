@@ -83,10 +83,6 @@
                                                     <a href="{{route('room.show',$room->id)}}" class="menu-link px-3">View</a>
                                                 </div>
                                                 <div class="menu-item px-3">
-                                                    <a href="" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#rejectModel_{{$room->id}}">Rejected</a>
-                                                    {{-- <a href="{{ route('room.status', [$room->id, 'rejected']) }}" class="menu-link px-3">Rejected</a> --}}
-                                                </div>
-                                                <div class="menu-item px-3">
                                                     <form action="{{route('room.destroy',$room->id)}}" method="post">
                                                         @csrf
                                                         @method('delete')

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\HotelManageController;
 use App\Http\Controllers\Admin\HotelsController;
 use App\Http\Controllers\Admin\RoomsController;
+use App\Http\Controllers\Frontend\HomesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,10 +19,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/',[HomesController::class,'index']);
 Auth::routes();
 // to manage the hotel 
 Route::get('hotel/manage',[HotelManageController::class,'index'])->name('manage.hotel');
