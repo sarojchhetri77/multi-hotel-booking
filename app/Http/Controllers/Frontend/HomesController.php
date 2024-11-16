@@ -19,6 +19,6 @@ class HomesController extends Controller
     public function index(){
        $data['categories'] = $this->categoryService->listCategories();
        $data['hotels'] = $this->hotelService->listHotels(['status'=>config('constants.hotel_status.verified')]);
-       return view('index',$data);
+       return view('frontend.index',$data);
     }
 }
