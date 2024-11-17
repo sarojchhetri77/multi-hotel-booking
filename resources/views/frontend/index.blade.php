@@ -180,7 +180,7 @@
             <div class="row gx-0">
                 <div class="col-lg-3 bg-dark d-none d-lg-block">
                     <a href="index.html" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
-                        <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
+                        <h1 class="m-0 text-light text-uppercase">Rommix</h1>
                     </a>
                 </div>
                 <div class="col-lg-9">
@@ -207,7 +207,7 @@
                     </div> --}}
                     <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
                         <a href="index.html" class="navbar-brand d-block d-lg-none">
-                            <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
+                            <h1 class="m-0 text-primary text-uppercase">Rommix</h1>
                         </a>
                         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                             <span class="navbar-toggler-icon"></span>
@@ -247,41 +247,16 @@
 
         <!-- Carousel Start -->
         <div class="container-fluid p-0 mb-5">
-            <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="w-100" src="{{asset('frontend/img/carousel-1.jpg')}}" alt="Image">
-                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                            <div class="p-3" style="max-width: 700px;">
-                                <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Luxury Living</h6>
-                                <h1 class="display-3 text-white mb-4 animated slideInDown">Discover A Brand Luxurious Hotel</h1>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Rooms</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Room</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100" src="{{asset('frontend/img/carousel-2.jpg')}}" alt="Image">
-                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                            <div class="p-3" style="max-width: 700px;">
-                                <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Luxury Living</h6>
-                                <h1 class="display-3 text-white mb-4 animated slideInDown">Discover A Brand Luxurious Hotel</h1>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Rooms</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Room</a>
-                            </div>
-                        </div>
+            <div class="d-flex flex-column align-items-center justify-content-center" style="position: relative; height: 100vh;">
+                <img class="w-100" src="{{asset('frontend/img/carousel-1.jpg')}}" alt="Image" style="object-fit: cover; height: 100vh;">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5);">
+                    <div class="p-3" style="max-width: 700px;">
+                        <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Unmatched Comfort Awaits</h6>
+                        <h1 class="display-3 text-white mb-4 animated slideInDown">Book Your Stay at Exclusive Hotels</h1>
+                        <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Hotels</a>
+                        <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Hotel</a>
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#header-carousel"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
         </div>
         <!-- Carousel End -->
@@ -295,6 +270,11 @@
                         <div class="col-md-10">
                             <div class="row g-2">
                                 <div class="col-md-3">
+                                    <div class="location" id="" data-target-input="">
+                                        <input type="text" class="form-control " placeholder="Location" data-target="" data-toggle=""/>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="date" id="date1" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input"
                                             placeholder="Check in" data-target="#date1" data-toggle="datetimepicker" />
@@ -306,21 +286,29 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <select class="form-select">
-                                        <option selected>Adult</option>
-                                        <option value="1">Adult 1</option>
-                                        <option value="2">Adult 2</option>
-                                        <option value="3">Adult 3</option>
-                                    </select>
+                                    <div class="guest-dropdown" style="position: relative;">
+                                        <!-- Input field -->
+                                        <input type="text" class="form-control" id="guest-input" placeholder="Select Guests" readonly>
+                                        
+                                        <!-- Dropdown -->
+                                        <div id="guest-dropdown-menu" style="display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #ddd; width: 100%; padding: 10px; z-index: 1000;">
+                                            <div class="form-group">
+                                                <label for="adults">Adults:</label>
+                                                <input type="number" id="adults" name="adults" class="form-control" value="1" min="1">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="children">Children:</label>
+                                                <input type="number" id="children" name="children" class="form-control" value="0" min="0">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="rooms">Rooms:</label>
+                                                <input type="number" id="rooms" name="rooms" class="form-control" value="1" min="1">
+                                            </div>
+                                            <button type="button" id="apply-guest-selection" class="btn btn-primary btn-sm mt-2">Apply</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <select class="form-select">
-                                        <option selected>Child</option>
-                                        <option value="1">Child 1</option>
-                                        <option value="2">Child 2</option>
-                                        <option value="3">Child 3</option>
-                                    </select>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -339,8 +327,8 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">
                         <h6 class="section-title text-start text-primary text-uppercase">About Us</h6>
-                        <h1 class="mb-4">Welcome to <span class="text-primary text-uppercase">Hotelier</span></h1>
-                        <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                        <h1 class="mb-4">Welcome to <span class="text-primary text-uppercase">Roomix</span></h1>
+                        <p class="mb-4">Welcome to Roomix, your trusted platform for easy and hassle-free hotel booking! We offer a wide selection of hotels, each managed by its own dedicated team. Our goal is to provide travelers with top-notch services and accommodations that meet their needs. Whether you're planning a weekend getaway or a business trip, Roomix ensures a seamless booking experience, with the added benefit of being able to book directly with hotel admins for a personalized touch. Discover the best in comfort and convenience, all in one place at Roomix.</p>
                         <div class="row g-3 pb-4">
                             <div class="col-sm-4 wow fadeIn" data-wow-delay="0.1s">
                                 <div class="border rounded p-1">
@@ -448,7 +436,7 @@
 
 
         <!-- Video Start -->
-        <div class="container-xxl py-5 px-0 wow zoomIn" data-wow-delay="0.1s">
+        {{-- <div class="container-xxl py-5 px-0 wow zoomIn" data-wow-delay="0.1s">
             <div class="row g-0">
                 <div class="col-md-6 bg-dark d-flex align-items-center">
                     <div class="p-5">
@@ -459,15 +447,15 @@
                         <a href="" class="btn btn-light py-md-3 px-md-5">Book A Room</a>
                     </div>
                 </div>
-                {{-- <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="video">
                         <button type="button" class="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-bs-target="#videoModal">
                             <span></span>
                         </button>
                     </div>
-                </div> --}}
+                </div>
             </div>
-        </div>
+        </div> --}}
 
         {{-- <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -797,6 +785,38 @@
 
     <!-- Template Javascript -->
     <script src="{{asset('frontend/js/main.js')}}"></script>
+    <script>
+        <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const guestInput = document.getElementById('guest-input');
+        const dropdownMenu = document.getElementById('guest-dropdown-menu');
+        const applyButton = document.getElementById('apply-guest-selection');
+        
+        // Show/Hide dropdown
+        guestInput.addEventListener('click', () => {
+            dropdownMenu.style.display = dropdownMenu.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!dropdownMenu.contains(event.target) && event.target !== guestInput) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+
+        // Apply selection
+        applyButton.addEventListener('click', () => {
+            const adults = document.getElementById('adults').value;
+            const children = document.getElementById('children').value;
+            const rooms = document.getElementById('rooms').value;
+
+            guestInput.value = `${adults} Adults, ${children} Children, ${rooms} Rooms`;
+            dropdownMenu.style.display = 'none';
+        });
+    });
+</script>
+
+    </script>
 </body>
 
 </html>
