@@ -248,7 +248,7 @@
         <!-- Carousel Start -->
         <div class="container-fluid p-0 mb-5">
             <div class="d-flex flex-column align-items-center justify-content-center" style="position: relative; height: 100vh;">
-                <img class="w-100" src="{{asset('frontend/img/carousel-1.jpg')}}" alt="Image" style="object-fit: cover; height: 100vh;">
+                <img class="w-100" src="{{asset('frontend/img/carosel5.jpeg')}}" alt="Image" style="object-fit: cover; height: 100vh;">
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5);">
                     <div class="p-3" style="max-width: 700px;">
                         <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Unmatched Comfort Awaits</h6>
@@ -785,7 +785,6 @@
 
     <!-- Template Javascript -->
     <script src="{{asset('frontend/js/main.js')}}"></script>
-    <script>
         <script>
     document.addEventListener('DOMContentLoaded', () => {
         const guestInput = document.getElementById('guest-input');
@@ -816,7 +815,6 @@
     });
 </script>
 
-    </script>
 </body>
 
 </html>
