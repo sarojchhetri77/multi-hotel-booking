@@ -8,17 +8,25 @@ use App\Services\HotelService;
 use Illuminate\Http\Request;
 
 class HomesController extends Controller
-{ 
+{
     protected $categoryService;
     protected $hotelService;
-    public function __construct(CategoryService $categoryService,HotelService $hotelService)
+    public function __construct(CategoryService $categoryService, HotelService $hotelService)
     {
         $this->categoryService = $categoryService;
         $this->hotelService = $hotelService;
     }
-    public function index(){
-       $data['categories'] = $this->categoryService->listCategories();
-       $data['hotels'] = $this->hotelService->listHotels(['status'=>config('constants.hotel_status.verified')]);
-       return view('frontend.index',$data);
+    public function index()
+    {
+        $data['categories'] = $this->categoryService->listCategories();
+        $data['hotels'] = $this->hotelService->listHotels(['status' => config('constants.hotel_status.verified')]);
+        return view('frontend.index', $data);
+    }
+
+    public function listHotels()
+    {
+        $data['categories'] = $this->categoryService->listCategories();
+        $data['hotels'] = $this->hotelService->listHotels(['status' => config('constants.hotel_status.verified')]);
+        return view('frontend.booking.hotelList',$data);
     }
 }

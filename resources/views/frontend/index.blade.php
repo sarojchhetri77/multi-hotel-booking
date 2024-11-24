@@ -253,7 +253,7 @@
                     <div class="p-3" style="max-width: 700px;">
                         <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Unmatched Comfort Awaits</h6>
                         <h1 class="display-3 text-white mb-4 animated slideInDown">Book Your Stay at Exclusive Hotels</h1>
-                        <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Hotels</a>
+                        <a href="{{url('hotel/list')}}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Hotels</a>
                         <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Hotel</a>
                     </div>
                 </div>
@@ -701,14 +701,6 @@
         <div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s">
             <div class="container pb-5">
                 <div class="row g-5">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="bg-primary rounded p-4">
-                            <a href="index.html"><h1 class="text-white text-uppercase mb-3">Hotelier</h1></a>
-                            <p class="text-white mb-0">
-								Download <a class="text-dark fw-medium" href="https://htmlcodex.com/hotel-html-template-pro">Hotelier – Premium Version</a>, build a professional website for your hotel business and grab the attention of new visitors upon your site’s launch.
-							</p>
-                        </div>
-                    </div>
                     <div class="col-md-6 col-lg-3">
                         <h6 class="section-title text-start text-primary text-uppercase mb-4">Contact</h6>
                         <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>

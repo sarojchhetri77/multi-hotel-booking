@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::get('/',[HomesController::class,'index'])->name('frontend.home');
+Route::get('hotel/list',[HomesController::class,'listHotels'])->name('hotel.list');
 Auth::routes();
 // to manage the hotel 
 Route::get('hotel/manage',[HotelManageController::class,'index'])->name('manage.hotel');
