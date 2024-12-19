@@ -266,55 +266,57 @@
         <div class="container-fluid booking pb-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container">
                 <div class="bg-white shadow" style="padding: 35px;">
+                    <form action="{{route('hotel.list')}}">
                     <div class="row g-2">
-                        <div class="col-md-10">
-                            <div class="row g-2">
-                                <div class="col-md-3">
-                                    <div class="location" id="" data-target-input="">
-                                        <input type="text" class="form-control " placeholder="Location" data-target="" data-toggle=""/>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="date" id="date1" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"
-                                            placeholder="Check in" data-target="#date1" data-toggle="datetimepicker" />
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="date" id="date2" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="guest-dropdown" style="position: relative;">
-                                        <!-- Input field -->
-                                        <input type="text" class="form-control" id="guest-input" placeholder="Select Guests" readonly>
-                                        
-                                        <!-- Dropdown -->
-                                        <div id="guest-dropdown-menu" style="display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #ddd; width: 100%; padding: 10px; z-index: 1000;">
-                                            <div class="form-group">
-                                                <label for="adults">Adults:</label>
-                                                <input type="number" id="adults" name="adults" class="form-control" value="1" min="1">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="children">Children:</label>
-                                                <input type="number" id="children" name="children" class="form-control" value="0" min="0">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="rooms">Rooms:</label>
-                                                <input type="number" id="rooms" name="rooms" class="form-control" value="1" min="1">
-                                            </div>
-                                            <button type="button" id="apply-guest-selection" class="btn btn-primary btn-sm mt-2">Apply</button>
+                            <div class="col-md-10">
+                                <div class="row g-2">
+                                    <div class="col-md-3">
+                                        <div class="location" id="" data-target-input="">
+                                            <input type="text" name="location" class="form-control " placeholder="Location" data-target="" data-toggle=""/>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="date" id="date1" data-target-input="nearest">
+                                            <input type="text" class="form-control datetimepicker-input"
+                                                placeholder="Check in" name="checkin" data-target="#date1" data-toggle="datetimepicker" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="date" id="date2" data-target-input="nearest">
+                                            <input type="text" name="checkout" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="guest-dropdown" style="position: relative;">
+                                            <!-- Input field -->
+                                            <input type="text" class="form-control" id="guest-input" placeholder="Select Guests" readonly>
+                                            
+                                            <!-- Dropdown -->
+                                            <div id="guest-dropdown-menu" style="display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #ddd; width: 100%; padding: 10px; z-index: 1000;">
+                                                <div class="form-group">
+                                                    <label for="adults">Adults:</label>
+                                                    <input type="number" id="adults" name="adults" class="form-control" value="1" min="1">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="children">Children:</label>
+                                                    <input type="number" id="children" name="children" class="form-control" value="0" min="0">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="rooms">Rooms:</label>
+                                                    <input type="number" id="rooms" name="rooms" class="form-control" value="1" min="1">
+                                                </div>
+                                                <button type="button" id="apply-guest-selection" class="btn btn-primary btn-sm mt-2">Apply</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
-                                
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary w-100">Submit</button>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary w-100">Submit</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -322,7 +324,7 @@
 
 
         <!-- About Start -->
-        <div class="container-xxl py-5">
+        {{-- <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">
@@ -378,7 +380,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- About End -->
 
 
@@ -422,7 +424,7 @@
                                 </div>
                                 {{-- <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p> --}}
                                 <div class="d-flex justify-content-between">
-                                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="">View Detail</a>
+                                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="{{route('hotel.detail',$hotel->slug)}}" target="_blank">View Detail</a>
                                     <a class="btn btn-sm btn-dark rounded py-2 px-4" href="">Book Now</a>
                                 </div>
                             </div>
@@ -478,7 +480,7 @@
 
 
         <!-- Service Start -->
-        <div class="container-xxl py-5">
+        {{-- <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                     <h6 class="section-title text-center text-primary text-uppercase">Our Services</h6>
@@ -553,12 +555,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Service End -->
 
 
         <!-- Testimonial Start -->
-        <div class="container-xxl testimonial my-5 py-5 bg-dark wow zoomIn" data-wow-delay="0.1s">
+        {{-- <div class="container-xxl testimonial my-5 py-5 bg-dark wow zoomIn" data-wow-delay="0.1s">
             <div class="container">
                 <div class="owl-carousel testimonial-carousel py-5">
                     <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
@@ -596,12 +598,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Testimonial End -->
 
 
         <!-- Team Start -->
-        <div class="container-xxl py-5">
+        {{-- <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                     <h6 class="section-title text-center text-primary text-uppercase">Our Team</h6>
@@ -674,7 +676,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Team End -->
 
 

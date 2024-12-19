@@ -102,30 +102,30 @@
                                 <div class="row g-2">
                                     <div class="col-md-3">
                                         <div class="location" id="" data-target-input="">
-                                            <input type="text" class="form-control " placeholder="Location" data-target="" data-toggle=""/>
+                                            <input type="text" class="form-control " value="{{ old('location', $location) }}" placeholder="Location" data-target="" data-toggle=""/>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="date" id="date1" data-target-input="nearest">
                                             <input type="text" class="form-control datetimepicker-input"
-                                                placeholder="Check in" data-target="#date1" data-toggle="datetimepicker" />
+                                                placeholder="Check in" value="{{ old('checkin', $checkin) }}" data-target="#date1" data-toggle="datetimepicker" />
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="date" id="date2" data-target-input="nearest">
-                                            <input type="text" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker"/>
+                                            <input type="text" value="{{ old('checkout', $checkout) }}" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker"/>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="guest-dropdown" style="position: relative;">
                                             <!-- Input field -->
-                                            <input type="text" class="form-control" id="guest-input" placeholder="Select Guests" readonly>
+                                            <input type="text" class="form-control" value="" id="guest-input" placeholder="Select Guests" readonly>
                                             
                                             <!-- Dropdown -->
                                             <div id="guest-dropdown-menu" style="display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #ddd; width: 100%; padding: 10px; z-index: 1000;">
                                                 <div class="form-group">
                                                     <label for="adults">Adults:</label>
-                                                    <input type="number" id="adults" name="adults" class="form-control" value="1" min="1">
+                                                    <input type="number" id="adults" name="adults" class="form-control" value="{{ old('adults', $adults) }} min="1">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="children">Children:</label>
@@ -209,47 +209,6 @@
         </div>
         <!-- Room End -->
 
-
-        <!-- Video Start -->
-        {{-- <div class="container-xxl py-5 px-0 wow zoomIn" data-wow-delay="0.1s">
-            <div class="row g-0">
-                <div class="col-md-6 bg-dark d-flex align-items-center">
-                    <div class="p-5">
-                        <h6 class="section-title text-start text-white text-uppercase mb-3">Luxury Living</h6>
-                        <h1 class="text-white mb-4">Discover A Brand Luxurious Hotel</h1>
-                        <p class="text-white mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                        <a href="" class="btn btn-primary py-md-3 px-md-5 me-3">Our Rooms</a>
-                        <a href="" class="btn btn-light py-md-3 px-md-5">Book A Room</a>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="video">
-                        <button type="button" class="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-bs-target="#videoModal">
-                            <span></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
-        {{-- <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- 16:9 aspect ratio -->
-                        <div class="ratio ratio-16x9">
-                            <iframe class="embed-responsive-item" src="" id="video" allowfullscreen allowscriptaccess="always"
-                                allow="autoplay"></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-        <!-- Video Start -->
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-light footer wow fadeIn mt-2" data-wow-delay="0.1s">
             <div class="container pb-5">
