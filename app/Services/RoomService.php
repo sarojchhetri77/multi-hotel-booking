@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\Category;
@@ -12,43 +13,62 @@ class RoomService
 {
     protected $room;
     protected $category;
-   public function __construct(Room $room,Category $category)
-   {
-     $this->room = $room;
-     $this->category = $category;
-   }
-
-   public function listRooms($params = []){
-    $rooms = $this->room->query();
-    if(key_exists('status',$params)){
-        $rooms->where('status',$params['status']);
+    public function __construct(Room $room, Category $category)
+    {
+        $this->room = $room;
+        $this->category = $category;
     }
-    if(key_exists('with',$params)){
-        $rooms->with($params['with']);
-    }
-    return $rooms->get();
-   }
 
-   public function requestRoom($data=[],$id = null){
-    $data['slug'] = Str::slug($data['name'], '-');
-    $data['hotel_id'] = Auth::user()->hotel->id;
-    if(key_exists('thumbnail',$data)){
-        if($data['thumbnail'] instanceof UploadedFile){
-            $thumbnailPath = $data['thumbnail']->store('uploads/rooms/thumbnails','public');
-            $thumbnailPath = Storage::url($thumbnailPath);
-            $data['thumbnail'] = $thumbnailPath;
-        } 
-        else{
-            unset($data['thumbnail']);
+    public function listRooms($params = [])
+    {
+        $rooms = $this->room->query();
+        if (key_exists('status', $params)) {
+            $rooms->where('status', $params['status']);
         }
+        if (key_exists('with', $params)) {
+            $rooms->with($params['with']);
+        }
+        return $rooms->get();
     }
 
-    $room = $this->room->updateOrCreate(['id' => $id],$data);
-    return $room;
-    
-   }
+    public function requestRoom($data = [], $id = null)
+    {
+        $data['slug'] = Str::slug($data['name'], '-');
+        $data['hotel_id'] = Auth::user()->hotel->id;
+        if (key_exists('thumbnail', $data)) {
+            if ($data['thumbnail'] instanceof UploadedFile) {
+                $thumbnailPath = $data['thumbnail']->store('uploads/rooms/thumbnails', 'public');
+                $thumbnailPath = Storage::url($thumbnailPath);
+                $data['thumbnail'] = $thumbnailPath;
+            } else {
+                unset($data['thumbnail']);
+            }
+        }
 
-   public function getRoomDetailsById($id,$params = []){   
-    return $this->room->where('id',$id)->first();
-}
+        $room = $this->room->updateOrCreate(['id' => $id], $data);
+        return $room;
+    }
+
+    public function getRoomDetailsById($id, $params = [])
+    {
+        $room = $this->room->query();
+        if (key_exists('status', $params)) {
+            $room->where('status', $params['status']);
+        }
+        if (key_exists('with', $params)) {
+            $room->with($params['with']);
+        }
+        return $room->where('id', $id)->first();
+    }
+    public function getRoomDetailsBySlug($slug, $params = [])
+    {
+        $room = $this->room->query();
+        if (key_exists('status', $params)) {
+            $room->where('status', $params['status']);
+        }
+        if (key_exists('with', $params)) {
+            $room->with($params['with']);
+        }
+        return $room->where('slug', $slug)->first();
+    }
 }
