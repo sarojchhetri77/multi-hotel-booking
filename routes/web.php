@@ -34,14 +34,29 @@ Route::get('user/dashboard',[UsersController::class,'index'])->name('user.dashbo
 
 Route::get('/hotel/{slug}/rooms',[RoomController::class,'index'])->name('hotelroom.list');
 Auth::routes();
-// to manage the hotel 
-Route::get('hotel/manage',[HotelManageController::class,'index'])->name('manage.hotel');
 
-Route::resource('hotel',HotelsController::class);
-Route::resource('category',CategoriesController::class);
-Route::resource('room',RoomsController::class);
+Route::middleware(['hotel_owner'])->group(function(){
+    // to manage the hotel 
+  Route::get('hotel/manage',[HotelManageController::class,'index'])->name('manage.hotel');
+  });
 
-Route::get('hotels/{hotel}/{status}', [HotelsController::class, 'updateHotelStatus'])->name('hotel.status');
-Route::post('hotels/reject/{id}', [HotelsController::class, 'updateRejectMessage'])->name('hotel.reject');
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+// Route for the normal user
+Route::middleware(['admin'])->group(function(){
+    Route::resource('hotel',HotelsController::class);
+    Route::resource('category',CategoriesController::class);
+    Route::resource('room',RoomsController::class);
+});
+
+// Route for the super admin
+Route::middleware(['super_admin'])->group(function(){
+    Route::get('hotels/{hotel}/{status}', [HotelsController::class, 'updateHotelStatus'])->name('hotel.status');
+    Route::post('hotels/reject/{id}', [HotelsController::class, 'updateRejectMessage'])->name('hotel.reject');
+});
+
+
