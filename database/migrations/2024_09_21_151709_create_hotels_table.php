@@ -17,7 +17,12 @@ return new class extends Migration
             $table->string('slug');
             $table->string('address');
             $table->string('district')->nullable();
+            $table->string('city')->nullable();
             $table->integer('street_no')->nullable();
+            $table->integer('room_number')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->enum('status', config('constants.hotel_status'))->default(config('constants.hotel_status.unverified'));
+            $table->text('reject_message')->nullable();
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

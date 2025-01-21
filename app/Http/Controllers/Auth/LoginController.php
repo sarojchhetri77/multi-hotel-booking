@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -36,5 +37,18 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {  
+        if($user->role == config('constants.user_type.super_admin')){
+            return redirect()->route('home')->with('success','Login Successfull');
+        }
+        if($user->role == config('constants.user_type.admin')){
+            return redirect()->route('manage.hotel')->with('success','Login Successfull');
+        }
+        if($user->role == config('constants.user_type.user')){
+            return redirect()->route('frontend.home')->with('success','Login Successfull');
+        }
     }
 }

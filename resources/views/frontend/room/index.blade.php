@@ -1,0 +1,165 @@
+@extends('frontend.hotel.layouts.layout')
+
+@section('main-content')
+
+        <!-- Page Header Start -->
+        <div class="container-fluid page-header mb-5 p-0" style="background-image: url('{{ asset('frontend/img/carousel-1.jpg') }}');">
+            <div class="container-fluid page-header-inner py-5">
+                <div class="container text-center pb-5">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Rooms</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Rooms</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Page Header End -->
+       <!-- Booking Start -->
+       <div class="container-fluid booking pb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="bg-white shadow" style="padding: 35px;">
+                <div class="row g-2">
+                    <div class="col-md-10">
+                        <div class="row g-2">
+                            <div class="col-md-3">
+                                <div class="date" id="date1" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input"
+                                        placeholder="Check in" data-target="#date1" data-toggle="datetimepicker" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="date" id="date2" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option selected>Adult</option>
+                                    <option value="1">Adult 1</option>
+                                    <option value="2">Adult 2</option>
+                                    <option value="3">Adult 3</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select">
+                                    <option selected>Child</option>
+                                    <option value="1">Child 1</option>
+                                    <option value="2">Child 2</option>
+                                    <option value="3">Child 3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Booking End -->
+
+
+    <!-- Room Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="section-title text-center text-primary text-uppercase">Our Rooms</h6>
+                <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Rooms</span></h1>
+            </div>
+            <form action="" method="POST">
+                @csrf
+                <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                <input type="hidden" name="hotel_id" value="{{ $hotel->id }}">
+                
+                <div class="row g-4">
+                    @foreach ($hotel->rooms as $room)
+                    <div class="col-lg-4 col-md-6 wow fadeInUp room-card" data-room-id="{{ $room->id }}" data-wow-delay="0.1s">
+                        <div class="room-item shadow rounded overflow-hidden border border-light">
+                            <div class="position-relative">
+                                <img class="img-fluid" src="{{ asset($room->thumbnail) }}" alt="">
+                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">${{ $room->price }}/Night</small>
+                            </div>
+                            <div class="p-4 mt-2">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <h5 class="mb-0">{{ $room->name }}</h5>
+                                    <div class="ps-2">
+                                        @for ($i = 0; $i < 5; $i++)
+                                            <small class="fa fa-star text-primary"></small>
+                                        @endfor
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>{{ $room->beds }} Bed</small>
+                                    <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>{{ $room->baths }} Bath</small>
+                                    <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+                                </div>
+                                <p class="text-body mb-3">{!! $room->description !!}</p>
+                                <div class="d-flex justify-content-between">
+                                    <a class="btn btn-sm btn-info rounded py-2 px-4" href="#">View Detail</a>
+                                    <button type="button" class="btn btn-sm btn-primary rounded py-2 px-4 select-room-btn">Select Room</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            
+                <!-- Hidden input field to store selected room IDs -->
+                <input type="hidden" name="selected_rooms" id="selected_rooms">
+            
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success btn-lg" id="proceed_booking" disabled>Proceed to Booking</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+    <!-- Room End -->
+    
+@endsection
+
+@section('extra-js')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let selectedRooms = [];
+
+        document.querySelectorAll('.select-room-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                let card = this.closest('.room-card');
+                let roomId = card.getAttribute('data-room-id');
+
+                if (selectedRooms.includes(roomId)) {
+                    // Deselect room
+                    selectedRooms = selectedRooms.filter(id => id !== roomId);
+                    card.classList.remove('border-primary');
+                    card.classList.add('border-light');
+                    this.textContent = "Select Room";
+                    this.classList.remove('btn-danger');
+                    this.classList.add('btn-primary');
+                } else {
+                    // Select room
+                    selectedRooms.push(roomId);
+                    card.classList.remove('border-light');
+                    card.classList.add('border-primary');
+                    this.textContent = "Deselect Room";
+                    this.classList.remove('btn-primary');
+                    this.classList.add('btn-danger');
+                }
+
+                // Update hidden input field
+                document.getElementById('selected_rooms').value = selectedRooms.join(',');
+
+                // Enable or disable the proceed button
+                document.getElementById('proceed_booking').disabled = selectedRooms.length === 0;
+            });
+        });
+    });
+</script>
+
+    
+@endsection
