@@ -55,7 +55,7 @@
                     <div class="nav-item dropdown" style="margin-right: 30px">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">User</a>
                         <div class="dropdown-menu rounded-0 me-5">
-                            <a href="booking.html" class="dropdown-item">Dashboard</a>
+                            <a href="{{route('user.dashboard')}}" class="dropdown-item">Dashboard</a>
                             <a href="team.html" class="dropdown-item">Our Team</a>
                             <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                         </div>
