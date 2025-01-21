@@ -71,5 +71,11 @@ class HotelService
         return $hotel->where('slug',$slug)->first();
     }
 
+    public function getHotelRoomBySlug($slug,$params=[]){
+        $hotel = $this->hotel->where('slug',$slug)->with('rooms')->first();
+        return $hotel;
+    
+    }
+
 
 }
