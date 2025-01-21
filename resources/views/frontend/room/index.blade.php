@@ -100,7 +100,7 @@
                                 </div>
                                 <p class="text-body mb-3">{!! $room->description !!}</p>
                                 <div class="d-flex justify-content-between">
-                                    <a class="btn btn-sm btn-info rounded py-2 px-4" href="#">View Detail</a>
+                                    <a class="btn btn-sm btn-info rounded py-2 px-4" href="{{route('room.details',$room->id)}}">View Detail</a>
                                     <button type="button" class="btn btn-sm btn-primary rounded py-2 px-4 select-room-btn">Select Room</button>
                                 </div>
                             </div>

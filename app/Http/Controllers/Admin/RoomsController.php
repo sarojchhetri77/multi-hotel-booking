@@ -56,6 +56,8 @@ class RoomsController extends Controller
             'has_tv' => ['nullable'],
             'has_bathroom' => ['nullable'],
             'room_view' => ['nullable'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'mimes:png,jpg,jpeg'],
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->messages())->withInput()->with('error', 'Validation Error');

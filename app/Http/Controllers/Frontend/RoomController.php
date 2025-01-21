@@ -22,4 +22,11 @@ class RoomController extends Controller
       $data['hotel'] = $this->hotelService->getHotelRoomBySlug($slug);
       return view('frontend.room.index',$data);
     }
+
+    public function roomDetails($id){
+        $room = $this->roomService->getRoomDetailsById($id,['with'=>['images']]);
+        $data['hotel'] = $room->hotel;
+        $data['room'] = $room;
+        return view('frontend.room.details',$data);
+    }
 }
