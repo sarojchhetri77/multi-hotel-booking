@@ -17,6 +17,7 @@ class HotelsController extends Controller
     public function __construct(HotelService $hotelService)
     {
         $this->hotelService = $hotelService;
+        // $this->middleware(['admin'])->only(['index']);
     }
 
     /**

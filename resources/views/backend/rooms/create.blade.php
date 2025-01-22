@@ -85,6 +85,17 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6  mb-7">
+                                    <label class="col-lg-4 fw-semibold text-muted required">Images</label>
+                                    <div class="col-lg-10">
+                                        <input type="file" name="images[]" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('images') is-invalid @enderror" multiple />
+                                        @error('images')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6  mb-7">
                                     <label class="col-lg-4 fw-semibold text-muted required">Capacity</label>
                                     <div class="col-lg-12">
                                         <input type="number" name="capacity"

@@ -27,4 +27,8 @@ class HotelController extends Controller
         $data['room'] = $this->roomService->getRoomDetailsById($slug,['with'=>'hotel']);
         return view('frontend.room.index',$data);
     }
+
+    public function userSelectedRooms(){
+        return view('frontend.userrooms.index');
+    }
 }

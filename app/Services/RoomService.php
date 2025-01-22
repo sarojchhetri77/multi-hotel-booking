@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Models\Room;
+use App\Models\RoomImage;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +14,12 @@ class RoomService
 {
     protected $room;
     protected $category;
-    public function __construct(Room $room, Category $category)
+    protected $roomImage;
+    public function __construct(Room $room, Category $category,RoomImage $roomImage)
     {
         $this->room = $room;
         $this->category = $category;
+        $this->roomImage = $roomImage;
     }
 
     public function listRooms($params = [])
@@ -46,6 +49,19 @@ class RoomService
         }
 
         $room = $this->room->updateOrCreate(['id' => $id], $data);
+
+        if (isset($data['images'])) {
+            $image = $this->roomImage->where('room_id',$room->id)->delete();
+            foreach ($data['images'] as $image) {
+                if ($image instanceof UploadedFile) {
+                    $path = $image->store('uploads/room/images', 'public');
+                    $this->roomImage::create([
+                        'room_id' => $room->id ?? $id,
+                        'url' => Storage::url($path)
+                    ]);
+                }
+            }
+        }
         return $room;
     }
 
