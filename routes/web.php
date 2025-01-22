@@ -31,11 +31,16 @@ Route::get('hotels/{slug}', [HotelController::class, 'hotelDetail'])->name('hote
 Route::get('user/select/room', [HotelController::class, 'userSelectedRooms'])->name('userselect.room');
 // Route::get('{hotelSlug}/rooms/{slug}', [HotelController::class, 'roomDetail'])->name('room.detail');
 
-Route::get('user/dashboard', [UsersController::class, 'index'])->name('user.dashboard');
+
 
 Route::get('/hotel/{slug}/rooms', [RoomController::class, 'index'])->name('hotelroom.list');
-Route::get('rooms/{id}',[RoomController::class,'roomDetails'])->name('room.details');
+Route::get('rooms/{id}', [RoomController::class, 'roomDetails'])->name('room.details');
 Auth::routes();
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('user/dashboard', [UsersController::class, 'index'])->name('user.dashboard');
+});
+
 
 Route::middleware(['hotel_owner'])->group(function () {
     // to manage the hotel 
