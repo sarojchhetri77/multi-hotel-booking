@@ -28,7 +28,8 @@ class HotelController extends Controller
         return view('frontend.room.index',$data);
     }
 
-    public function userSelectedRooms(){
-        return view('frontend.userrooms.index');
+    public function userSelectedRooms(Request $request){
+        $selectedRooms = $request->session()->get('selected_rooms', []);
+        return view('frontend.userrooms.index',compact('selectedRooms'));
     }
 }

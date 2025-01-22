@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\EsewaPaymentController;
 use App\Http\Controllers\Admin\HotelManageController;
 use App\Http\Controllers\Admin\HotelsController;
 use App\Http\Controllers\Admin\RoomsController;
@@ -35,6 +36,7 @@ Route::get('user/select/room', [HotelController::class, 'userSelectedRooms'])->n
 
 Route::get('/hotel/{slug}/rooms', [RoomController::class, 'index'])->name('hotelroom.list');
 Route::get('rooms/{id}', [RoomController::class, 'roomDetails'])->name('room.details');
+Route::post('/store-selected-rooms', [RoomController::class, 'storeSelectedRooms'])->name('store.selected.rooms');
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
@@ -46,6 +48,9 @@ Route::middleware(['hotel_owner'])->group(function () {
     // to manage the hotel 
     Route::get('hotel/manage', [HotelManageController::class, 'index'])->name('manage.hotel');
 });
+
+Route::get('esewa/pay', [EsewaPaymentController::class, 'pay'])->name('esewa.pay');
+Route::get('esewa/check', [EsewaPaymentController::class, 'check'])->name('esewa.check');
 
 
 

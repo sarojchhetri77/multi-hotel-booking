@@ -29,4 +29,25 @@ class RoomController extends Controller
         $data['room'] = $room;
         return view('frontend.room.details',$data);
     }
+
+    public function storeSelectedRooms(Request $request)
+    {
+        $newSelectedRooms = $request->input('selected_rooms', []);
+    
+        // Retrieve existing rooms from session
+        $existingRooms = session('selected_rooms', []);
+    
+        // Merge new rooms with existing ones, ensuring no duplicates
+        foreach ($newSelectedRooms as $newRoom) {
+            if (!collect($existingRooms)->contains('room_id', $newRoom['room_id'])) {
+                $existingRooms[] = $newRoom;
+            }
+        }
+    
+        // Store the updated list back into the session
+        session(['selected_rooms' => $existingRooms]);
+    
+        return response()->json(['status' => 'success', 'selected_rooms' => $existingRooms]);
+    }
+    
 }

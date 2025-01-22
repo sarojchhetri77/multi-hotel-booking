@@ -81,12 +81,12 @@
                     <div class="col-lg-4 col-md-6 wow fadeInUp room-card" data-room-id="{{ $room->id }}" data-wow-delay="0.1s">
                         <div class="room-item shadow rounded overflow-hidden border border-light">
                             <div class="position-relative">
-                                <img class="img-fluid" src="{{ asset($room->thumbnail) }}" alt="">
-                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">${{ $room->price }}/Night</small>
+                                <img class="img-fluid" src="{{ asset($room->thumbnail) }}" alt="" data-thumbnails="{{ asset($room->thumbnail) }}">
+                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">{{ $room->price_per_night }}</small>
                             </div>
                             <div class="p-4 mt-2">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <h5 class="mb-0">{{ $room->name }}</h5>
+                                    <h5 class="mb-0" id="name">{{ $room->name }}</h5>
                                     <div class="ps-2">
                                         @for ($i = 0; $i < 5; $i++)
                                             <small class="fa fa-star text-primary"></small>
@@ -113,7 +113,8 @@
                 <input type="hidden" name="selected_rooms" id="selected_rooms">
             
                 <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-success btn-lg" id="proceed_booking" disabled>Proceed to Booking</button>
+                    {{-- <button type="submit" class="btn btn-success btn-lg" id="proceed_booking" disabled>Proceed to Booking</button> --}}
+                    <a href="{{route('userselect.room')}}" class="btn btn-success btn-lg">Proceed To Booking</a>
                 </div>
             </form>
             
@@ -125,40 +126,60 @@
 
 @section('extra-js')
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let selectedRooms = [];
+   $(document).ready(function () {
+    let selectedRooms = [];
 
-        document.querySelectorAll('.select-room-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                let card = this.closest('.room-card');
-                let roomId = card.getAttribute('data-room-id');
+    $('.select-room-btn').click(function () {
+        let card = $(this).closest('.room-card');
+        let roomId = card.data('room-id');
+        let name = card.find('#name').text();
+        let thumbnail = card.find('img').data('thumbnails');
+        let pricePerNight = card.find('.position-absolute').text().split('/')[0].trim(); // Extract price from the text
+        let hotelId = $('input[name="hotel_id"]').val(); // Get hotel ID from the hidden input
 
-                if (selectedRooms.includes(roomId)) {
-                    // Deselect room
-                    selectedRooms = selectedRooms.filter(id => id !== roomId);
-                    card.classList.remove('border-primary');
-                    card.classList.add('border-light');
-                    this.textContent = "Select Room";
-                    this.classList.remove('btn-danger');
-                    this.classList.add('btn-primary');
-                } else {
-                    // Select room
-                    selectedRooms.push(roomId);
-                    card.classList.remove('border-light');
-                    card.classList.add('border-primary');
-                    this.textContent = "Deselect Room";
-                    this.classList.remove('btn-primary');
-                    this.classList.add('btn-danger');
-                }
-
-                // Update hidden input field
-                document.getElementById('selected_rooms').value = selectedRooms.join(',');
-
-                // Enable or disable the proceed button
-                document.getElementById('proceed_booking').disabled = selectedRooms.length === 0;
+        if (selectedRooms.some(room => room.room_id === roomId)) {
+            // Deselect room
+            selectedRooms = selectedRooms.filter(room => room.room_id !== roomId);
+            card.removeClass('border-primary').addClass('border-light');
+            $(this).text("Select Room").removeClass('btn-danger').addClass('btn-primary');
+        } else {
+            // Select room
+            selectedRooms.push({
+                room_id: roomId,
+                name: name,
+                price_per_night: pricePerNight,
+                hotel_id: hotelId,
+                thumbnail: thumbnail
             });
+            card.removeClass('border-light').addClass('border-primary');
+            $(this).text("Deselect Room").removeClass('btn-primary').addClass('btn-danger');
+        }
+
+        // Update hidden input field
+        $('#selected_rooms').val(selectedRooms.map(room => room.room_id).join(','));
+
+        // Enable or disable the proceed button
+        $('#proceed_booking').prop('disabled', selectedRooms.length === 0);
+
+        // Store selected room data in the session via AJAX
+        $.ajax({
+            url: '{{ route('store.selected.rooms') }}',
+            method: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'), // CSRF token
+                selected_rooms: selectedRooms
+            },
+            success: function(response) {
+                // Handle success if needed
+            },
+            error: function(error) {
+                // Handle error if needed
+                console.error(error);
+            }
         });
     });
+});
+
 </script>
 
     
