@@ -1,4 +1,4 @@
-@extends('frontend.layouts.layout')
+@extends('frontend.hotel.layouts.layout')
 
 @section('main-content')
 <style>
@@ -42,22 +42,22 @@
 
             <!-- Loop through selected rooms -->
             @forelse($selectedRooms as $room)
-            <div class="cart-item d-flex justify-content-between">
+            <div class="cart-item d-flex justify-content-between" id="room-{{ $room['room_id'] }}">
                 <div class="d-flex">
                     <img src="{{ asset($room['thumbnail']) }}" alt="Room Image" class="product-img me-3">
                     <div>
                         <h5>{{ $room['name'] }}</h5>
-                        {{-- <p class="text-muted">{{ $room['description'] }}</p> --}}
                     </div>
                 </div>
                 <div class="d-flex flex-column justify-content-between">
-                    <span>${{ $room['price_per_night'] }}</span>
-                    <button class="btn btn-sm btn-danger">Remove</button>
+                    <span class="price">${{ $room['price_per_night'] }}</span>
+                    <button class="btn btn-sm btn-danger" id="remove-room-{{ $room['room_id'] }}">Remove</button>
                 </div>
             </div>
             @empty
             <p>No rooms selected yet.</p>
             @endforelse
+            
 
         </div>
 
@@ -87,4 +87,40 @@
         </div>
     </div>
 </div>    
+@endsection
+@section('extra-js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // On click of remove button
+        $(".btn-danger").click(function() {
+            var roomId = $(this).attr('id').split('-')[2];  // Get the room ID from button id
+
+            $.ajax({
+                url: "{{url('remove-room')}}/" + roomId,
+                method: 'GET',
+                success: function(data) {
+                    console.log(data);
+                    if (data.success) {
+                        // Remove the room item from the UI
+                        $(`#room-${roomId}`).remove();
+                        // Optionally, update the total price or other dynamic content
+                        updateTotalPrice();
+                    }
+                }
+            });
+        });
+    });
+
+    function updateTotalPrice() {
+        let total = 0;
+        $(".cart-item").each(function() {
+            let price = $(this).find('.price').text().replace('$', '');
+            total += parseFloat(price);
+        });
+        $(".total-price").text('$' + total);
+    }
+</script>
+
 @endsection

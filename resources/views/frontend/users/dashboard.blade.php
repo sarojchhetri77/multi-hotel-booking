@@ -203,7 +203,7 @@
                          @if (auth()->user()->hotel)
                              
                          <div>
-                            <a href="" class="btn btn-primary">Manage Hotel</a>
+                            <a href="{{route('manage.hotel')}}" class="btn btn-primary">Manage Hotel</a>
                          </div>
                          @endif
                         

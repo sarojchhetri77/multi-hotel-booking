@@ -15,13 +15,10 @@ class EsewaPaymentController extends Controller
 
         // Calculate the total price of selected rooms
         $sum = collect($selectedRooms)->sum('price_per_night');
-        
         if ($sum > 0) {
-            // Initialize the Esewa payment process
+            $transactionUuid = $this->generateTransactionUuid(Auth::id(), now()->timestamp);
             $esewa = new Esewa();
-            $esewa->config(route('esewa.check'), route('esewa.check'), $sum, 111111222222211);
-            
-        
+            $esewa->config(route('esewa.check'), route('esewa.check'), $sum,$transactionUuid);
             $esewa->init();
         }
     }
@@ -32,45 +29,45 @@ class EsewaPaymentController extends Controller
     
         // Check if the payment data is received and valid
         if ($data) {
-            // Verify if payment status is COMPLETE
             if ($data["status"] === 'COMPLETE') {
-                // Retrieve the cart data from the session
-                $cart = session('cart', []); // Default to an empty array if no cart in session
+                $cart = session('selected_rooms', []);
                 $msg = 'Payment successful';
                 $totalAmount = 0;
     
-                // Process each cart item and create bookings
                 foreach ($cart as $item) {
-                    // Calculate the total amount (could be cart price or based on response)
-                    $totalAmount += $data['total_amount'];  // Ensure this is calculated as needed
+                    $totalAmount += $data['total_amount']; 
     
-                    // Create a new booking record
                     Booking::query()->create([
                         'user_id' => Auth::id(),
-                        'product_id' => $item['product_id'], // Assuming your session cart stores product_id
-                        'numbers' => $item['numbers'], // Assuming your session cart stores numbers
-                        'esewa_status' => 'payed',
-                        'address' => auth()->user()->address, // Accessing user address
-                        'phone' => auth()->user()->number, // Accessing user phone number
-                        'price_per_item' => $item['price'], // Assuming your session cart stores price
-                        'total_amount' => $data['total_amount'], // Use the total from payment data
-                        'food_status' => 'ordered'
+                        'hotel_id' => $item['hotel_id'],
+                        'room_id' => $item['room_id'],
+                        'payment_status' => 'payed',
+                        'price' => $item['price_per_night'],
+                        'check_in_date' => '2022-2-1',
+                        'check_out_date' => '2022-2-1',
+                        // 'total_amount' => $data['total_amount'], 
                     ]);
                 }
     
-                // Clear the session cart after payment
-                session()->forget('cart'); // This will remove the cart data from the session
+                session()->forget('cart');
     
-                // Return the success view with necessary data
-                return view('restaurant-frontend.payment-success', [
-                    'totalAmount' => $totalAmount,
+                return view('frontend.payment.success', [
                     'msg' => $msg
                 ]);
             }
         }
     
         // Return failed payment view if payment is not complete or data is invalid
-        return view('restaurant-frontend.payment-failed');
+        return view('frontend.payment.failed');
+    }
+
+    protected function generateTransactionUuid($userId, $timestamp)
+    {
+        $inputString = $userId . '-' . $timestamp;
+        $hash = hash('sha256', $inputString);
+        $randomString = substr($hash, 0, 12);
+
+        return $randomString;
     }
     
 }

@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomesController::class, 'index'])->name('frontend.home');
 Route::get('hotel/list', [HomesController::class, 'listHotels'])->name('hotel.list');
 Route::get('hotels/{slug}', [HotelController::class, 'hotelDetail'])->name('hotel.detail');
-Route::get('user/select/room', [HotelController::class, 'userSelectedRooms'])->name('userselect.room');
+Route::get('{slug}/select/room', [HotelController::class, 'userSelectedRooms'])->name('userselect.room');
 // Route::get('{hotelSlug}/rooms/{slug}', [HotelController::class, 'roomDetail'])->name('room.detail');
 
 
@@ -37,6 +37,9 @@ Route::get('user/select/room', [HotelController::class, 'userSelectedRooms'])->n
 Route::get('/hotel/{slug}/rooms', [RoomController::class, 'index'])->name('hotelroom.list');
 Route::get('rooms/{id}', [RoomController::class, 'roomDetails'])->name('room.details');
 Route::post('/store-selected-rooms', [RoomController::class, 'storeSelectedRooms'])->name('store.selected.rooms');
+// to remove the room from the cart
+Route::get('/remove-room/{id}', [HotelController::class,'removeRoom'])->name('remove.room');
+
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {

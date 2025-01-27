@@ -111,10 +111,9 @@
             
                 <!-- Hidden input field to store selected room IDs -->
                 <input type="hidden" name="selected_rooms" id="selected_rooms">
-            
                 <div class="text-center mt-4">
                     {{-- <button type="submit" class="btn btn-success btn-lg" id="proceed_booking" disabled>Proceed to Booking</button> --}}
-                    <a href="{{route('userselect.room')}}" class="btn btn-success btn-lg">Proceed To Booking</a>
+                    <a href="{{route('userselect.room',$hotel->slug)}}" class="btn btn-success btn-lg">Proceed To Booking</a>
                 </div>
             </form>
             

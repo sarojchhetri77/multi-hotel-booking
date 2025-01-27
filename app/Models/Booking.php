@@ -14,8 +14,7 @@ class Booking extends Model
         'hotel_id',
         'check_in_date',
         'check_out_date',
-        'guest_count',
-        'status',
+        'payment_status',
     ];
     public function user()
     {
