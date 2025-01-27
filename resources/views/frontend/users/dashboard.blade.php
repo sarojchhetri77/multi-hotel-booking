@@ -103,7 +103,7 @@
                                  <button class="nav-link tabb" id="pills-askquestion-tab" data-bs-toggle="pill" data-bs-target="#pills-askquestion" type="button" role="tab" aria-controls="pills-askquestion" aria-selected="false">Register Hotel</button>
                                </li>
                                <li class="nav-item" role="presentation">
-                                 <button class="nav-link tabb active" id="pills-question-tab" data-bs-toggle="pill" data-bs-target="#pills-question" type="button" role="tab" aria-controls="pills-question" aria-selected="false">Your Questions</button>
+                                 <button class="nav-link tabb active" id="pills-question-tab" data-bs-toggle="pill" data-bs-target="#pills-question" type="button" role="tab" aria-controls="pills-question" aria-selected="false">Your Hotel</button>
                                </li>
                                <li class="nav-item" role="presentation">
                                  <button class="nav-link tabb" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Profile Details</button>
@@ -198,42 +198,133 @@
                      </div>
                      <div class="tab-pane fade show active " id="pills-question" role="tabpanel" aria-labelledby="pills-question-tab">
                          <div class="p-3 border-bottom">
-                             <h5>Your Question List</h5>
+                             <h5>Manage your hotel</h5>
                          </div>
+                         @if (auth()->user()->hotel)
+                             
+                         <div>
+                            <a href="{{route('manage.hotel')}}" class="btn btn-primary">Manage Hotel</a>
+                         </div>
+                         @endif
                         
                      </div>
                      <div class="tab-pane fade" id="pills-askquestion" role="tabpanel" aria-labelledby="pills-askquestion-tab">
                          <div class="p-3 border-bottom">
-                             <h5>Ask Question</h5>
+                             <h5>Enter the details of your hotel</h5>
                          </div>
-                         <div>
-                             <form id="discussionFormss" action="" method="POST" enctype="multipart/form-data">
-                                 @csrf
-                             <div class="modal-body text-start">
-                                 <div class="mb-3">
-                                     <label for="title" class="form-label">Title Of Discussion</label>
-                                     <input type="text" name="title" class="form-control" id="titless" aria-describedby="textHelp">
-                                     <div id="titleErrors" class="text-danger"></div>
-                                 </div>
-                                 <div class="input-group mb-3">
-                                     <label class="input-group-text" for="tag">Choose Tags</label>
-                                     <select class="form-select" id="tagss" name="category[]">
-                                        
-                                     </select>
-                                     <div id="tagsErrors" class="text-danger"></div>
-                                 </div>
- 
-                                 <div class="mb-3">
-                                     <label for="description" class="form-label">Description</label>
-                                     <textarea class="form-control ckeditor-editor" name="description" id="descriptionss" rows="3"></textarea>
-                                     <div id="descriptionErrors" class="text-danger"></div>
-                                 </div>
-                             </div>
-                             <div class="p-2">
-                                 <button type="submit" class="btn btn-primary">Create</button>
-                             </div>
-                         </form>
-                         </div>
+                         <div class="card-body py-4">
+                            <form action="{{ route('hotel.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-12  mb-7">
+                                        <label class="col-lg-4 fw-semibold text-muted required">Name</label>
+                                        <div class="col-lg-12">
+                                            <input type="text" name="name"
+                                                class="form-control mb-lg-0 @error('name') is-invalid @enderror"
+                                                placeholder="Enter Title" value="{{ old('name') }}" />
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12  mb-7">
+                                        <label class="col-lg-4 fw-semibold text-muted required">Address</label>
+                                        <div class="col-lg-12">
+                                            <input type="text" name="address"
+                                                class="form-control mb-lg-0 @error('address') is-invalid @enderror"
+                                                placeholder="Enter Title" value="{{ old('address') }}" />
+                                            @error('address')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12  mb-7">
+                                        <label class="col-lg-4 fw-semibold text-muted required">District</label>
+                                        <div class="col-lg-12">
+                                            <input type="text" name="district"
+                                                class="form-control mb-lg-0 @error('district') is-invalid @enderror"
+                                                placeholder="Enter Title" value="{{ old('district') }}" />
+                                            @error('district')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12  mb-7">
+                                        <label class="col-lg-4 fw-semibold text-muted required">City</label>
+                                        <div class="col-lg-12">
+                                            <input type="text" name="city"
+                                                class="form-control mb-lg-0 @error('city') is-invalid @enderror"
+                                                placeholder="Enter Title" value="{{ old('city') }}" />
+                                            @error('city')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12  mb-7">
+                                        <label class="col-lg-4 fw-semibold text-muted required">Street No</label>
+                                        <div class="col-lg-12">
+                                            <input type="number" name="street_no"
+                                                class="form-control mb-lg-0 @error('street_no') is-invalid @enderror"
+                                                placeholder="Enter Title" value="{{ old('street_no') }}" />
+                                            @error('street_no')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12  mb-7">
+                                        <label class="col-lg-4 fw-semibold text-muted required">Total Rooms</label>
+                                        <div class="col-lg-12">
+                                            <input type="number" name="room_number"
+                                                class="form-control mb-lg-0 @error('room_number') is-invalid @enderror"
+                                                placeholder="Enter Title" value="{{ old('room_number') }}" />
+                                            @error('room_number')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12  mb-7">
+                                        <label class="col-lg-4 fw-semibold text-muted required">Thumbnail</label>
+                                        <div class="col-lg-12">
+                                            <input type="file" name="thumbnail"
+                                                class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('thumbnail') is-invalid @enderror"
+                                                placeholder="Choose Icon" value="{{ old('thumbnail') }}" accept="image/*"/>
+                                            @error('thumbnail')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    {{-- <div class="col-md-12  mb-7">
+                                        <label class="col-lg-4 fw-semibold text-muted"> Hotel Description</label>
+                                        <div class="col-lg-12">
+                                            <textarea name="description"  id="description"
+                                                class="form-control form-control-lg ckeditor-editor  @error('description') is-invalid @endif">{{old('description')}}</textarea>
+                                        </div>
+                                        @error('description')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div> --}}
+                                    <div class="col-md-12 mb-7">
+                                            <input type="submit" class="btn btn-success" value="Submit">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                      </div>
                      <div class="tab-pane fade p-3" id="pills-policy" role="tabpanel" aria-labelledby="pills-policy-tab">
                         
