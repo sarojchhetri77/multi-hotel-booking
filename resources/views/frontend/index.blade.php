@@ -31,17 +31,22 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="date" id="date1" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"
-                                            placeholder="Check in" name="checkin" data-target="#date1" data-toggle="datetimepicker" />
+                                    <div data-target-input="nearest">
+                                        <input type="date" class="form-control "
+                                            placeholder="Check in" name="check_in_date" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="date" id="date2" data-target-input="nearest">
-                                        <input type="text" name="checkout" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker"/>
+                                    <div>
+                                        <input type="date" name="check_out_date" class="form-control" placeholder="Check out" data-target="#date2"/>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
+                                    <div class="room" id="" data-target-input="">
+                                        <input type="number" name="rooms" class="form-control" min="1" placeholder="No. of Room" data-target="" />
+                                    </div>
+                                </div>
+                                {{-- <div class="col-md-3">
                                     <div class="guest-dropdown" style="position: relative;">
                                         <!-- Input field -->
                                         <input type="text" class="form-control" id="guest-input" placeholder="Select Guests" readonly>
@@ -63,7 +68,7 @@
                                             <button type="button" id="apply-guest-selection" class="btn btn-primary btn-sm mt-2">Apply</button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
                             </div>
                         </div>
