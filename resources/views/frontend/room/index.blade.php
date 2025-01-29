@@ -22,18 +22,19 @@
        <div class="container-fluid booking pb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container">
             <div class="bg-white shadow" style="padding: 35px;">
+                <form action="{{route('hotelroom.list',$hotel->slug)}}" method="get">
                 <div class="row g-2">
                     <div class="col-md-10">
                         <div class="row g-2">
                             <div class="col-md-3">
-                                <div class="date" id="date1" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input"
-                                        placeholder="Check in" data-target="#date1" data-toggle="datetimepicker" />
+                                <div data-target-input="nearest">
+                                    <input type="date" name="check_in_date" class="form-control"
+                                        placeholder="Check_in_date"/>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="date" id="date2" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker"/>
+                                <div>
+                                    <input type="date" class="form-control" name="check_out_date"/>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -58,6 +59,7 @@
                         <button class="btn btn-primary w-100">Submit</button>
                     </div>
                 </div>
+            </form>
             </div>
         </div>
     </div>
@@ -77,7 +79,7 @@
                 <input type="hidden" name="hotel_id" value="{{ $hotel->id }}">
                 
                 <div class="row g-4">
-                    @foreach ($hotel->rooms as $room)
+                    @foreach ($rooms as $room)
                     <div class="col-lg-4 col-md-6 wow fadeInUp room-card" data-room-id="{{ $room->id }}" data-wow-delay="0.1s">
                         <div class="room-item shadow rounded overflow-hidden border border-light">
                             <div class="position-relative">
