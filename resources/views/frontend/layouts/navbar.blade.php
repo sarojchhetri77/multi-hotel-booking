@@ -53,12 +53,43 @@
                     </div>
                     {{-- <a href="https://htmlcodex.com/hotel-html-template-pro" class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block">Booking<i class="fa fa-arrow-right ms-3"></i></a> --}}
                     <div class="nav-item dropdown" style="margin-right: 30px">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">User</a>
+                        {{-- <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">User</a>
                         <div class="dropdown-menu rounded-0 me-5">
                             <a href="{{route('user.dashboard')}}" class="dropdown-item">Dashboard</a>
                             <a href="team.html" class="dropdown-item">Our Team</a>
                             <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        </div>
+                        </div> --}}
+                        @auth
+                        {{-- <a href="{{ url('/home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a> --}}
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <img src="{{ Auth::user()->profile_pic ? asset(Auth::user()->profile_pic) : asset('admin/assets/media/avatars/blank.png') }}"
+                                alt="user"
+                                style="width: 40px; height: 40px; border-radius: 50%; margin-right:4rem;" />
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="navbarDropdown">
+                            <li class="nav-item border-bottom">
+                               <p class="text-center">{{Auth::user()->name}}</p> 
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('user.dashboard') }}" class="nav-link btn text-dark">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-5 text-dark" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Sign Out') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-outline-primary">Login</a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="btn btn-primary ms-2" type="submit">Register</a>
+                        @endif
+                    @endauth
                     </div>
                 </div>
             </nav>
