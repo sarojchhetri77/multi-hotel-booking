@@ -47,6 +47,8 @@
         @include('frontend.hotel.layouts.navbar')
         @yield('main-content')
          
+
+        
         <!-- Footer Start -->
         <div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s" style="margin-top: 10rem">
             <div class="container pb-5">
