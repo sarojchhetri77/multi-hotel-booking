@@ -146,7 +146,7 @@
 
     <!-- Room Start -->
     <div class="container-xxl py-5">
-        <div class="container">
+        <div class="container" style="margin-bottom: 6rem">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title text-center text-primary text-uppercase">Our Hotels</h6>
                 <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Hotels</span></h1>
@@ -156,7 +156,7 @@
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="room-item shadow rounded overflow-hidden">
                         <div class="position-relative">
-                            <img class="img-fluid w-100" src="{{asset($hotel->thumbnail)}}" alt="">
+                            <img class=" w-100" width="100%"   src="{{asset($hotel->thumbnail)}}" alt="" style="height:15rem">
                             {{-- <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">{{$hotel->price}}/Night</small> --}}
                         </div>
                         <div class="p-4 mt-2">
