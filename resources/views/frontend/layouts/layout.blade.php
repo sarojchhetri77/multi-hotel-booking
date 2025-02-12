@@ -66,7 +66,7 @@
         
 
         <!-- Footer Start -->
-        <div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s">
+        <div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s"  style="margin-top: 6rem">
             <div class="container pb-5">
                 <div class="row g-5">
                     <div class="col-md-6 col-lg-3">
