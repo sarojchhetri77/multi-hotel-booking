@@ -77,94 +77,154 @@
 
 <head>
     <base>
-    <title>Sign In</title>
+    <title>Sign In - Hotel Booking Platform</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="{{asset('frontend/images/fabicon.png')}}" />
-    <link rel="shortcut icon" href="" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-    <link href="{{ asset('admin/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset('admin/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .login-card h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-card .form-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .login-card .form-control {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .login-card .form-control:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 5px rgba(106, 17, 203, 0.3);
+        }
+
+        .login-card .btn-primary {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .login-card .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+        }
+
+        .login-card .btn-google {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-weight: 600;
+            color: #555;
+            transition: all 0.3s ease;
+        }
+
+        .login-card .btn-google:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-card .btn-google img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .login-card .register-link {
+            color: #6a11cb;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .login-card .register-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
-<body id="kt_body" class="app-blank bg-light">
-    <script>
-        var defaultThemeMode = "light";
-        var themeMode;
-        if (document.documentElement) {
-            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
-                themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
-            } else {
-                if (localStorage.getItem("data-bs-theme") !== null) {
-                    themeMode = localStorage.getItem("data-bs-theme");
-                } else {
-                    themeMode = defaultThemeMode;
-                }
-            }
-            if (themeMode === "system") {
-                themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-            }
-            document.documentElement.setAttribute("data-bs-theme", themeMode);
-        }
-    </script>
-            <div class="d-flex flex-column flex-lg-row-fluid py-10">
-                <div class="d-flex flex-center flex-column flex-column-fluid">
-                    <div class="w-lg-500px p-10 p-lg-15 mx-auto card shadow">
-                        <form class="form w-100" method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="text-center mb-10">
-                                <h1 class="text-dark mb-3">Sign In</h1>
-                            </div>
-                            <div class="fv-row mb-10">
-                                <label class="form-label fs-6 fw-bold text-dark">Email</label>
-                                <input id="email" type="email" class="form-control form-control-lg form-control-solid @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="fv-row mb-10">
-                                <div class="d-flex flex-stack mb-2">
-                                    <label class="form-label fw-bold text-dark fs-6 mb-0">Password</label>
-                                    {{-- <a href="{{route('password.request')}}"
-                                        class="link-primary fs-6 fw-bold">Forgot Password ?</a> --}}
-                                </div>
-                                <input id="password" type="password" class="form-control form-control-lg form-control-solid @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-                                    <span class="indicator-label">Continue</span>
-                                    <span class="indicator-progress">Please wait...
-                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                </button>
-                                <a href="{{route('register')}}"
-                                        class="link-primary fs-6 fw-bold">Register an account ?</a>
-                            </div>
-                            <div class="flex items-center justify-end mt-4 w-100 align-middle">
-                                {{-- <a href="{{ route('auth.google') }}" class="text-decoration-none text-white btn btn-lg btn-primary w-100"> --}}
-                                    {{-- <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" style="margin-left: 3em;"> --}}
-                                    {{-- <p class="mt-1">Continue with google</p> --}}
-                                {{-- </a> --}}
-                                <a href="" id="kt_sign_in_submit" class="btn btn-lg btn-light shadow-sm w-100 mb-5">
-                                    <span><img width="30" height="30" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/></span>  <span class="indicator-label">Continue With Google</span>
-                                  </a>
-                            </div>
-                        </form>
-                    </div>
+<body>
+    <div class="d-flex flex-column justify-content-center align-items-center min-vh-100">
+        <div class="login-card">
+            <form class="form w-100" method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="text-center mb-4">
+                    <h1>Welcome Back</h1>
+                    <p class="text-muted">Sign in to continue to your hotel booking platform.</p>
                 </div>
-            </div>
-    <script src="{{ asset('admin/assets/plugins/global/plugins.bundle.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/scripts.bundle.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/custom/authentication/sign-in/general.js') }}"></script>
-    <script src="{{asset('admin/assets/js/custom/toast.js')}}"></script>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary">
+                        Sign In
+                    </button>
+                </div>
+                <div class="text-center mb-4">
+                    <a href="{{ route('password.request') }}" class="text-muted">Forgot Password?</a>
+                </div>
+                <div class="text-center mb-3">
+                    <p class="text-muted">Or</p>
+                </div>
+                <div class="d-grid mb-4">
+                    <a href="" class="btn btn-google">
+                        <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google Logo">
+                        Continue with Google
+                    </a>
+                </div>
+                <div class="text-center">
+                    <p class="text-muted">Don't have an account? <a href="{{ route('register') }}" class="register-link">Register</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('admin/assets/js/custom/toast.js') }}"></script>
     <script>
         $(document).ready(function(){
             var warnMessage = @json(Session::get('warning'));
@@ -176,4 +236,3 @@
 </body>
 
 </html>
-
