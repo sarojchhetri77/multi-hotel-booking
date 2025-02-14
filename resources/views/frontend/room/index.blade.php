@@ -83,7 +83,7 @@
                     <div class="col-lg-4 col-md-6 wow fadeInUp room-card" data-room-id="{{ $room->id }}" data-wow-delay="0.1s">
                         <div class="room-item shadow rounded overflow-hidden border border-light">
                             <div class="position-relative">
-                                <img class="img-fluid" src="{{ asset($room->thumbnail) }}" alt="" data-thumbnails="{{ asset($room->thumbnail) }}">
+                                <img class="w-100" src="{{ asset($room->thumbnail) }}" alt="" data-thumbnails="{{ asset($room->thumbnail) }}"  style="height:15rem">
                                 <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">{{ $room->price_per_night }}</small>
                             </div>
                             <div class="p-4 mt-2">

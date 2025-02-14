@@ -69,7 +69,7 @@ Route::middleware(['admin'])->group(function () {
 
 // Route for the super admin
 Route::middleware(['super_admin'])->group(function () {
-    Route::resource('hotel', HotelsController::class);
     Route::get('hotels/{hotel}/{status}', [HotelsController::class, 'updateHotelStatus'])->name('hotel.status');
     Route::post('hotels/reject/{id}', [HotelsController::class, 'updateRejectMessage'])->name('hotel.reject');
 });
+Route::resource('hotel', HotelsController::class);

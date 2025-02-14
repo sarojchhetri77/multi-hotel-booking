@@ -46,7 +46,7 @@
         @yield('main-content')
          
 
-        <!-- Newsletter Start -->
+        {{-- <!-- Newsletter Start -->
         <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="row justify-content-center">
                 <div class="col-lg-10 border rounded p-1">
@@ -62,11 +62,11 @@
                 </div>
             </div>
         </div>
-        <!-- Newsletter Start -->
+        <!-- Newsletter Start --> --}}
         
 
         <!-- Footer Start -->
-        <div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s">
+        <div class="container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s"  style="margin-top: 6rem">
             <div class="container pb-5">
                 <div class="row g-5">
                     <div class="col-md-6 col-lg-3">
@@ -103,7 +103,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
+            {{-- <div class="container">
                 <div class="copyright">
                     <div class="row">
                         <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <!-- Footer End -->
 
