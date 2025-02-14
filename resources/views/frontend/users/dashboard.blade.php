@@ -327,7 +327,7 @@
                                         <label class="form-label required">Thumbnail</label>
                                         <div class="drag-drop-area" id="dragDropArea">
                                             <p class="default-text">Drag & drop your image here or <span class="browse-link">browse</span></p>
-                                            <img src="" alt="Image Preview" class="preview-image" style="display: none;">
+                                            <img src="" alt="Image Preview" class="preview-image" style="display: none; max-width: 100px; max-height: 100px;">
                                             <input type="file" name="thumbnail" id="thumbnailInput" class="form-control @error('thumbnail') is-invalid @enderror" accept="image/*" style="display: none;">
                                             @error('thumbnail')
                                                 <span class="invalid-feedback" role="alert">
@@ -341,14 +341,6 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="pills-policy" role="tabpanel" aria-labelledby="pills-policy-tab">
-                        <div class="card-header">
-                            <h5>Policy Generator</h5>
-                        </div>
-                        <div class="card-body">
-                            <!-- Policy generator content here -->
                         </div>
                     </div>
                 </div>
@@ -366,58 +358,59 @@
         const defaultText = $('.default-text');
         const previewImage = $('.preview-image');
 
-        // Prevent default drag behaviors
-        dragDropArea.on('dragenter dragover dragleave drop', function (e) {
+        dragDropArea.on('dragenter dragover', function (e) {
             e.preventDefault();
             e.stopPropagation();
-        });
-
-        // Highlight drop area when item is dragged over it
-        dragDropArea.on('dragenter dragover', function () {
             dragDropArea.addClass('dragover');
         });
 
-        dragDropArea.on('dragleave drop', function () {
+        dragDropArea.on('dragleave', function () {
             dragDropArea.removeClass('dragover');
         });
 
-        // Handle dropped files
         dragDropArea.on('drop', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dragDropArea.removeClass('dragover');
+
             const files = e.originalEvent.dataTransfer.files;
             if (files.length > 0) {
-                thumbnailInput[0].files = files;
-                showImagePreview(files[0]);
+                let file = files[0];
+
+                // Use DataTransfer to assign files to input
+                let dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                thumbnailInput[0].files = dataTransfer.files;
+
+                showImagePreview(file);
             }
         });
 
-        // Handle file input change
         thumbnailInput.on('change', function () {
             if (this.files && this.files[0]) {
                 showImagePreview(this.files[0]);
             }
         });
 
-        // Allow clicking the drag-drop area to trigger the file input
-        dragDropArea.on('click', function () {
+        $(".browse-link").on('click', function (e) {
+            e.stopPropagation();
             thumbnailInput.click();
         });
 
-        // Show image preview
         function showImagePreview(file) {
             const reader = new FileReader();
             reader.onload = function (e) {
                 previewImage.attr('src', e.target.result);
                 previewImage.show();
-                defaultText.hide(); // Hide the default text
+                defaultText.hide();
             };
             reader.readAsDataURL(file);
         }
 
-        // Allow clicking the image to change it
         previewImage.on('click', function (e) {
-            e.stopPropagation(); // Prevent triggering the drag-drop area click event
+            e.stopPropagation();
             thumbnailInput.click();
         });
     });
-</script>
+</script>   
 @endsection

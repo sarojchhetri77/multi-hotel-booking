@@ -1,5 +1,139 @@
 @extends('frontend.layouts.layout')
 @section('main-content')
+<style>
+    /* Search Container */
+.search-container {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto 4rem auto;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid black;
+}
+
+.search-container:focus-within {
+    border-color:#feaa2d;
+    box-shadow: 0 6px 25px rgba(0, 123, 255, 0.2);
+}
+
+/* Search Input */
+.search-input {
+    width: 100%;
+    padding: 1.2rem 2rem;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background: transparent;
+    transition: all 0.3s ease;
+    color: #333;
+}
+
+.search-input::placeholder {
+    color: #999;
+    font-weight: 400;
+}
+
+.search-input:focus {
+    padding-left: 2.5rem;
+}
+
+/* Animation for Search Container */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.search-container {
+    animation: slideIn 0.6s ease-out;
+}
+
+/* Micro-interaction for Input Focus */
+@keyframes inputFocus {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.search-input:focus {
+    animation: inputFocus 0.3s ease;
+}
+
+/* for the popular destination */
+.destination-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+        }
+
+        .destination-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .destination-card:hover .card-content {
+            transform: translateY(0);
+        }
+
+        .destination-name {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .destination-description {
+            margin: 5px 0 0;
+            font-size: 16px;
+        }
+        .hotel-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hotel-item:hover {
+    transform: scale(1.05); /* Scale up the card */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add a shadow */
+}
+</style>
      <!-- Carousel Start -->
      <div class="container-fluid p-0 mb-5">
         <div class="d-flex flex-column align-items-center justify-content-center" style="position: relative; height: 100vh;">
@@ -8,8 +142,8 @@
                 <div class="p-3" style="max-width: 700px;">
                     <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Unmatched Comfort Awaits</h6>
                     <h1 class="display-3 text-white mb-4 animated slideInDown">Book Your Stay at Exclusive Hotels</h1>
-                    <a href="{{url('hotel/list')}}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Hotels</a>
-                    <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Hotel</a>
+                    <a href="#hotel-container" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Hotels</a>
+                    <a href="{{url('hotel/list')}}" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Hotel</a>
                 </div>
             </div>
         </div>
@@ -82,107 +216,118 @@
     </div>
     <!-- Booking End -->
 
-
-    <!-- About Start -->
-    {{-- <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-lg-6">
-                    <h6 class="section-title text-start text-primary text-uppercase">About Us</h6>
-                    <h1 class="mb-4">Welcome to <span class="text-primary text-uppercase">Roomix</span></h1>
-                    <p class="mb-4">Welcome to Roomix, your trusted platform for easy and hassle-free hotel booking! We offer a wide selection of hotels, each managed by its own dedicated team. Our goal is to provide travelers with top-notch services and accommodations that meet their needs. Whether you're planning a weekend getaway or a business trip, Roomix ensures a seamless booking experience, with the added benefit of being able to book directly with hotel admins for a personalized touch. Discover the best in comfort and convenience, all in one place at Roomix.</p>
-                    <div class="row g-3 pb-4">
-                        <div class="col-sm-4 wow fadeIn" data-wow-delay="0.1s">
-                            <div class="border rounded p-1">
-                                <div class="border rounded text-center p-4">
-                                    <i class="fa fa-hotel fa-2x text-primary mb-2"></i>
-                                    <h2 class="mb-1" data-toggle="counter-up">1234</h2>
-                                    <p class="mb-0">Rooms</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 wow fadeIn" data-wow-delay="0.3s">
-                            <div class="border rounded p-1">
-                                <div class="border rounded text-center p-4">
-                                    <i class="fa fa-users-cog fa-2x text-primary mb-2"></i>
-                                    <h2 class="mb-1" data-toggle="counter-up">1234</h2>
-                                    <p class="mb-0">Staffs</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 wow fadeIn" data-wow-delay="0.5s">
-                            <div class="border rounded p-1">
-                                <div class="border rounded text-center p-4">
-                                    <i class="fa fa-users fa-2x text-primary mb-2"></i>
-                                    <h2 class="mb-1" data-toggle="counter-up">1234</h2>
-                                    <p class="mb-0">Clients</p>
-                                </div>
-                            </div>
+    {{-- Popular destination --}}
+    <div class="container py-5">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title text-center text-primary text-uppercase mb-5">Popular Destination</h6>
+            {{-- <h2 class="mb-5">Explore Our <span class="text-primary text-uppercase">Featured Hotels</span></h2> --}}
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4 wow fadeInUp" data-wow-delay="0.1s">
+            <!-- Destination Card 1 -->
+            <div class="col">
+                <a href="{{ url('hotel/list?location=Kathmandu') }}">
+                    <div class="destination-card">
+                        <div class="card-image" style="background-image: url('https://assets.traveltriangle.com/blog/wp-content/uploads/2015/10/Swayambhunath-in-Kathmandu-Valley-Swayambhunath-temple-is-among-the-best-Nepal-places-to-visit-near-Kathmandu-valley.jpg');"></div>
+                            <div class="card-content">
+                              <h3 class="destination-name text-white">Kathmandu</h3>
+                              <p class="destination-description">City of Temple</p>
                         </div>
                     </div>
-                    <a class="btn btn-primary py-3 px-5 mt-2" href="">Explore More</a>
+                </a>
+            </div>
+            <!-- Destination Card 2 -->
+            <div class="col">
+                <a href="{{ url('hotel/list?location=Pokhara') }}">
+                <div class="destination-card">
+                    <div class="card-image" style="background-image: url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/d6/96/36/photo4jpg.jpg?w=1200&h=700&s=1');"></div>
+                    <div class="card-content">
+                        <h3 class="destination-name text-white">Pokhara</h3>
+                        <p class="destination-description">City of Lake</p>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="row g-3">
-                        <div class="col-6 text-end">
-                            <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.1s" src="{{asset('frontend/img/about-1.jpg')}}" style="margin-top: 25%;">
-                        </div>
-                        <div class="col-6 text-start">
-                            <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.3s" src="{{asset('frontend/img/about-2.jpg')}}">
-                        </div>
-                        <div class="col-6 text-end">
-                            <img class="img-fluid rounded w-50 wow zoomIn" data-wow-delay="0.5s" src="{{asset('frontend/img/about-3.jpg')}}">
-                        </div>
-                        <div class="col-6 text-start">
-                            <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.7s" src="{{asset('frontend/img/about-4.jpg')}}">
-                        </div>
+                </a>
+            </div>
+            <!-- Destination Card 3 -->
+            <div class="col">
+                <div class="destination-card">
+                    <div class="card-image" style="background-image: url('https://nepaltraveller.com/images/main/1733741403.sidetrackimagebaglung.png');"></div>
+                    <div class="card-content">
+                        <h3 class="destination-name text-white">Baglung</h3>
+                        <p class="destination-description">Nothing</p>
                     </div>
                 </div>
             </div>
+            <!-- Add more cards as needed -->
         </div>
-    </div> --}}
-    <!-- About End -->
+    </div>
 
-
-    <!-- Room Start -->
-    <div class="container-xxl py-5">
+    {{-- end of the popular destination --}}
+      <!-- Feature hotel Start -->
+      <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="section-title text-center text-primary text-uppercase">Our Featured Hotels</h6>
+                <h2 class="mb-5">Explore Our <span class="text-primary text-uppercase">Featured Hotels</span></h2>
+            </div>
+                <div class="row g-4">
+                    @foreach ($hotels as $hotel)
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="hotel-item shadow rounded overflow-hidden animate__animated animate__fadeIn">
+                            <div class="position-relative">
+                                <img class="w-100" width="100%" src="{{asset($hotel->thumbnail)}}" alt="" style="height:15rem">
+                            </div>
+                            <div class="p-4 mt-2">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <h5 class="mb-0">{{$hotel->name}}</h5>
+                                </div>
+                                <p class="text-muted">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 10.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 7.5 12 7.5 14.5 8.62 14.5 10s-1.12 2.5-2.5 2.5z"></path>
+                                    </svg>
+                                    {{$hotel->city}},{{$hotel->address}}
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <a class="btn btn-sm btn-primary rounded py-2 px-4" href="{{route('hotel.detail',$hotel->slug)}}" target="_blank">View Detail</a>
+                                    <a class="btn btn-sm btn-dark rounded py-2 px-4" href="{{route('hotelroom.list',$hotel->slug)}}" target="_blank">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>            
+        </div>
+    </div>
+    <!-- feature End -->
+    <!-- hotel Start -->
+    <div class="container-xxl py-5" id="hotel-container">
         <div class="container" style="margin-bottom: 6rem">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search hotels by name, city, or address..." />
+                </div>
+            </div>
+    
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title text-center text-primary text-uppercase">Our Hotels</h6>
-                <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Hotels</span></h1>
+                <h2 class="mb-5">Explore Our <span class="text-primary text-uppercase">Hotels</span></h2>
             </div>
             <div class="row g-4">
                 @foreach ($hotels as $hotel)
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="room-item shadow rounded overflow-hidden">
                         <div class="position-relative">
-                            <img class=" w-100" width="100%"   src="{{asset($hotel->thumbnail)}}" alt="" style="height:15rem">
-                            {{-- <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">{{$hotel->price}}/Night</small> --}}
+                            <img class="w-100" width="100%" src="{{asset($hotel->thumbnail)}}" alt="" style="height:15rem">
                         </div>
                         <div class="p-4 mt-2">
                             <div class="d-flex justify-content-between mb-3">
                                 <h5 class="mb-0">{{$hotel->name}}</h5>
-                                {{-- <div class="ps-2">
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                </div> --}}
                             </div>
                             <p class="text-muted">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 10.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 7.5 12 7.5 14.5 8.62 14.5 10s-1.12 2.5-2.5 2.5z"></path>
-                                  </svg>
-                                  
-                              {{$hotel->city}},{{$hotel->address}}</p>
-
-                            <div class="d-flex mb-3">
-                                {{-- <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Bed</small>
-                                <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Bath</small>
-                                <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small> --}}
-                            </div>
-                            {{-- <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p> --}}
+                                </svg>
+                                {{$hotel->city}},{{$hotel->address}}
+                            </p>
                             <div class="d-flex justify-content-between">
                                 <a class="btn btn-sm btn-primary rounded py-2 px-4" href="{{route('hotel.detail',$hotel->slug)}}" target="_blank">View Detail</a>
                                 <a class="btn btn-sm btn-dark rounded py-2 px-4" href="{{route('hotelroom.list',$hotel->slug)}}" target="_blank">Book Now</a>
@@ -194,250 +339,29 @@
             </div>
         </div>
     </div>
-    <!-- Room End -->
+    <!-- hotel End -->
+@endsection
+@section('extra-js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            
+            $(".room-item").each(function () {
+                var hotelName = $(this).find("h5").text().toLowerCase();
+                var hotelLocation = $(this).find("p.text-muted").text().toLowerCase();
+                
+                if (hotelName.indexOf(value) > -1 || hotelLocation.indexOf(value) > -1) {
+                    $(this).parent().show();
+                } else {
+                    $(this).parent().hide();
+                }
+            });
+        });
+    });
+</script>
 
-
-    <!-- Video Start -->
-    {{-- <div class="container-xxl py-5 px-0 wow zoomIn" data-wow-delay="0.1s">
-        <div class="row g-0">
-            <div class="col-md-6 bg-dark d-flex align-items-center">
-                <div class="p-5">
-                    <h6 class="section-title text-start text-white text-uppercase mb-3">Luxury Living</h6>
-                    <h1 class="text-white mb-4">Discover A Brand Luxurious Hotel</h1>
-                    <p class="text-white mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                    <a href="" class="btn btn-primary py-md-3 px-md-5 me-3">Our Rooms</a>
-                    <a href="" class="btn btn-light py-md-3 px-md-5">Book A Room</a>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="video">
-                    <button type="button" class="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-bs-target="#videoModal">
-                        <span></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-    {{-- <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content rounded-0">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- 16:9 aspect ratio -->
-                    <div class="ratio ratio-16x9">
-                        <iframe class="embed-responsive-item" src="" id="video" allowfullscreen allowscriptaccess="always"
-                            allow="autoplay"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!-- Video Start -->
-
-
-    <!-- Service Start -->
-    {{-- <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title text-center text-primary text-uppercase">Our Services</h6>
-                <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Services</span></h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <a class="service-item rounded" href="">
-                        <div class="service-icon bg-transparent border rounded p-1">
-                            <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                <i class="fa fa-hotel fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <h5 class="mb-3">Rooms & Appartment</h5>
-                        <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-                    <a class="service-item rounded" href="">
-                        <div class="service-icon bg-transparent border rounded p-1">
-                            <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                <i class="fa fa-utensils fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <h5 class="mb-3">Food & Restaurant</h5>
-                        <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <a class="service-item rounded" href="">
-                        <div class="service-icon bg-transparent border rounded p-1">
-                            <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                <i class="fa fa-spa fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <h5 class="mb-3">Spa & Fitness</h5>
-                        <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
-                    <a class="service-item rounded" href="">
-                        <div class="service-icon bg-transparent border rounded p-1">
-                            <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                <i class="fa fa-swimmer fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <h5 class="mb-3">Sports & Gaming</h5>
-                        <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <a class="service-item rounded" href="">
-                        <div class="service-icon bg-transparent border rounded p-1">
-                            <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                <i class="fa fa-glass-cheers fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <h5 class="mb-3">Event & Party</h5>
-                        <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-                    <a class="service-item rounded" href="">
-                        <div class="service-icon bg-transparent border rounded p-1">
-                            <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
-                                <i class="fa fa-dumbbell fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <h5 class="mb-3">GYM & Yoga</h5>
-                        <p class="text-body mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!-- Service End -->
-
-
-    <!-- Testimonial Start -->
-    {{-- <div class="container-xxl testimonial my-5 py-5 bg-dark wow zoomIn" data-wow-delay="0.1s">
-        <div class="container">
-            <div class="owl-carousel testimonial-carousel py-5">
-                <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                    <div class="d-flex align-items-center">
-                        <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-1.jpg" style="width: 45px; height: 45px;">
-                        <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
-                        </div>
-                    </div>
-                    <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                </div>
-                <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                    <div class="d-flex align-items-center">
-                        <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-2.jpg" style="width: 45px; height: 45px;">
-                        <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
-                        </div>
-                    </div>
-                    <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                </div>
-                <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                    <div class="d-flex align-items-center">
-                        <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-3.jpg" style="width: 45px; height: 45px;">
-                        <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
-                        </div>
-                    </div>
-                    <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!-- Testimonial End -->
-
-
-    <!-- Team Start -->
-    {{-- <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title text-center text-primary text-uppercase">Our Team</h6>
-                <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Staffs</span></h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="rounded shadow overflow-hidden">
-                        <div class="position-relative">
-                            <img class="img-fluid" src="img/team-1.jpg" alt="">
-                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4 mt-3">
-                            <h5 class="fw-bold mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="rounded shadow overflow-hidden">
-                        <div class="position-relative">
-                            <img class="img-fluid" src="img/team-2.jpg" alt="">
-                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4 mt-3">
-                            <h5 class="fw-bold mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="rounded shadow overflow-hidden">
-                        <div class="position-relative">
-                            <img class="img-fluid" src="img/team-3.jpg" alt="">
-                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4 mt-3">
-                            <h5 class="fw-bold mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="rounded shadow overflow-hidden">
-                        <div class="position-relative">
-                            <img class="img-fluid" src="img/team-4.jpg" alt="">
-                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4 mt-3">
-                            <h5 class="fw-bold mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!-- Team End -->
 @endsection
 
         
