@@ -18,6 +18,7 @@ class Booking extends Model
         'guest_name',
         'guest_phone',
         'arrival_time',
+        'booking_status',
     ];
     public function user()
     {

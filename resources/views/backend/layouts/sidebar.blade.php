@@ -1,3 +1,6 @@
+@php
+    $redirectUrl = auth()->user()->role === 'ADMIN' ? url('hotel/manage') : url('home');
+@endphp
 <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar"
     data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px"
     data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
@@ -8,7 +11,7 @@
             class="flex-column-fluid menu menu-sub-indention menu-column menu-rounded menu-active-bg mb-7">
             <div class="menu-item">
                 <a class="menu-link {{ Request::segment(0) === 'admin' || Request::segment(1) === 'home' ? 'active' : '' }}"
-                    href="{{ url('home') }}">
+                    href="{{ $redirectUrl }}">
                     <span class="menu-icon">
                         <i class="ki-duotone ki-element-11 fs-1">
                             <span class="path1"></span>

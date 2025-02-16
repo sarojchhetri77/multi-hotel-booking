@@ -50,6 +50,9 @@ Route::middleware(['auth'])->group(function () {
     // Route::post('review/store',[ReviewController::class,'store'])->name('review.store');
     Route::post('booking',[BookingController::class,'bookroom'])->name('room.book');
     Route::post('booking-payment',[BookingController::class,'paymentbook'])->name('payment.book');
+    Route::get('payment/success',[BookingController::class,'paymentSuccess'])->name('booking.success');
+    Route::get('payment/failed',[BookingController::class,'paymentFailed'])->name('booking.failed');
+    Route::post('booking/cancel',[BookingController::class,'cancelBooking'])->name('booking.cancel');
 });
  Route::resource('review',ReviewController::class);
 

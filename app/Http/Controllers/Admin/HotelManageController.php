@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +17,7 @@ class HotelManageController extends Controller
             abort(404);
         }
         $data['hotel'] = $user->hotel;
+        $data['bookings'] = Booking::where('hotel_id',Auth::user()->hotel->id)->get();
         return view('backend.manage_hotel.dashboard', $data);
     }
 }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\BookingConfirmationMail;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -37,6 +39,7 @@ class BookingController extends Controller
                 'hotel_id' => $item['hotel_id'],
                 'room_id' => $item['room_id'],
                 'payment_status' => 'Not Paid',
+                'booking_status' => 'booked', 
                 'price' => $item['price_per_night'],
                 'check_in_date' => now(),
                 'check_out_date' => now()->addDay(),
@@ -62,7 +65,7 @@ class BookingController extends Controller
             }
 
             // Create the booking
-            Booking::create($bookingData);
+          $booking =  Booking::create($bookingData);
             Log::info('Booking created successfully.', ['booking_data' => $bookingData]);
         }
 
@@ -72,26 +75,50 @@ class BookingController extends Controller
 
         // Redirect to a success page or return a response
         Log::info('Redirecting to success page.');
+        $user = Auth::user();
+        Mail::to($user->email)->send(new BookingConfirmationMail($booking));
         return redirect()->route('booking.success')->with('success', 'Room(s) booked successfully!');
     }
 
-    public function paymentBook(Request $request){
+    // public function paymentBook(Request $request){
+    //     $request->validate([
+    //         'guestName' => 'required|string|max:255',
+    //         'guestPhone' => 'required|string|max:15',
+    //         'arrivalTime' => 'required|date_format:H:i',
+    //     ]);
+    
+    //     // Save booking logic here
+    //     $booking = Booking::create([
+    //         'user_id' => Auth::id(),
+    //         'guest_name' => $request->guestName,
+    //         'guest_phone' => $request->guestPhone,
+    //         'arrival_time' => $request->arrivalTime,
+    //         'payment_status' => 'Pending',
+    //         'booking_status' => 'booked', 
+    //     ]);
+      
+    
+    //     // Redirect to the eSewa payment gateway with the booking ID
+    //     return redirect()->route('esewa.pay', ['bookingId' => $booking->id]);
+    // }
+
+    public function paymentSuccess(){
+        return view('frontend.payment.success');
+    }
+
+    public function paymentFailed(){
+        return view('frontend.payment.failed');
+    }
+
+    public function cancelBooking(Request $request){
         $request->validate([
-            'guestName' => 'required|string|max:255',
-            'guestPhone' => 'required|string|max:15',
-            'arrivalTime' => 'required|date_format:H:i',
+            'booking_id' => 'required|exists:bookings,id',
         ]);
-    
-        // Save booking logic here
-        $booking = Booking::create([
-            'user_id' => Auth::id(),
-            'guest_name' => $request->guestName,
-            'guest_phone' => $request->guestPhone,
-            'arrival_time' => $request->arrivalTime,
-            'payment_status' => 'Pending', // Set payment status as pending
-        ]);
-    
-        // Redirect to the eSewa payment gateway with the booking ID
-        return redirect()->route('esewa.pay', ['bookingId' => $booking->id]);
+
+        $booking = Booking::find($request->booking_id);
+        $booking->booking_status = 'cancelled';
+        $booking->save();
+
+        return redirect()->back()->with('success', 'Booking cancelled successfully!');
     }
 }

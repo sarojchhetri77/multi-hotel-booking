@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Room;
 use App\Services\RoomService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,8 @@ class RoomsController extends Controller
     public function index()
     {   
         $hotel_id = Auth::user()->hotel->id;
-        $data['rooms'] = $this->roomService->listRooms(['hotel_id' =>$hotel_id]);
+        // $data['rooms'] = $this->roomService->listRooms(['hotel_id' =>$hotel_id]);
+        $data['rooms'] = Room::where('hotel_id',$hotel_id)->get();
         return view('backend.rooms.index',$data);
     }
 

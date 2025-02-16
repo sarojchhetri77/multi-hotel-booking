@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\BookingConfirmationMail;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Xentixar\EsewaSdk\Esewa;
 
 class EsewaPaymentController extends Controller
@@ -35,7 +37,7 @@ class EsewaPaymentController extends Controller
                 foreach ($cart as $item) {
                     $totalAmount += $data['total_amount']; 
     
-                    Booking::query()->create([
+                  $booking =  Booking::query()->create([
                         'user_id' => Auth::id(),
                         'hotel_id' => $item['hotel_id'],
                         'room_id' => $item['room_id'],
@@ -43,11 +45,14 @@ class EsewaPaymentController extends Controller
                         'price' => $item['price_per_night'],
                         'check_in_date' => '2022-2-1',
                         'check_out_date' => '2022-2-1',
+                        'booking_status' => 'booked'
                         // 'total_amount' => $data['total_amount'], 
                     ]);
                 }
     
                 session()->forget('cart');
+                $user = Auth::user();
+                Mail::to($user->email)->send(new BookingConfirmationMail($booking));
     
                 return view('frontend.payment.success', [
                     'msg' => $msg

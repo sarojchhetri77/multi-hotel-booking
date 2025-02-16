@@ -101,40 +101,36 @@
                             <table class="table table-striped table-hover table-row-bordered gy-5">
                                 <thead>
                                     <tr class="fw-bold fs-6 text-gray-800">
-                                        <th>Booking ID</th>
+                                        <th>ID</th>
                                         <th>Guest Name</th>
-                                        <th>Room Type</th>
+                                        <th>Room</th>
                                         <th>Check-In Date</th>
                                         <th>Check-Out Date</th>
-                                        <th>Status</th>
+                                        <th>Payment Status</th>
+                                        <th>Booking Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <!-- Example Data -->
+                                    @foreach ($bookings as $booking)
                                     <tr>
-                                        <td>#12345</td>
-                                        <td>John Doe</td>
-                                        <td>Deluxe Room</td>
-                                        <td>2023-10-15</td>
-                                        <td>2023-10-20</td>
-                                        <td><span class="badge badge-success">Confirmed</span></td>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$booking->user->name}}</td>
+                                        <td>{{$booking->room->name}}</td>
+                                        <td>{{$booking->check_in_date}}</td>
+                                        <td>{{$booking->check_out_date}}</td>
+                                        <td>  <span class="badge {{ $booking->payment_status == 'paid' ? 'badge-success' : 'badge-danger' }}">
+                                            {{ $booking->payment_status }}
+                                        </span></td>
+                                        <td>  <span class="badge {{ $booking->booking_status == 'booked' ? 'badge-success' : 'badge-danger' }}">
+                                            {{ $booking->booking_status }}
+                                        </span></td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-primary">View</a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>#12346</td>
-                                        <td>Jane Smith</td>
-                                        <td>Standard Room</td>
-                                        <td>2023-10-18</td>
-                                        <td>2023-10-22</td>
-                                        <td><span class="badge badge-warning">Pending</span></td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-primary">View</a>
-                                        </td>
-                                    </tr>
-                                    <!-- Add more rows dynamically from your database -->
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

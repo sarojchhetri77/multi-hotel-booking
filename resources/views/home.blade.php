@@ -25,8 +25,8 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
-               <a href="{{url('hotel/manage')}}" class="btn btn-primary">Manage Hotel</a>
-               <a href="{{url('hotel/create')}}" class="btn btn-primary ms-2">Create Hotel</a>
+               {{-- <a href="{{url('hotel/manage')}}" class="btn btn-primary">Manage Hotel</a>
+               <a href="{{url('hotel/create')}}" class="btn btn-primary ms-2">Create Hotel</a> --}}
             </div>
         </div>
     </div>
