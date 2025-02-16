@@ -75,6 +75,26 @@
 .rating span.filled {
     color: #ffcc00;
 }
+.map-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+
+.map-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.map-iframe {
+    display: block;
+    width: 100%;
+    height: 500px;
+    border: none;
+}
 </style>
      <!-- Carousel Start -->
      <div class="container-fluid p-0 mb-5">
@@ -414,7 +434,14 @@
             </div>
         </div>
     </div>
-<!-- review and rating end -->
+<!-- Hotel Map -->
+    <!-- review and rating start -->
+    <div class="map-section">
+        <div class="map-container wow fadeInUp" data-wow-delay="0.2s">
+            <iframe class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2979.446471636069!2d83.99173189999999!3d28.2400159!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3995946a3a83989f%3A0x6725cf65b414222f!2sPrithvi%20Narayan%20Campus!5e1!3m2!1sen!2snp!4v1739696334591!5m2!1sen!2snp" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+<!-- Hotel map end -->
 @endsection
 @section('extra-js')
 <script>
