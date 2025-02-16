@@ -1,6 +1,81 @@
 @extends('frontend.hotel.layouts.layout')
 
 @section('main-content')
+<style>
+     .form-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    .form-container h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+    .form-container label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+    .form-container input[type="text"],
+    .form-container input[type="email"],
+    .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .form-container textarea {
+      resize: vertical;
+      height: 100px;
+    }
+    .form-container .rating {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .form-container .rating span {
+      font-size: 40px;
+      cursor: pointer;
+      color: #ccc;
+    }
+    .form-container .rating span:hover,
+    .form-container .rating span.active {
+      color: #ffcc00;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .form-container button:hover {
+      background-color: #218838;
+    }
+    .rating {
+    display: inline-block;
+    font-size: 24px;
+    cursor: pointer;
+} 
+.rating span {
+    color: #ddd;
+    transition: color 0.2s;
+}
+
+.rating span.filled {
+    color: #ffcc00;
+}
+</style>
      <!-- Carousel Start -->
      <div class="container-fluid p-0 mb-5">
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
@@ -195,49 +270,6 @@
     </div>
     <!-- Room End -->
 
-
-    <!-- Video Start -->
-    <div class="container-xxl py-5 px-0 wow zoomIn" data-wow-delay="0.1s">
-        <div class="row g-0">
-            <div class="col-md-6 bg-dark d-flex align-items-center">
-                <div class="p-5">
-                    <h6 class="section-title text-start text-white text-uppercase mb-3">Luxury Living</h6>
-                    <h1 class="text-white mb-4">Discover A Brand Luxurious Hotel</h1>
-                    <p class="text-white mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                    <a href="" class="btn btn-primary py-md-3 px-md-5 me-3">Our Rooms</a>
-                    <a href="" class="btn btn-light py-md-3 px-md-5">Book A Room</a>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="video">
-                    <button type="button" class="btn-play" data-bs-toggle="modal" data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-bs-target="#videoModal">
-                        <span></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content rounded-0">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- 16:9 aspect ratio -->
-                    <div class="ratio ratio-16x9">
-                        <iframe class="embed-responsive-item" src="" id="video" allowfullscreen allowscriptaccess="always"
-                            allow="autoplay"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Video Start -->
-
-
     <!-- Service Start -->
     <div class="container-xxl py-5">
         <div class="container">
@@ -318,125 +350,111 @@
     <!-- Service End -->
 
 
-    <!-- Testimonial Start -->
+    <!-- review and rating start -->
     <div class="container-xxl testimonial my-5 py-5 bg-dark wow zoomIn" data-wow-delay="0.1s">
         <div class="container">
-            <div class="owl-carousel testimonial-carousel py-5">
-                <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                    <div class="d-flex align-items-center">
-                        <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-1.jpg" style="width: 45px; height: 45px;">
-                        <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
-                        </div>
-                    </div>
-                    <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                </div>
-                <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                    <div class="d-flex align-items-center">
-                        <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-2.jpg" style="width: 45px; height: 45px;">
-                        <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
-                        </div>
-                    </div>
-                    <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                </div>
-                <div class="testimonial-item position-relative bg-white rounded overflow-hidden">
-                    <p>Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd et erat magna eos</p>
-                    <div class="d-flex align-items-center">
-                        <img class="img-fluid flex-shrink-0 rounded" src="img/testimonial-3.jpg" style="width: 45px; height: 45px;">
-                        <div class="ps-3">
-                            <h6 class="fw-bold mb-1">Client Name</h6>
-                            <small>Profession</small>
-                        </div>
-                    </div>
-                    <i class="fa fa-quote-right fa-3x text-primary position-absolute end-0 bottom-0 me-4 mb-n1"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Testimonial End -->
-
-
-    <!-- Team Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title text-center text-primary text-uppercase">Our Team</h6>
-                <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Staffs</span></h1>
-            </div>
             <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="rounded shadow overflow-hidden">
-                        <div class="position-relative">
-                            <img class="img-fluid" src="img/team-1.jpg" alt="">
-                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                <!-- Left Column: Review Form -->
+                <div class="col-md-6">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h2 class="mb-4">Leave a Review</h2>
+                        <form id="review-form" action="{{ route('review.store') }}" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Your Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
                             </div>
-                        </div>
-                        <div class="text-center p-4 mt-3">
-                            <h5 class="fw-bold mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Your Email:</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Rate Your Experience:</label>
+                                <div class="rating">
+                                    <span data-value="1">☆</span>
+                                    <span data-value="2">☆</span>
+                                    <span data-value="3">☆</span>
+                                    <span data-value="4">☆</span>
+                                    <span data-value="5">☆</span>
+                                </div>
+                                <input type="hidden" id="rating-value" name="rating" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="review" class="form-label">Your Review:</label>
+                                <textarea class="form-control" id="review" name="review" rows="4" required></textarea>
+                            </div>
+                            <input type="hidden" id="hotel_id" name="hotel_id" value="{{ $hotel->id }}" required>
+                            <button type="submit" class="btn btn-primary w-100">Submit Your Review</button>
+                        </form>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="rounded shadow overflow-hidden">
-                        <div class="position-relative">
-                            <img class="img-fluid" src="img/team-2.jpg" alt="">
-                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+    
+                <!-- Right Column: Reviews List -->
+                <div class="col-md-6">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h2 class="mb-4">Customer Reviews</h2>
+                        @foreach ($reviews as $review)
+                        <div class="review-item mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold">{{$review->name}}</span>
+                                <span class="text-muted">{{$review->email}}</span>
                             </div>
-                        </div>
-                        <div class="text-center p-4 mt-3">
-                            <h5 class="fw-bold mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="rounded shadow overflow-hidden">
-                        <div class="position-relative">
-                            <img class="img-fluid" src="img/team-3.jpg" alt="">
-                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
+                            <div class="mb-2">
+                                <span class="text-warning"> 
+                                   @for ($i = 0; $i < $review->rating; $i++)
+                                   ★ 
+                                   @endfor
+                                </span>
                             </div>
+                            <p class="mb-0">{{$review->review}}</p>
                         </div>
-                        <div class="text-center p-4 mt-3">
-                            <h5 class="fw-bold mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="rounded shadow overflow-hidden">
-                        <div class="position-relative">
-                            <img class="img-fluid" src="img/team-4.jpg" alt="">
-                            <div class="position-absolute start-50 top-100 translate-middle d-flex align-items-center">
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center p-4 mt-3">
-                            <h5 class="fw-bold mb-0">Full Name</h5>
-                            <small>Designation</small>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Team End -->
+<!-- review and rating end -->
+@endsection
+@section('extra-js')
+<script>
+    $(document).ready(function() {
+    $('.rating span').on('click', function() {
+        const value = $(this).data('value');
+        $('#rating-value').val(value);
+
+        $('.rating span').each(function() {
+            if ($(this).data('value') <= value) {
+                $(this).addClass('filled').text('★');
+            } else {
+                $(this).removeClass('filled').text('☆');
+            }
+        });
+    });
+    $('#review-form').on('submit', function(event) {
+                event.preventDefault(); 
+
+                const formData = $(this).serialize();
+                console.log(formData);
+                $.ajax({
+                    url: $(this).attr('action'), 
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        console.log(response);
+                        alert('Thank you for your review!');
+                        $('#review-form')[0].reset();
+                        $('.rating span').removeClass('filled').text('☆');
+                    },
+                    error: function(xhr, status, error) {
+                        alert('An error occurred. Please try again.');
+                        console.error(error);
+                    }
+                });
+            });
+});
+</script>
+    
 @endsection
 
 

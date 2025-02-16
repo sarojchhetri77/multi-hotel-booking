@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\EsewaPaymentController;
 use App\Http\Controllers\Admin\HotelManageController;
 use App\Http\Controllers\Admin\HotelsController;
+use App\Http\Controllers\Admin\HotelServicesController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\RoomsController;
 use App\Http\Controllers\Frontend\HomesController;
 use App\Http\Controllers\Frontend\HotelController;
@@ -44,7 +46,9 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
     Route::get('user/dashboard', [UsersController::class, 'index'])->name('user.dashboard');
+    // Route::post('review/store',[ReviewController::class,'store'])->name('review.store');
 });
+ Route::resource('review',ReviewController::class);
 
 
 Route::middleware(['hotel_owner'])->group(function () {
@@ -65,6 +69,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['admin'])->group(function () {
     Route::resource('category', CategoriesController::class);
     Route::resource('room', RoomsController::class);
+    Route::resource('hotelservice',HotelServicesController::class);
 });
 
 // Route for the super admin

@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('hotel_about_us', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
+            $table->text('short_description')->nullable();
+            $table->longText('long_description')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->timestamps();
         });
     }

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\HotelService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class HotelServicesController extends Controller
 {
@@ -12,7 +15,11 @@ class HotelServicesController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $hotel = $user->hotel;
+        $data['services'] = HotelService::where('hotel_id',$hotel->id)->get();
+        return view('backend.hotelservice.index',$data);
+
     }
 
     /**
@@ -20,7 +27,7 @@ class HotelServicesController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.hotelservice.create');
     }
 
     /**
@@ -28,7 +35,27 @@ class HotelServicesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => ['required','string','max:255'],
+            'icon' => ['required','image','mimes:png,jpg,jpeg'],
+            'short_description' => ['required'],
+            'long_description' => ['required'],
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->messages())->withInput()->with('error', 'Validation Error');
+        }
+        if ($request->hasFile('icon')) {
+            $thumbnailPath = $request->file('icon')->store('hotel_service_images', 'public');
+        }
+    
+        HotelService::create([
+            'name' => $request->name,
+            'icon' => $thumbnailPath ?? null,
+            'short_description' => $request->short_description,
+            'long_description' => $request->long_description,
+            'hotel_id' => Auth::user()->hotel->id,
+        ]);
+        return redirect()->route('hotelservice.index')->with('success','Hotel Service Added successfully');
     }
 
     /**

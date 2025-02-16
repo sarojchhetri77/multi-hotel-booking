@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();    
+            $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
+            $table->tinyInteger('rating')->unsigned();
+            $table->text('review')->nullable();
             $table->timestamps();
         });
     }
