@@ -14,6 +14,8 @@ class Room extends Model
       'category_id',
       'thumbnail',
       'capacity',
+      'no_of_adult',
+      'no_of_children',
       'description',
       'room_number',
       'beds',

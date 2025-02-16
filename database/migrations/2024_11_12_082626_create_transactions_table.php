@@ -20,9 +20,9 @@ return new class extends Migration
             $table->bigInteger('room_id')->unsigned()->nullable();
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
             $table->double('amount');
-            $table->enum('payment_method',config('constants.payment_methods'))->nullable();
+            // $table->enum('payment_method',config('constants.payment_methods'))->nullable();
             $table->dateTime('transaction_started_at')->nullable();
-            $table->enum('payment_status',config('constants.payment_status'))->default(config('constants.payment_status.pending'));
+            // $table->enum('payment_status',config('constants.payment_status'))->default(config('constants.payment_status.pending'));
             $table->string('product_code')->nullable();
             $table->dateTime('transaction_ended_at')->nullable();
             $table->string('transaction_signature')->nullable();

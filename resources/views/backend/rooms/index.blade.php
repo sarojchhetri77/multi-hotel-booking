@@ -54,7 +54,8 @@
                                     <th class="w-10px pe-2">S.N</th>
                                     <th class="min-w-125px">Title</th>
                                     <th class="min-w-125px">Thumbnail</th>
-                                    {{-- <th class="min-w-125px">Status</th> --}}
+                                    <th class="min-w-125px">Category</th>
+                                    <th class="min-w-125px">Price Per Night</th>
                                     <th class="text-end min-w-100px">Actions</th>
                                 </tr>
                             </thead>
@@ -67,7 +68,15 @@
                                             </p>
                                         </td>
                                         <td>
-                                            <img class="symbol" height="50%" width="50%" src="{{asset($room->thumbnail)}}" alt="room thumbnail">
+                                            <img class="symbol" height="100" width="100" src="{{asset($room->thumbnail)}}" alt="room thumbnail">
+                                        </td>
+                                        <td class="">
+                                            <p class="text-gray-800 text-hover-primary mb-1">{{ $room->category->title }}
+                                            </p>
+                                        </td>
+                                        <td class="">
+                                            <p class="text-gray-800 text-hover-primary mb-1">RS. {{ $room->price_per_night }}
+                                            </p>
                                         </td>
                                         <td class="text-end">
                                             <a href="#"
@@ -79,9 +88,9 @@
                                                 <div class="menu-item px-3">
                                                     <a href="{{route('room.edit',$room->id)}}" class="menu-link px-3">Edit</a>
                                                 </div>
-                                                <div class="menu-item px-3">
+                                                {{-- <div class="menu-item px-3">
                                                     <a href="{{route('room.show',$room->id)}}" class="menu-link px-3">View</a>
-                                                </div>
+                                                </div> --}}
                                                 <div class="menu-item px-3">
                                                     <form action="{{route('room.destroy',$room->id)}}" method="post">
                                                         @csrf

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('room_number')->nullable();
             $table->integer('capacity');
             $table->integer('beds');
+            $table->integer('no_of_adult');
+            $table->integer('no_of_children');
             $table->string('bed_type')->nullable();
             $table->decimal('price_per_night', 10, 2);
             $table->boolean('available')->default(true);
