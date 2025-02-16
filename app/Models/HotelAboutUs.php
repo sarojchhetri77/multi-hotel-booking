@@ -10,9 +10,21 @@ class HotelAboutUs extends Model
     use HasFactory;
     protected $fillable = [
         'hotel_id',
-        'short_description',
+        'small_description',
         'long_description',
-        'thumbnail',
+        'num_clients',
+        'num_staff',
+        'num_rooms',
+        'images',
     ];
+
+    protected $casts = [
+        'images' => 'array',
+    ];
+
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class);
+    }
 
 }

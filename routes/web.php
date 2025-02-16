@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\HomesController;
 use App\Http\Controllers\Frontend\HotelController;
 use App\Http\Controllers\Frontend\RoomController;
 use App\Http\Controllers\Frontend\UsersController;
+use App\Http\Controllers\HotelAboutUssController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,8 @@ Route::get('hotel/list', [HomesController::class, 'listHotels'])->name('hotel.li
 Route::get('hotels/{slug}', [HotelController::class, 'hotelDetail'])->name('hotel.detail');
 Route::get('{slug}/select/room', [HotelController::class, 'userSelectedRooms'])->name('userselect.room');
 // Route::get('{hotelSlug}/rooms/{slug}', [HotelController::class, 'roomDetail'])->name('room.detail');
+Route::get('aboutus/{slug}',[HotelController::class,'aboutUs'])->name('hotelss.aboutus');
+Route::get('sevicess/{slug}',[HotelController::class,'services'])->name('hotelss.services');
 
 
 
@@ -57,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
  Route::resource('review',ReviewController::class);
 
 
-Route::middleware(['hotel_owner'])->group(function () {
+Route::middleware(['auth','hotel_owner'])->group(function () {
     // to manage the hotel 
     Route::get('hotel/manage', [HotelManageController::class, 'index'])->name('manage.hotel');
 });
@@ -72,10 +75,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 // Route for the normal user
-Route::middleware(['admin'])->group(function () {
+Route::middleware(['auth','admin'])->group(function () {
     Route::resource('category', CategoriesController::class);
     Route::resource('room', RoomsController::class);
     Route::resource('hotelservice',HotelServicesController::class);
+    Route::resource('hotelaboutus',HotelAboutUssController::class);
 });
 
 // Route for the super admin

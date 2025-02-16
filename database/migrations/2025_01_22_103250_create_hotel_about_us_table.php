@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('hotel_about_us', function (Blueprint $table) {
             $table->id();
             $table->foreignId('hotel_id')->constrained()->onDelete('cascade');
-            $table->text('short_description')->nullable();
-            $table->longText('long_description')->nullable();
-            $table->string('thumbnail')->nullable();
+            $table->text('small_description');
+            $table->longText('long_description');
+            $table->integer('num_clients')->default(0);
+            $table->integer('num_staff')->default(0);
+            $table->integer('num_rooms')->default(0);
+            $table->json('images');
             $table->timestamps();
         });
     }

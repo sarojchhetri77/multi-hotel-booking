@@ -38,8 +38,8 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="{{route('hotel.detail',$hotel->slug)}}" class="nav-item nav-link active">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="service.html" class="nav-item nav-link">Services</a>
+                        <a href="{{route('hotelss.aboutus',$hotel->slug)}}" class="nav-item nav-link">About</a>
+                        {{-- <a href="#servicecontainer" class="nav-item nav-link">Services</a> --}}
                         <a href="{{route('hotelroom.list',$hotel->slug)}}" class="nav-item nav-link">Rooms</a>
                         <a href="contact.html" class="nav-item nav-link">Contact Us</a>
                     </div>

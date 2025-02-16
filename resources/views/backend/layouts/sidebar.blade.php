@@ -170,7 +170,7 @@
                 </div>
                 <div class="menu-item">
                     <a class="menu-link {{ Request::segment(1) === 'aboutus' ? 'active' : '' }}"
-                        href="{{ url('aboutus') }}">
+                        href="{{ url('hotelaboutus') }}">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-some-files fs-1">
                                 <span class="path1"></span>
