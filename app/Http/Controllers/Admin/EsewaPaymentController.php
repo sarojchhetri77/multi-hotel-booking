@@ -11,11 +11,9 @@ use Xentixar\EsewaSdk\Esewa;
 class EsewaPaymentController extends Controller
 {
       public function pay(Request $request){
-        $selectedRooms = session('selected_rooms', []); // Fetch selected rooms from session
-
-        // Calculate the total price of selected rooms
-        $sum = collect($selectedRooms)->sum('price_per_night');
-        if ($sum > 0) {
+          $selectedRooms = session('selected_rooms', []); 
+          $sum = collect($selectedRooms)->sum('price_per_night');
+          if ($sum > 0) {
             $transactionUuid = $this->generateTransactionUuid(Auth::id(), now()->timestamp);
             $esewa = new Esewa();
             $esewa->config(route('esewa.check'), route('esewa.check'), $sum,$transactionUuid);

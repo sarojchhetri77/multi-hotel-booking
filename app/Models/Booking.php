@@ -15,6 +15,9 @@ class Booking extends Model
         'check_in_date',
         'check_out_date',
         'payment_status',
+        'guest_name',
+        'guest_phone',
+        'arrival_time',
     ];
     public function user()
     {

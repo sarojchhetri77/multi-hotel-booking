@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\EsewaPaymentController;
 use App\Http\Controllers\Admin\HotelManageController;
@@ -47,6 +48,8 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::get('user/dashboard', [UsersController::class, 'index'])->name('user.dashboard');
     // Route::post('review/store',[ReviewController::class,'store'])->name('review.store');
+    Route::post('booking',[BookingController::class,'bookroom'])->name('room.book');
+    Route::post('booking-payment',[BookingController::class,'paymentbook'])->name('payment.book');
 });
  Route::resource('review',ReviewController::class);
 
