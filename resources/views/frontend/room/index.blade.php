@@ -28,30 +28,24 @@
                         <div class="row g-2">
                             <div class="col-md-3">
                                 <div data-target-input="nearest">
-                                    <input type="date" name="check_in_date" class="form-control"
+                                    <input type="date" name="check_in_date" value="{{$checkin}}" class="form-control"
                                         placeholder="Check_in_date"/>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div>
-                                    <input type="date" class="form-control" name="check_out_date"/>
+                                    <input type="date" class="form-control" value="{{$checkout}}" name="check_out_date"/>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <select class="form-select">
-                                    <option selected>Adult</option>
-                                    <option value="1">Adult 1</option>
-                                    <option value="2">Adult 2</option>
-                                    <option value="3">Adult 3</option>
-                                </select>
+                               <div>
+                                <input type="number" class="form-control" placeholder="No of adult" value="{{$noOfAdult}}" name="no_of_adult"/>
+                               </div>
                             </div>
                             <div class="col-md-3">
-                                <select class="form-select">
-                                    <option selected>Child</option>
-                                    <option value="1">Child 1</option>
-                                    <option value="2">Child 2</option>
-                                    <option value="3">Child 3</option>
-                                </select>
+                                <div>
+                                    <input type="number" class="form-control" placeholder="No of Children" value="{{$noOfChildren}}" name="no_of_children"/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -122,6 +116,25 @@
         </div>
     </div>
     <!-- Room End -->
+
+    <!-- Modal -->
+<div class="modal fade" id="dateModal" tabindex="-1" aria-labelledby="dateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dateModalLabel">Enter Check-in and Check-out Dates</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Please enter both check-in and check-out dates before selecting a room.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     
 @endsection
 
@@ -131,12 +144,21 @@
     let selectedRooms = [];
 
     $('.select-room-btn').click(function () {
+        let checkin = $('input[name="check_in_date"]').val();
+        let checkout = $('input[name="check_out_date"]').val();
+
+        // Check if check-in and check-out dates are entered
+        if (!checkin || !checkout) {
+            $('#dateModal').modal('show'); // Show the modal
+            return; // Stop function execution
+        }
+
         let card = $(this).closest('.room-card');
         let roomId = card.data('room-id');
         let name = card.find('#name').text();
         let thumbnail = card.find('img').data('thumbnails');
-        let pricePerNight = card.find('.position-absolute').text().split('/')[0].trim(); // Extract price from the text
-        let hotelId = $('input[name="hotel_id"]').val(); // Get hotel ID from the hidden input
+        let pricePerNight = card.find('.position-absolute').text().split('/')[0].trim(); // Extract price
+        let hotelId = $('input[name="hotel_id"]').val(); // Get hotel ID
 
         if (selectedRooms.some(room => room.room_id === roomId)) {
             // Deselect room
@@ -171,15 +193,15 @@
                 selected_rooms: selectedRooms
             },
             success: function(response) {
-                // Handle success if needed
+                console.log("Rooms saved successfully");
             },
             error: function(error) {
-                // Handle error if needed
-                console.error(error);
+                console.error("Error saving selected rooms", error);
             }
         });
     });
 });
+
 
 </script>
 
