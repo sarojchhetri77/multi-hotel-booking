@@ -35,6 +35,15 @@ class HomesController extends Controller
         if ($rooms == 0) {
             $rooms = 1;
         }
+        if (!empty($checkin) && !empty($checkout)) {
+            session([
+                'checkin' => $checkin,
+                'checkout' => $checkout
+            ]);
+        } else {
+            $checkin = session('checkin');
+            $checkout = session('checkout');
+        }
 
         $data['location'] = $location;
         $data['checkin'] = $checkin;

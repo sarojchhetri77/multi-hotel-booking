@@ -29,20 +29,32 @@ class RoomController extends Controller
         $checkout = $request->query('check_out_date');
         $noOfAdult = $request->query('no_of_adult');
         $noOfChildren = $request->query('no_of_children');
+
+        
     
-        // If no filters are applied, return all rooms
         if (!$checkin && !$checkout && !$noOfAdult && !$noOfChildren) {
             $availableRooms = Room::where('hotel_id', $hotel->id)->get();
         } else {
+            if (session('checkin') && session('checkout')) {
+                $checkin = $checkin;
+                $checkout = $checkout;
+            } else {
+                if (!empty($checkin) && !empty($checkout)) {
+                    session([
+                        'checkin' => $checkin,
+                        'checkout' => $checkout
+                    ]);
+                }
+            }            
             $availableRooms = $this->getAvailableRooms($hotel->id, $checkin, $checkout, $noOfAdult, $noOfChildren);
         }
-    
+        
         return view('frontend.room.index', [
             'hotel' => $hotel,
             'rooms' => $availableRooms,
+            'noOfAdult' => $noOfAdult,
             'checkin' => $checkin,
             'checkout' => $checkout,
-            'noOfAdult' => $noOfAdult,
             'noOfChildren' => $noOfChildren,
         ]);
     }

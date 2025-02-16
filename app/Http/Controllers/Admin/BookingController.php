@@ -14,23 +14,14 @@ class BookingController extends Controller
 {
     public function bookRoom(Request $request)
     {
-        Log::info('Booking process started.', ['user_id' => Auth::id()]);
-
-        // Validate the request data
         $request->validate([
             'guest_name' => 'required_if:booking_for,other|string|max:255',
             'guest_phone' => 'required_if:booking_for,other|string|max:15',
             'arrival_time' => 'required_if:booking_for,other|date_format:H:i',
         ]);
-        Log::info('Request data validated.', ['request_data' => $request->all()]);
 
         $user = auth()->user();
-        Log::info('Authenticated user retrieved.', ['user' => $user]);
-
         $cart = session('selected_rooms', []);
-        Log::info('Retrieved selected rooms from session.', ['cart' => $cart]);
-
-        // Loop through the cart and create bookings
         foreach ($cart as $item) {
             Log::info('Processing room booking.', ['room_id' => $item['room_id'], 'hotel_id' => $item['hotel_id']]);
 
@@ -41,12 +32,9 @@ class BookingController extends Controller
                 'payment_status' => 'Not Paid',
                 'booking_status' => 'booked', 
                 'price' => $item['price_per_night'],
-                'check_in_date' => now(),
-                'check_out_date' => now()->addDay(),
+                'check_in_date' => session('checkin'),
+                'check_out_date' => session('checkout'),
             ];
-            Log::info('Booking data prepared.', ['booking_data' => $bookingData]);
-
-            // If the booking is for someone else, add guest details
             if ($request->booking_for === 'other') {
                 $bookingData['guest_name'] = $request->guest_name;
                 $bookingData['guest_phone'] = $request->guest_phone;
@@ -57,24 +45,17 @@ class BookingController extends Controller
                     'arrival_time' => $request->arrival_time,
                 ]);
             } else {
-                // If the booking is for the user, use their details
                 $bookingData['guest_name'] = $user->name;
                 $bookingData['guest_phone'] = $request->phone;
                 $bookingData['arrival_time'] = now()->format('H:i');
                 Log::info('Booking for self.', ['guest_name' => $user->name, 'guest_phone' => $user->phone]);
             }
 
-            // Create the booking
           $booking =  Booking::create($bookingData);
             Log::info('Booking created successfully.', ['booking_data' => $bookingData]);
         }
 
-        // Clear the cart after booking
         session()->forget('selected_rooms');
-        Log::info('Cart cleared after booking.');
-
-        // Redirect to a success page or return a response
-        Log::info('Redirecting to success page.');
         $user = Auth::user();
         Mail::to($user->email)->send(new BookingConfirmationMail($booking));
         return redirect()->route('booking.success')->with('success', 'Room(s) booked successfully!');

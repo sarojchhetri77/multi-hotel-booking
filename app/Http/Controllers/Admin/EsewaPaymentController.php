@@ -43,10 +43,9 @@ class EsewaPaymentController extends Controller
                         'room_id' => $item['room_id'],
                         'payment_status' => 'payed',
                         'price' => $item['price_per_night'],
-                        'check_in_date' => '2022-2-1',
-                        'check_out_date' => '2022-2-1',
+                        'check_in_date' => session('checkin'),
+                        'check_out_date' => session('checkout'),
                         'booking_status' => 'booked'
-                        // 'total_amount' => $data['total_amount'], 
                     ]);
                 }
     
