@@ -204,7 +204,7 @@
                         Sign In
                     </button>
                 </div>
-                <div class="text-center mb-4">
+                {{-- <div class="text-center mb-4">
                     <a href="{{ route('password.request') }}" class="text-muted">Forgot Password?</a>
                 </div>
                 <div class="text-center mb-3">
@@ -215,7 +215,7 @@
                         <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google Logo">
                         Continue with Google
                     </a>
-                </div>
+                </div> --}}
                 <div class="text-center">
                     <p class="text-muted">Don't have an account? <a href="{{ route('register') }}" class="register-link">Register</a></p>
                 </div>

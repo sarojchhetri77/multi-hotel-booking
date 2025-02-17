@@ -99,18 +99,34 @@
                 <ul class="list-unstyled">
                     <!-- Calculate the total dynamically -->
                     @php
-                    $totalPrice = 0;
-                    foreach ($selectedRooms as $room) {
-                        $totalPrice += $room['price_per_night'];
-                    }
+                    // $totalPrice = 0;
+                    // foreach ($selectedRooms as $room) {
+                    //     $totalPrice += $room['price_per_night'];
+                    // }
+                    $totalPrice = 0;  // Initialize the total price
+
+$checkin = session('checkin');
+$checkout = session('checkout');
+
+$check_in = \Carbon\Carbon::parse($checkin);
+$check_out = \Carbon\Carbon::parse($checkout);
+
+$stayDays = $check_out->diffInDays($check_in);
+// echo $stayDays;
+
+foreach ($selectedRooms as $room) {
+    $roomTotalPrice = $room['price_per_night'] * $stayDays;
+    $totalPrice += $roomTotalPrice;
+}
                     @endphp
+                    {{-- {{$stayDays}} --}}
                     <li class="d-flex justify-content-between">
                         <span>Subtotal:</span>
                         <span>${{ $totalPrice }}</span>
                     </li>
                     <li class="d-flex justify-content-between">
                         <span class="total-price">Total:</span>
-                        <span class="total-price">${{ $totalPrice + 5.00 }}</span> <!-- Adding a $5.00 booking fee -->
+                        <span class="total-price">${{ $totalPrice }}</span> <!-- Adding a $5.00 booking fee -->
                     </li>
                 </ul>
                 <!-- Button to trigger modal -->
