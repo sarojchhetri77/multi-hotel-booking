@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use App\Models\Hotel;
 use App\Models\HotelAboutUs;
 use App\Models\HotelService as ModelsHotelService;
@@ -76,6 +77,12 @@ class HotelController extends Controller
        $services = ModelsHotelService::where('hotel_id',$hotel->id)->first();
        return view('frontend.hotel.service',compact('services','hotel'));
     }
+
+    public function contactus($slug){
+        $hotel = Hotel::where('slug',$slug)->first();
+       return view('frontend.hotel.contactus',compact('hotel'));
+    }
+
     
 
 }

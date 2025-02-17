@@ -41,7 +41,7 @@
                         <a href="{{route('hotelss.aboutus',$hotel->slug)}}" class="nav-item nav-link">About</a>
                         {{-- <a href="#servicecontainer" class="nav-item nav-link">Services</a> --}}
                         <a href="{{route('hotelroom.list',$hotel->slug)}}" class="nav-item nav-link">Rooms</a>
-                        <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                        <a href="{{route('hotelss.contactus',$hotel->slug)}}" class="nav-item nav-link">Contact Us</a>
                     </div>
                     {{-- <a href="https://htmlcodex.com/hotel-html-template-pro" class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block">Booking<i class="fa fa-arrow-right ms-3"></i></a> --}}
                     <div class="nav-item dropdown" style="margin-right: 30px">

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\HotelsController;
 use App\Http\Controllers\Admin\HotelServicesController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\RoomsController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Frontend\HomesController;
 use App\Http\Controllers\Frontend\HotelController;
 use App\Http\Controllers\Frontend\RoomController;
@@ -37,6 +38,8 @@ Route::get('{slug}/select/room', [HotelController::class, 'userSelectedRooms'])-
 // Route::get('{hotelSlug}/rooms/{slug}', [HotelController::class, 'roomDetail'])->name('room.detail');
 Route::get('aboutus/{slug}',[HotelController::class,'aboutUs'])->name('hotelss.aboutus');
 Route::get('sevicess/{slug}',[HotelController::class,'services'])->name('hotelss.services');
+Route::get('contactus/{slug}',[HotelController::class,'contactus'])->name('hotelss.contactus');
+Route::resource('contact-us',ContactController::class);
 
 
 

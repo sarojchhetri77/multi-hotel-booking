@@ -180,6 +180,18 @@
                         <span class="menu-title">About Us</span>
                     </a>
                 </div>
+                <div class="menu-item">
+                    <a class="menu-link {{ Request::segment(1) === 'aboutus' ? 'active' : '' }}"
+                        href="{{ url('contact-us') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-some-files fs-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Contact message</span>
+                    </a>
+                </div>
                 @endif
                 
             </div>

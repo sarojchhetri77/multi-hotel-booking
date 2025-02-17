@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-       
-        return view('home');
+       $bookings = Booking::with('hotel','room')->get();
+        return view('home',compact('bookings'));
     }
 }
