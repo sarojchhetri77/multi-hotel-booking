@@ -22,6 +22,7 @@ class HomesController extends Controller
     {
         $data['categories'] = $this->categoryService->listCategories();
         $data['hotels'] = $this->hotelService->listHotels(['status' => config('constants.hotel_status.verified')]);
+        $data['featurehotels'] = Hotel::where('is_feature','yes')->get();
         return view('frontend.index', $data);
     }
 

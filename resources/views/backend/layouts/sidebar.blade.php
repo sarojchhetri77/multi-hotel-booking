@@ -25,7 +25,7 @@
             </div>
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 @if (auth()->user()->role == config('constants.user_type.super_admin'))
-                <span class="menu-link {{ Request::segment(1) === 'admin' &&Request::segment(2) === 'users' ? 'active' : '' }}">
+                {{-- <span class="menu-link {{ Request::segment(1) === 'admin' &&Request::segment(2) === 'users' ? 'active' : '' }}">
                     <span class="menu-icon">
                         <i class="ki-duotone ki-some-files fs-1">
                             <span class="path1"></span>
@@ -34,8 +34,8 @@
                     </span>
                     <span class="menu-title">Users</span>
                     <span class="menu-arrow"></span>
-                </span>
-                <div class="menu-sub menu-sub-accordion">
+                </span> --}}
+                {{-- <div class="menu-sub menu-sub-accordion">
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(1) === 'admin' && Request::segment(2) === 'users' && Request::segment(3) === 'by-status' ? 'show' : '' }}">
                         <span class="menu-link {{Request::segment(1) === 'admin' && Request::segment(2) === 'users' && Request::segment(3) === 'by-status' ? 'active' : '' }}">
                             <span class="menu-bullet">
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
               
                 {{-- ==========for discussion forum------------- --}}
                 {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -118,6 +118,18 @@
                 </div> --}}
                 {{-- ---------end of the discussion forum --------------- --}}
                
+                <div class="menu-item">
+                    <a class="menu-link {{ Request::segment(1) === 'user' ? 'active' : '' }}"
+                        href="{{ url('users/list') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-some-files fs-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Users</span>
+                    </a>
+                </div>
                 <div class="menu-item">
                     <a class="menu-link {{ Request::segment(1) === 'hotel' ? 'active' : '' }}"
                         href="{{ url('hotel') }}">

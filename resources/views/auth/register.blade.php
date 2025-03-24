@@ -204,6 +204,15 @@
                     @enderror
                 </div>
                 <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
+                    @error('phone')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                     @error('password')

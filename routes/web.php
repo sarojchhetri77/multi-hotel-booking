@@ -89,5 +89,10 @@ Route::middleware(['auth','admin'])->group(function () {
 Route::middleware(['super_admin'])->group(function () {
     Route::get('hotels/{hotel}/{status}', [HotelsController::class, 'updateHotelStatus'])->name('hotel.status');
     Route::post('hotels/reject/{id}', [HotelsController::class, 'updateRejectMessage'])->name('hotel.reject');
+    Route::get('hotel/feature/{id}',[HotelsController::class,'makeHotelFeature'])->name('hotel.feature');
+
+    Route::get('/users/list',[UsersController::class,'userList']);
+    // Route::get('/user/{id}', [UsersController::class, 'blockUser'])->name('user.block');
+    // Route::get('/user/{id}/view',[UsersController::class,'viewUserDetails'])->name('user.show');
 });
 Route::resource('hotel', HotelsController::class);

@@ -20,6 +20,8 @@ class Hotel extends Model
         'thumbnail',
         'reject_message',
         'status',
+        'is_feature',
+        'map',
      ];
      public function categories(){
         return $this->hasMany(Category::class,'hotel_id');

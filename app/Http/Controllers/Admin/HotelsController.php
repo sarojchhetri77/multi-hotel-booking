@@ -17,7 +17,7 @@ class HotelsController extends Controller
     public function __construct(HotelService $hotelService)
     {
         $this->hotelService = $hotelService;
-        $this->middleware(['super_admin'])->except(['store']);
+        // $this->middleware(['super_admin'])->except(['store']);
     }
 
     /**
@@ -50,13 +50,14 @@ class HotelsController extends Controller
             'city' => ['required', 'string'],
             'room_number' => ['required', 'integer'],
             'street_no' => ['required', 'integer'],
+            'map' => ['nullable'],
         ]);
         if ($validator->fails()) {
             Log::error('Validation failed', ['errors' => $validator->errors()->all()]);
             return redirect()->back()->withErrors($validator->messages())->withInput()->with('error', 'Validation Error');
         }
         $this->hotelService->requestHotel($validator->valid());
-        return redirect()->route('hotel.index')->with('success', 'Hotel is Created SUccessfully');
+        return redirect()->route('user.dashboard')->with('success', 'Hotel is Created SUccessfully');
     }
 
     /**
@@ -160,5 +161,16 @@ class HotelsController extends Controller
         $status = $hotel->status;
         Mail::to($hotel->user->email)->send(new HotelApproveMail($hotel, $status));
         return redirect()->route('hotel.index')->with('success', 'Hotel Reject Successfully');
+    }
+
+    public function makeHotelFeature($id)
+    {
+        $hotel = Hotel::findOrFail($id); 
+        if ($hotel->is_feature == 'no') {
+            $hotel->is_feature = 'yes';
+            $hotel->save();
+        }
+        return redirect()->route('hotel.index')->with('success', 'Hotel make featured Successfully');
+
     }
 }

@@ -322,6 +322,16 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-12 mb-3">
+                                        <label class="form-label required">Embeded Map</label>
+                                        {{-- <input type="text" name="map" class="form-control @error('map') is-invalid @enderror" placeholder="Enter City" value="{{ old('map') }}"> --}}
+                                        <textarea name="map" id="" cols="30" rows="3" class="form-control"></textarea>
+                                        @error('map')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-12 mb-3">
                                         <label class="form-label required">Thumbnail</label>
                                         <div class="drag-drop-area" id="dragDropArea">
                                             <p class="default-text">Drag & drop your image here or <span class="browse-link">browse</span></p>
@@ -409,7 +419,7 @@
                                                                     Action
                                                                 </button>
                                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $booking->id }}">
-                                                                    <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>View</a></li>
+                                                                    {{-- <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>View</a></li> --}}
                                                                     <li>
                                                                         <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#cancelModal{{ $booking->id }}">
                                                                             <i class="fas fa-times me-2"></i>Cancel Booking

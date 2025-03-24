@@ -24,6 +24,8 @@ return new class extends Migration
             $table->enum('status', config('constants.hotel_status'))->default(config('constants.hotel_status.unverified'));
             $table->text('reject_message')->nullable();
             $table->unsignedBigInteger('owner_id');
+            $table->string('is_feature')->default('no');
+            $table->text('map')->nullable();
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

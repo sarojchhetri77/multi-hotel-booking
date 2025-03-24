@@ -99,25 +99,25 @@
                 <ul class="list-unstyled">
                     <!-- Calculate the total dynamically -->
                     @php
-                    // $totalPrice = 0;
-                    // foreach ($selectedRooms as $room) {
-                    //     $totalPrice += $room['price_per_night'];
-                    // }
-                    $totalPrice = 0;  // Initialize the total price
+                    $totalPrice = 0;
+                    foreach ($selectedRooms as $room) {
+                        $totalPrice += $room['price_per_night'];
+                    }
+                    // $totalPrice = 0;  // Initialize the total price
 
-$checkin = session('checkin');
-$checkout = session('checkout');
+// $checkin = session('checkin');
+// $checkout = session('checkout');
 
-$check_in = \Carbon\Carbon::parse($checkin);
-$check_out = \Carbon\Carbon::parse($checkout);
+// $check_in = \Carbon\Carbon::parse($checkin);
+// $check_out = \Carbon\Carbon::parse($checkout);
 
-$stayDays = $check_out->diffInDays($check_in);
-// echo $stayDays;
+// $stayDays = $check_out->diffInDays($check_in);
+// // echo $stayDays;
 
-foreach ($selectedRooms as $room) {
-    $roomTotalPrice = $room['price_per_night'] * $stayDays;
-    $totalPrice += $roomTotalPrice;
-}
+// foreach ($selectedRooms as $room) {
+//     $roomTotalPrice = $room['price_per_night'] * $stayDays;
+//     $totalPrice += $roomTotalPrice;
+// }
                     @endphp
                     {{-- {{$stayDays}} --}}
                     <li class="d-flex justify-content-between">

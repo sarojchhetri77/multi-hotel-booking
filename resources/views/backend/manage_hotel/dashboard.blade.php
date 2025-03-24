@@ -108,7 +108,7 @@
                                         <th>Check-Out Date</th>
                                         <th>Payment Status</th>
                                         <th>Booking Status</th>
-                                        <th>Action</th>
+                                        <th>Phone</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -127,7 +127,7 @@
                                             {{ $booking->booking_status }}
                                         </span></td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-primary">View</a>
+                                            {{$booking->user->phone}}
                                         </td>
                                     </tr>
                                     @endforeach
