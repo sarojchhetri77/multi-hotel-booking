@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\BookingConfirmationMail;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Xentixar\EsewaSdk\Esewa;
 
 class EsewaPaymentController extends Controller
 {
       public function pay(Request $request){
-        $selectedRooms = session('selected_rooms', []); // Fetch selected rooms from session
-
-        // Calculate the total price of selected rooms
-        $sum = collect($selectedRooms)->sum('price_per_night');
-        if ($sum > 0) {
+          $selectedRooms = session('selected_rooms', []); 
+          $sum = collect($selectedRooms)->sum('price_per_night');
+          if ($sum > 0) {
             $transactionUuid = $this->generateTransactionUuid(Auth::id(), now()->timestamp);
             $esewa = new Esewa();
             $esewa->config(route('esewa.check'), route('esewa.check'), $sum,$transactionUuid);
@@ -37,19 +37,21 @@ class EsewaPaymentController extends Controller
                 foreach ($cart as $item) {
                     $totalAmount += $data['total_amount']; 
     
-                    Booking::query()->create([
+                  $booking =  Booking::query()->create([
                         'user_id' => Auth::id(),
                         'hotel_id' => $item['hotel_id'],
                         'room_id' => $item['room_id'],
                         'payment_status' => 'payed',
                         'price' => $item['price_per_night'],
-                        'check_in_date' => '2022-2-1',
-                        'check_out_date' => '2022-2-1',
-                        // 'total_amount' => $data['total_amount'], 
+                        'check_in_date' => session('checkin'),
+                        'check_out_date' => session('checkout'),
+                        'booking_status' => 'booked'
                     ]);
                 }
     
                 session()->forget('cart');
+                $user = Auth::user();
+                Mail::to($user->email)->send(new BookingConfirmationMail($booking));
     
                 return view('frontend.payment.success', [
                     'msg' => $msg

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Room;
 use App\Services\RoomService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class RoomsController extends Controller
     public function index()
     {   
         $hotel_id = Auth::user()->hotel->id;
-        $data['rooms'] = $this->roomService->listRooms(['hotel_id' =>$hotel_id]);
+        $data['rooms'] = Room::where('hotel_id',$hotel_id)->get();
         return view('backend.rooms.index',$data);
     }
 
@@ -48,6 +49,8 @@ class RoomsController extends Controller
             'capacity' => ['required'],
             'description' => ['required'],
             'room_number' => ['required'],
+            'no_of_children' => ['required'],
+            'no_of_adult' => ['required'],
             'beds' => ['required'],
             'bed_type' => ['nullable'],
             'price_per_night' => ['required'],
@@ -81,8 +84,8 @@ class RoomsController extends Controller
     {   
         $data['room'] = $this->roomService->getRoomDetailsById($id);
         $hotel_id = Auth::user()->hotel->id;
-        $data['category'] = Category::where('hotel_id',$hotel_id)->first();
-        return view('backend.rooms.create',$data);
+        $data['categories'] = Category::where('hotel_id',$hotel_id)->get();
+        return view('backend.rooms.edit',$data);
     }
 
     /**
@@ -90,7 +93,31 @@ class RoomsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'name' => ['required','string','max:255'],
+            'category_id' => ['required'],
+            'thumbnail' => ['nullable','image','mimes:png,jpg,jpeg'],
+            'capacity' => ['required'],
+            'description' => ['required'],
+            'room_number' => ['required'],
+            'no_of_children' => ['required'],
+            'no_of_adult' => ['required'],
+            'beds' => ['required'],
+            'bed_type' => ['nullable'],
+            'price_per_night' => ['required'],
+            'has_wifi' => ['nullable'],
+            'has_air_conditioning' => ['nullable'],
+            'has_tv' => ['nullable'],
+            'has_bathroom' => ['nullable'],
+            'room_view' => ['nullable'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'mimes:png,jpg,jpeg'],
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->messages())->withInput()->with('error', 'Validation Error');
+        }
+        $store = $this->roomService->requestRoom($validator->valid(),$id);
+        return redirect()->route('room.index')->with('success','Room created successfylly');
     }
 
     /**
@@ -98,6 +125,11 @@ class RoomsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $room = Room::findOrFail($id);
+        if($room){
+            $room->delete();
+            return redirect()->route('room.index')->with('success','Room Delete Successfully');
+        }
+        return redirect()->route('room.index')->with('Failed','Room Delete Failed');
     }
 }

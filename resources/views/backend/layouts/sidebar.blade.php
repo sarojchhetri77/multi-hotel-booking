@@ -1,3 +1,6 @@
+@php
+    $redirectUrl = auth()->user()->role === 'ADMIN' ? url('hotel/manage') : url('home');
+@endphp
 <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar"
     data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px"
     data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
@@ -8,7 +11,7 @@
             class="flex-column-fluid menu menu-sub-indention menu-column menu-rounded menu-active-bg mb-7">
             <div class="menu-item">
                 <a class="menu-link {{ Request::segment(0) === 'admin' || Request::segment(1) === 'home' ? 'active' : '' }}"
-                    href="{{ url('home') }}">
+                    href="{{ $redirectUrl }}">
                     <span class="menu-icon">
                         <i class="ki-duotone ki-element-11 fs-1">
                             <span class="path1"></span>
@@ -22,7 +25,7 @@
             </div>
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 @if (auth()->user()->role == config('constants.user_type.super_admin'))
-                <span class="menu-link {{ Request::segment(1) === 'admin' &&Request::segment(2) === 'users' ? 'active' : '' }}">
+                {{-- <span class="menu-link {{ Request::segment(1) === 'admin' &&Request::segment(2) === 'users' ? 'active' : '' }}">
                     <span class="menu-icon">
                         <i class="ki-duotone ki-some-files fs-1">
                             <span class="path1"></span>
@@ -31,8 +34,8 @@
                     </span>
                     <span class="menu-title">Users</span>
                     <span class="menu-arrow"></span>
-                </span>
-                <div class="menu-sub menu-sub-accordion">
+                </span> --}}
+                {{-- <div class="menu-sub menu-sub-accordion">
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(1) === 'admin' && Request::segment(2) === 'users' && Request::segment(3) === 'by-status' ? 'show' : '' }}">
                         <span class="menu-link {{Request::segment(1) === 'admin' && Request::segment(2) === 'users' && Request::segment(3) === 'by-status' ? 'active' : '' }}">
                             <span class="menu-bullet">
@@ -60,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
               
                 {{-- ==========for discussion forum------------- --}}
                 {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -116,6 +119,18 @@
                 {{-- ---------end of the discussion forum --------------- --}}
                
                 <div class="menu-item">
+                    <a class="menu-link {{ Request::segment(1) === 'user' ? 'active' : '' }}"
+                        href="{{ url('users/list') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-some-files fs-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Users</span>
+                    </a>
+                </div>
+                <div class="menu-item">
                     <a class="menu-link {{ Request::segment(1) === 'hotel' ? 'active' : '' }}"
                         href="{{ url('hotel') }}">
                         <span class="menu-icon">
@@ -151,6 +166,42 @@
                             </i>
                         </span>
                         <span class="menu-title">Rooms</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link {{ Request::segment(1) === 'hotelservice' ? 'active' : '' }}"
+                        href="{{ url('hotelservice') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-some-files fs-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Services</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link {{ Request::segment(1) === 'aboutus' ? 'active' : '' }}"
+                        href="{{ url('hotelaboutus') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-some-files fs-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">About Us</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link {{ Request::segment(1) === 'aboutus' ? 'active' : '' }}"
+                        href="{{ url('contact-us') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-some-files fs-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Contact message</span>
                     </a>
                 </div>
                 @endif

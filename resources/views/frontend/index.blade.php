@@ -270,7 +270,7 @@
                 <h2 class="mb-5">Explore Our <span class="text-primary text-uppercase">Featured Hotels</span></h2>
             </div>
                 <div class="row g-4">
-                    @foreach ($hotels as $hotel)
+                    @foreach ($featurehotels as $hotel)
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="hotel-item shadow rounded overflow-hidden animate__animated animate__fadeIn">
                             <div class="position-relative">

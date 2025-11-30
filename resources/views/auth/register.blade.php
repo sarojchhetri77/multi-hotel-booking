@@ -204,6 +204,15 @@
                     @enderror
                 </div>
                 <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
+                    @error('phone')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                     @error('password')
@@ -221,7 +230,7 @@
                         Sign Up
                     </button>
                 </div>
-                <div class="text-center mb-3">
+                {{-- <div class="text-center mb-3">
                     <p class="text-muted">Or</p>
                 </div>
                 <div class="d-grid mb-4">
@@ -229,7 +238,7 @@
                         <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google Logo">
                         Continue with Google
                     </a>
-                </div>
+                </div> --}}
                 <div class="text-center">
                     <p class="text-muted">Already have an account? <a href="{{ route('login') }}" class="login-link">Log In</a></p>
                 </div>

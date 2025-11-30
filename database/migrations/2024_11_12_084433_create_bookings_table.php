@@ -19,6 +19,11 @@ return new class extends Migration
             $table->date('check_in_date');
             $table->date('check_out_date');
             $table->string('payment_status')->default('pending');
+            $table->string('booking_status')->default('processed');
+
+            $table->string('guest_name')->nullable();
+            $table->string('guest_phone')->nullable();
+            $table->time('arrival_time')->nullable();
             $table->timestamps();
         });
     }

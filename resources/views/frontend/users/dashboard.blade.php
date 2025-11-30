@@ -153,6 +153,10 @@
     border-radius: 8px;
     display: none; /* Hidden by default */
 }
+.actions {
+    display: inline-block;
+    margin-left: 10px;
+}
 </style>
 
 <main class="container-fluid">
@@ -171,13 +175,7 @@
                             <button class="nav-link tabb" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Profile Details</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link tabb" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Change Password</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link tabb" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Setting</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link tabb" id="pills-policy-tab" data-bs-toggle="pill" data-bs-target="#pills-policy" type="button" role="tab" aria-controls="pills-policy" aria-selected="false">Policy Generator</button>
+                            <button class="nav-link tabb" id="pills-booking-tab" data-bs-toggle="pill" data-bs-target="#pills-booking" type="button" role="tab" aria-controls="pills-booking" aria-selected="false">Booking</button>
                         </li>
                     </ul>
                 </div>
@@ -324,6 +322,16 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-12 mb-3">
+                                        <label class="form-label required">Embeded Map</label>
+                                        {{-- <input type="text" name="map" class="form-control @error('map') is-invalid @enderror" placeholder="Enter City" value="{{ old('map') }}"> --}}
+                                        <textarea name="map" id="" cols="30" rows="3" class="form-control"></textarea>
+                                        @error('map')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-12 mb-3">
                                         <label class="form-label required">Thumbnail</label>
                                         <div class="drag-drop-area" id="dragDropArea">
                                             <p class="default-text">Drag & drop your image here or <span class="browse-link">browse</span></p>
@@ -341,6 +349,118 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-booking" role="tabpanel" aria-labelledby="pills-booking-tab">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Your Booking Details</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                @if($bookings->isEmpty())
+                                    <div class="alert alert-info m-3" role="alert">
+                                        You have no bookings yet.
+                                    </div>
+                                @else
+                                    <!-- Add table-responsive here -->
+                                    <div class="table-responsive" style="min-height: 500px;">
+                                        <table class="table table-bordered table-hover table-striped mb-0">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Room</th>
+                                                    <th>Check-In Date</th>
+                                                    <th>Check-Out Date</th>
+                                                    <th>Guest Name</th>
+                                                    <th>Guest Phone</th>
+                                                    <th>Arrival Time</th>
+                                                    <th>Payment Status</th>
+                                                    <th>Booking Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($bookings as $index => $booking)
+                                                    <tr>
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td>{{ $booking->room->name }}</td>
+                                                        <td>{{ $booking->check_in_date }}</td>
+                                                        <td>{{ $booking->check_out_date }}</td>
+                                                        <td>{{ $booking->guest_name }}</td>
+                                                        <td>{{ $booking->guest_phone }}</td>
+                                                        <td>{{ $booking->arrival_time }}</td>
+                                                        <td>
+                                                            @switch($booking->payment_status)
+                                                                @case('Not Paid')
+                                                                    <span class="badge bg-primary">Not Paid</span>
+                                                                @break
+                                                                @case('Paid')
+                                                                    <span class="badge bg-success">Paid</span>
+                                                                @break
+                                                                @default
+                                                                    <span class="badge bg-danger">Not Paid</span>
+                                                            @endswitch
+                                                        </td>
+                                                        <td>
+                                                            @switch($booking->booking_status)
+                                                                @case('booked')
+                                                                    <span class="badge bg-primary">booked</span>
+                                                                @break
+                                                                @case('cancelled')
+                                                                    <span class="badge bg-success">cancelled</span>
+                                                                @break
+                                                                @default
+                                                                    <span class="badge bg-danger">procesed</span>
+                                                            @endswitch
+                                                        </td>
+                                                        <td>
+                                                            <div class="dropdown">
+                                                                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ $booking->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    Action
+                                                                </button>
+                                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $booking->id }}">
+                                                                    {{-- <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>View</a></li> --}}
+                                                                    <li>
+                                                                        <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#cancelModal{{ $booking->id }}">
+                                                                            <i class="fas fa-times me-2"></i>Cancel Booking
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                    
+                                                    <!-- Cancel Booking Modal for Each Booking -->
+                                                    <div class="modal fade" id="cancelModal{{ $booking->id }}" tabindex="-1" aria-labelledby="cancelModalLabel{{ $booking->id }}" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="cancelModalLabel{{ $booking->id }}">Cancel Booking</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    @if ($booking->payment_status = 'Payed')
+                                                                    <p>You Should Contact to the hotel for Refund</p>
+                                                                    @endif
+                                                                    Are you sure you want to cancel this booking for <strong>{{ $booking->room->name }}</strong>?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <form action="{{ route('booking.cancel') }}" method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="booking_id" value="{{$booking->id}}">
+                                                                        <button type="submit" class="btn btn-danger">Confirm Cancel</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

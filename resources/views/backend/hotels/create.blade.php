@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="action-btn">
-                    <a href="{{ url('admin/blogs') }}" class="btn btn-sm btn-primary p-4">
+                    <a href="{{ url('hotel') }}" class="btn btn-sm btn-primary p-4">
                         Back
                     </a>
                 </div>

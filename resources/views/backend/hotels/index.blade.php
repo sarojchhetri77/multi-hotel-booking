@@ -107,6 +107,9 @@
                                                     <a href="{{route('hotel.show',$hotel->id)}}" class="menu-link px-3">View</a>
                                                 </div>
                                                 <div class="menu-item px-3">
+                                                    <a href="{{route('hotel.feature',$hotel->id)}}" class="menu-link px-3">Feature</a>
+                                                </div>
+                                                <div class="menu-item px-3">
                                                     <a href="{{ route('hotel.status', [$hotel->id, 'verified']) }}" class="menu-link px-3">Verify</a>
                                                 </div>
                                                 <div class="menu-item px-3">

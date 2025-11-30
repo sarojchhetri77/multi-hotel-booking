@@ -22,6 +22,7 @@ class HomesController extends Controller
     {
         $data['categories'] = $this->categoryService->listCategories();
         $data['hotels'] = $this->hotelService->listHotels(['status' => config('constants.hotel_status.verified')]);
+        $data['featurehotels'] = Hotel::where('is_feature','yes')->get();
         return view('frontend.index', $data);
     }
 
@@ -34,6 +35,15 @@ class HomesController extends Controller
 
         if ($rooms == 0) {
             $rooms = 1;
+        }
+        if (!empty($checkin) && !empty($checkout)) {
+            session([
+                'checkin' => $checkin,
+                'checkout' => $checkout
+            ]);
+        } else {
+            $checkin = session('checkin');
+            $checkout = session('checkout');
         }
 
         $data['location'] = $location;

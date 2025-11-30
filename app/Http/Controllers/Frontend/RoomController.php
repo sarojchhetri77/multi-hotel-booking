@@ -22,17 +22,73 @@ class RoomController extends Controller
 
     public function index(Request $request, $slug)
     {
+        $hotel = $this->hotelService->getHotelRoomBySlug($slug);
+    
+        // Get request parameters
         $checkin = $request->query('check_in_date');
         $checkout = $request->query('check_out_date');
-        $hotel = $this->hotelService->getHotelRoomBySlug($slug);
-        $availableRooms = $this->getAvailableRooms($hotel->id, $checkin, $checkout);
-        $data['hotel'] = $hotel;
-        $data['rooms'] = $availableRooms;
-        $data['checkin'] = $checkin;
-        $data['checkout'] = $checkout;
+        $noOfAdult = $request->query('no_of_adult');
+        $noOfChildren = $request->query('no_of_children');
 
-        return view('frontend.room.index', $data);
+        
+    
+        if (!$checkin && !$checkout && !$noOfAdult && !$noOfChildren) {
+            $availableRooms = Room::where('hotel_id', $hotel->id)->get();
+        } else {
+            if (session('checkin') && session('checkout')) {
+                $checkin = $checkin;
+                $checkout = $checkout;
+            } else {
+                if (!empty($checkin) && !empty($checkout)) {
+                    session([
+                        'checkin' => $checkin,
+                        'checkout' => $checkout
+                    ]);
+                }
+            }            
+            $availableRooms = $this->getAvailableRooms($hotel->id, $checkin, $checkout, $noOfAdult, $noOfChildren);
+        }
+        
+        return view('frontend.room.index', [
+            'hotel' => $hotel,
+            'rooms' => $availableRooms,
+            'noOfAdult' => $noOfAdult,
+            'checkin' => $checkin,
+            'checkout' => $checkout,
+            'noOfChildren' => $noOfChildren,
+        ]);
     }
+    
+    public function getAvailableRooms($hotelId, $checkin = null, $checkout = null, $noOfAdult = null, $noOfChildren = null)
+    {
+        $roomsQuery = Room::where('hotel_id', $hotelId);
+    
+        if ($checkin && $checkout) {
+            $bookedRoomIds = Booking::where('hotel_id', $hotelId)
+                ->where(function ($query) use ($checkin, $checkout) {
+                    $query->whereBetween('check_in_date', [$checkin, $checkout])
+                          ->orWhereBetween('check_out_date', [$checkin, $checkout])
+                          ->orWhere(function ($query) use ($checkin, $checkout) {
+                              $query->where('check_in_date', '<=', $checkin)
+                                    ->where('check_out_date', '>=', $checkout);
+                          });
+                })
+                ->pluck('room_id')
+                ->toArray();
+    
+            $roomsQuery->whereNotIn('id', $bookedRoomIds);
+        }
+    
+        if ($noOfAdult) {
+            $roomsQuery->where('no_of_adult', '>=', $noOfAdult);
+        }
+        if ($noOfChildren) {
+            $roomsQuery->where('no_of_children', '>=', $noOfChildren);
+        }
+    
+        return $roomsQuery->get();
+    }
+    
 
 
     public function roomDetails($id)
@@ -63,23 +119,23 @@ class RoomController extends Controller
         return response()->json(['status' => 'success', 'selected_rooms' => $existingRooms]);
     }
 
-    public function getAvailableRooms($hotelId, $checkin = null, $checkout = null)
-    {
-        $roomsQuery = Room::where('hotel_id', $hotelId);
-        if ($checkin && $checkout) {
-            $bookedRoomIds = Booking::where('hotel_id', $hotelId)
-                ->where(function ($query) use ($checkin, $checkout) {
-                    $query->whereBetween('check_in_date', [$checkin, $checkout])
-                        ->orWhereBetween('check_out_date', [$checkin, $checkout])
-                        ->orWhere(function ($query) use ($checkin, $checkout) {
-                            $query->where('check_in_date', '<', $checkin)
-                                ->where('check_out_date', '>', $checkout);
-                        });
-                })
-                ->pluck('room_id')
-                ->toArray();
-            $roomsQuery->whereNotIn('id', $bookedRoomIds);
-        }
-        return $roomsQuery->get();
-    }
+    // public function getAvailableRooms($hotelId, $checkin = null, $checkout = null)
+    // {
+    //     $roomsQuery = Room::where('hotel_id', $hotelId);
+    //     if ($checkin && $checkout) {
+    //         $bookedRoomIds = Booking::where('hotel_id', $hotelId)
+    //             ->where(function ($query) use ($checkin, $checkout) {
+    //                 $query->whereBetween('check_in_date', [$checkin, $checkout])
+    //                     ->orWhereBetween('check_out_date', [$checkin, $checkout])
+    //                     ->orWhere(function ($query) use ($checkin, $checkout) {
+    //                         $query->where('check_in_date', '<', $checkin)
+    //                             ->where('check_out_date', '>', $checkout);
+    //                     });
+    //             })
+    //             ->pluck('room_id')
+    //             ->toArray();
+    //         $roomsQuery->whereNotIn('id', $bookedRoomIds);
+    //     }
+    //     return $roomsQuery->get();
+    // }
 }

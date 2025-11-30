@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -28,7 +30,22 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'rating' => 'required|integer',
+            'review' => 'required|string',
+        ]);
+
+        Review::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'rating' => $request->rating,
+            'review' => $request->review,
+            'hotel_id' => $request->hotel_id,
+        ]);
+
+        return response()->json(['message' => 'Review submitted successfully!'], 200);
     }
 
     /**

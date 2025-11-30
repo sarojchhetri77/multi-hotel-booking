@@ -23,18 +23,18 @@
                             <div class="col-md-3">
                                 <div class="" data-target-input="nearest">
                                     <input type="date" class="form-control" name="check_in_date"
-                                        placeholder="Check in" value="{{ old('checkin', $checkin) }}" />
+                                        placeholder="Check in" value="{{session('checkin') }}" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class=""  data-target-input="nearest">
-                                    <input type="date" value="{{ old('checkout', $checkout) }}" name="check_out_date"
+                                    <input type="date" value="{{session('checkout') }}" name="check_out_date"
                                         class="form-control" placeholder="Check out" />
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="room" id="" data-target-input="">
-                                    <input type="number" name="rooms" class="form-control" min="1" value="{{old('rooms',$rooms)}}" placeholder="No. of Room" data-target="" />
+                                    <input type="number" name="rooms" class="form-control" min="1" value="{{$rooms}}" placeholder="No. of Room" data-target="" />
                                 </div>
                             </div>
                             {{-- <div class="col-md-3">

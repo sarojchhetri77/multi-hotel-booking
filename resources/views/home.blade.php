@@ -25,8 +25,64 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
-               <a href="{{url('hotel/manage')}}" class="btn btn-primary">Manage Hotel</a>
-               <a href="{{url('hotel/create')}}" class="btn btn-primary ms-2">Create Hotel</a>
+                <div class="card shadow-sm">
+                    <div class="card-header border-0 pt-6">
+                        <h2 class="card-title fw-bolder fs-2">Booking Details</h2>
+                    </div>
+                    <div class="card-body py-4">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover table-row-bordered gy-5">
+                                <thead>
+                                    <tr class="fw-bold fs-6 text-gray-800">
+                                        <th>ID</th>
+                                        <th>Hotel Name</th>
+                                        <th>Room price</th>
+                                        <th>Total price</th>
+                                        <th>Check-In Date</th>
+                                        <th>Check-Out Date</th>
+                                        <th>Payment Status</th>
+                                        <th>Booking Status</th>
+                                        <th>Phone</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Example Data -->
+                                    @foreach ($bookings as $booking)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$booking->hotel->name}}</td>
+                                        <td> RS.{{$booking->room->price_per_night}}</td>
+                                            @php
+                                                $check_in = \Carbon\Carbon::parse($booking->check_in_date);
+                                                $check_out = \Carbon\Carbon::parse($booking->check_out_date);
+                                                $stay_days = $check_out->diffInDays($check_in);
+                                            @endphp
+                                            {{-- {{$stay_days}} days --}}
+                                        
+                                        <td>
+                                            @php
+                                                $total_payment = $booking->room->price_per_night * $stay_days;
+                                            @endphp
+                                            RS.{{$total_payment}}
+                                        </td>
+                                        <td>{{$booking->check_in_date}}</td>
+                                        <td>{{$booking->check_out_date}}</td>
+                                        <td>  <span class="badge {{ $booking->payment_status == 'paid' ? 'badge-success' : 'badge-danger' }}">
+                                            {{ $booking->payment_status }}
+                                        </span></td>
+                                        <td>  <span class="badge {{ $booking->booking_status == 'booked' ? 'badge-success' : 'badge-danger' }}">
+                                            {{ $booking->booking_status }}
+                                        </span></td>
+                                        <td>
+                                            {{$booking->user->phone}}
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

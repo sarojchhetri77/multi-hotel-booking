@@ -109,6 +109,32 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6  mb-7">
+                                    <label class="col-lg-4 fw-semibold text-muted required">No of Adult</label>
+                                    <div class="col-lg-12">
+                                        <input type="number" name="no_of_adult"
+                                            class="form-control mb-lg-0 @error('no_of_adult') is-invalid @enderror"
+                                            placeholder="Enter Title" value="{{ old('no_of_adult') }}" />
+                                        @error('no_of_adult')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6  mb-7">
+                                    <label class="col-lg-4 fw-semibold text-muted required">No of Children</label>
+                                    <div class="col-lg-12">
+                                        <input type="number" name="no_of_children"
+                                            class="form-control mb-lg-0 @error('no_of_children') is-invalid @enderror"
+                                            placeholder="Enter Title" value="{{ old('no_of_children') }}" />
+                                        @error('no_of_children')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6  mb-7">
                                     <label class="col-lg-4 fw-semibold text-muted required">Room Number</label>
                                     <div class="col-lg-12">
                                         <input type="number" name="room_number"
@@ -161,7 +187,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6  mb-7">
-                                    <label class="col-lg-4 fw-semibold text-muted required">Room View</label>
+                                    <label class="col-lg-4 fw-semibold text-muted required">View From Room</label>
                                     <div class="col-lg-12">
                                         <input type="text" name="room_view"
                                             class="form-control mb-lg-0 @error('room_view') is-invalid @enderror"

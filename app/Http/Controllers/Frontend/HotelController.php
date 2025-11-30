@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use App\Models\Hotel;
+use App\Models\HotelAboutUs;
+use App\Models\HotelService as ModelsHotelService;
+use App\Models\Review;
 use App\Services\HotelService;
 use App\Services\RoomService;
 use Illuminate\Http\Request;
@@ -19,7 +23,11 @@ class HotelController extends Controller
    }
 
     public function hotelDetail($slug){
-        $data['hotel'] = $this->hotelService->getHotelDetailsBySlug($slug);
+        $hotel = $this->hotelService->getHotelDetailsBySlug($slug);
+        $data['reviews'] = $this->getHotelReviews($slug);
+        $data['aboutUs'] = HotelAboutUs::where('hotel_id',$hotel->id)->first();
+        $data['services'] = ModelsHotelService::where('hotel_id',$hotel->id)->get();
+        $data['hotel'] = $hotel;
         return view("frontend.hotel.detail",$data);
     }
 
@@ -50,6 +58,31 @@ class HotelController extends Controller
     
         return response()->json(['success' => true, 'roomId' => $roomId]);
     }
+
+    public function getHotelReviews($slug){
+        $hotel = Hotel::where('slug',$slug)->first();
+         $reviews = Review::where('hotel_id',$hotel->id)->latest()->get();
+         return $reviews;  
+
+    }
+
+    public function aboutUs($slug){
+        $hotel = Hotel::where('slug',$slug)->first();
+       $aboutUs = HotelAboutUs::where('hotel_id',$hotel->id)->first();
+       return view('frontend.hotel.aboutus',compact('aboutUs','hotel'));
+    }
+
+    public function services($slug){
+        $hotel = Hotel::where('slug',$slug)->first();
+       $services = ModelsHotelService::where('hotel_id',$hotel->id)->first();
+       return view('frontend.hotel.service',compact('services','hotel'));
+    }
+
+    public function contactus($slug){
+        $hotel = Hotel::where('slug',$slug)->first();
+       return view('frontend.hotel.contactus',compact('hotel'));
+    }
+
     
 
 }
